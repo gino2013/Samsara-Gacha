@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投胎轉生機 — 命定轉蛋</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#05060B;
+    --panel:#12141F;
+    --panel2:#1B1E2E;
+    --line: rgba(255,255,255,0.08);
+    --text:#EDEEF5;
+    --muted:#8A8FA3;
+    --ur1:#FFD866; --ur2:#FF6EC7; --ur3:#6EE7FF;
+    --ssr:#FFB627;
+    --r:#8B7FFF;
+    --n:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 800px at 20% -10%, rgba(139,127,255,0.12), transparent 60%),
+      radial-gradient(1000px 700px at 90% 110%, rgba(255,182,39,0.10), transparent 60%),
+      var(--void);
+    color:var(--text);
+    font-family:'Noto Sans TC', sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 16px 60px;
+    overflow-x:hidden;
+  }
+
+  .stars{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 80% 30%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 65% 85%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 25% 45%, rgba(255,255,255,0.35), transparent);
+    background-size: 100% 100%;
+    opacity:0.6;
+  }
+
+  .wrap{ position:relative; z-index:1; width:100%; max-width:720px; }
+
+  header{ text-align:center; margin-bottom:22px; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:0.25em; color:var(--muted);
+    text-transform:uppercase; margin-bottom:10px;
+  }
+  h1{
+    font-family:'Orbitron', sans-serif;
+    font-weight:900;
+    font-size:clamp(28px, 6vw, 44px);
+    margin:0 0 8px;
+    background:linear-gradient(90deg, var(--ur3), var(--ur2) 45%, var(--ur1));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    letter-spacing:0.02em;
+  }
+  .sub{ color:var(--muted); font-size:14px; line-height:1.7; max-width:520px; margin:0 auto; }
+
+  .stats{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    margin:22px 0 26px;
+  }
+  .stat{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:8px 14px;
+    text-align:center;
+    min-width:74px;
+  }
+  .stat .num{ font-family:'JetBrains Mono', monospace; font-weight:600; font-size:16px; }
+  .stat .lbl{ font-size:10px; color:var(--muted); letter-spacing:0.08em; margin-top:2px; }
+  .stat.ur .num{ color:var(--ur1); }
+  .stat.ssr .num{ color:var(--ssr); }
+  .stat.r .num{ color:var(--r); }
+  .stat.n .num{ color:var(--n); }
+
+  .stage{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    height:300px; margin-bottom:14px;
+  }
+  .ring{
+    position:absolute; width:230px; height:230px; border-radius:50%;
+    border:1px dashed rgba(255,255,255,0.12);
+    animation: spin 18s linear infinite;
+  }
+  .ring.r2{ width:280px; height:280px; border-color:rgba(255,255,255,0.06); animation-duration:26s; animation-direction:reverse; }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  .card{
+    position:relative;
+    width:190px; height:250px;
+    border-radius:16px;
+    background:linear-gradient(160deg, var(--panel2), var(--panel));
+    border:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transition: transform 0.5s cubic-bezier(.2,.9,.25,1), box-shadow 0.5s;
+    transform-style:preserve-3d;
+    padding:14px;
+  }
+  .card .rarity-badge{
+    position:absolute; top:10px; left:10px;
+    font-family:'Orbitron', sans-serif; font-weight:700; font-size:11px;
+    letter-spacing:0.1em;
+    padding:3px 9px; border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    color:var(--muted);
+  }
+  .flag{ font-size:56px; line-height:1; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.4)); }
+  .country{ font-size:18px; font-weight:700; text-align:center; padding:0 6px; }
+  .reason{ font-size:11px; color:var(--muted); text-align:center; line-height:1.5; padding:0 8px; }
+  .hint{ font-size:12px; color:var(--muted); }
+
+  .card.empty .flag{ font-size:40px; opacity:0.25; }
+  .card.empty .country{ color:var(--muted); font-weight:500; font-size:14px; }
+
+  .card.ur{ border-color: var(--ur2); box-shadow: 0 0 50px rgba(255,110,199,0.45), 0 0 90px rgba(110,231,255,0.25); }
+  .card.ur .rarity-badge{ background:linear-gradient(90deg, var(--ur3), var(--ur2), var(--ur1)); color:#1a0a12; }
+  .card.ssr{ border-color: var(--ssr); box-shadow: 0 0 40px rgba(255,182,39,0.4); }
+  .card.ssr .rarity-badge{ background:var(--ssr); color:#231400; }
+  .card.r{ border-color: var(--r); box-shadow: 0 0 28px rgba(139,127,255,0.35); }
+  .card.r .rarity-badge{ background:var(--r); color:#0e0a24; }
+  .card.n{ border-color: var(--n); }
+  .card.n .rarity-badge{ background:var(--n); color:#0b0d12; }
+
+  .card.reveal{ animation: pop 0.55s cubic-bezier(.2,.9,.25,1); }
+  @keyframes pop{
+    0%{ transform:scale(0.4) rotateY(90deg); opacity:0; }
+    60%{ transform:scale(1.06) rotateY(0deg); opacity:1; }
+    100%{ transform:scale(1) rotateY(0deg); }
+  }
+
+  .card.ur .sweep::after{
+    content:''; position:absolute; inset:0; border-radius:16px;
+    background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.5) 48%, transparent 66%);
+    background-size:250% 250%;
+    animation: sweep 1.6s ease-in-out 0.15s 2;
+    pointer-events:none;
+  }
+  @keyframes sweep{
+    0%{ background-position: 180% 180%; }
+    100%{ background-position: -20% -20%; }
+  }
+
+  .burst{ position:absolute; inset:0; pointer-events:none; overflow:visible; }
+  .burst i{
+    position:absolute; top:50%; left:50%; width:6px; height:6px; border-radius:50%;
+    opacity:0; transform:translate(-50%,-50%);
+  }
+
+  .controls{ display:flex; gap:12px; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
+  button.pull{
+    font-family:'Orbitron', sans-serif; font-weight:700; font-size:14px;
+    letter-spacing:0.06em;
+    padding:14px 26px; border-radius:12px; border:1px solid var(--line);
+    cursor:pointer; color:var(--text);
+    background:var(--panel2);
+    transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+  }
+  button.pull:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,0.25); }
+  button.pull:active{ transform:translateY(0px) scale(0.98); }
+  button.pull.primary{
+    background:linear-gradient(120deg, var(--ur3), var(--ur2), var(--ur1));
+    color:#160a17; border:none;
+    box-shadow: 0 10px 30px rgba(255,110,199,0.25);
+  }
+  button.pull:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
+
+  .pity{
+    text-align:center; font-family:'JetBrains Mono', monospace; font-size:11px;
+    color:var(--muted); margin-bottom:26px;
+  }
+  .pity b{ color:var(--r); }
+
+  .grid10{
+    display:none;
+    grid-template-columns:repeat(5, 1fr);
+    gap:10px;
+    margin:8px 0 28px;
+  }
+  .grid10.show{ display:grid; }
+  .mini{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:10px 4px; text-align:center; opacity:0; transform:translateY(10px) scale(0.9);
+    animation: miniIn 0.4s forwards; cursor:pointer;
+  }
+  @keyframes miniIn{ to{ opacity:1; transform:translateY(0) scale(1); } }
+  .mini .flag{ font-size:26px; }
+  .mini .country{ font-size:10.5px; font-weight:600; margin-top:4px; line-height:1.3; }
+  .mini .badge{ font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:0.06em; margin-top:5px; padding:2px 6px; border-radius:8px; display:inline-block; }
+  .mini.ur{ border-color:var(--ur2); box-shadow:0 0 16px rgba(255,110,199,0.3); }
+  .mini.ur .badge{ background:linear-gradient(90deg,var(--ur3),var(--ur2),var(--ur1)); color:#1a0a12; }
+  .mini.ssr{ border-color:var(--ssr); }
+  .mini.ssr .badge{ background:var(--ssr); color:#231400; }
+  .mini.r{ border-color:var(--r); }
+  .mini.r .badge{ background:var(--r); color:#0e0a24; }
+  .mini.n .badge{ background:var(--n); color:#0b0d12; }
+
+  .globe-panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px 16px 18px;
+    margin:6px 0 28px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .globe-title{
+    font-family:'Orbitron', sans-serif; font-size:12px; letter-spacing:0.12em;
+    color:var(--muted); margin-bottom:12px; text-transform:uppercase;
+  }
+  .globe-stage{
+    position:relative; width:280px; height:280px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #globeCanvas{ display:block; }
+  .pin{
+    position:absolute; width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle, #fff, var(--ur2));
+    box-shadow:0 0 10px 3px rgba(255,110,199,0.7), 0 0 24px 8px rgba(255,110,199,0.35);
+    transform:translate(-50%,-50%) scale(0);
+    pointer-events:none;
+    transition: transform 0.35s cubic-bezier(.3,1.5,.4,1);
+    z-index:5;
+  }
+  .pin.show{ transform:translate(-50%,-50%) scale(1); }
+  .pin::after{
+    content:''; position:absolute; inset:-6px; border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.6);
+    animation: pinPulse 1.6s ease-out infinite;
+  }
+  @keyframes pinPulse{
+    0%{ transform:scale(0.6); opacity:0.9; }
+    100%{ transform:scale(2.4); opacity:0; }
+  }
+  .globe-controls{ display:flex; gap:10px; margin-top:14px; }
+  button.globe-btn{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; font-weight:600;
+    padding:9px 16px; border-radius:10px; border:1px solid var(--line);
+    background:var(--panel2); color:var(--text); cursor:pointer;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  button.globe-btn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,0.25); }
+  button.globe-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  button.globe-btn.locate{ border-color: var(--ur2); color:var(--ur1); }
+
+  .geo-info{
+    width:100%; max-width:420px;
+    max-height:0; overflow:hidden; opacity:0;
+    transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
+    margin-top:0;
+  }
+  .geo-info.show{ max-height:160px; opacity:1; margin-top:16px; }
+  .geo-info-inner{
+    background:var(--panel2); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; text-align:center;
+  }
+  .geo-info-head{ display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:8px; }
+  .geo-info-head .f{ font-size:24px; }
+  .geo-info-head .nm{ font-weight:700; font-size:15px; }
+  .geo-info-head .tg{ font-family:'Orbitron',sans-serif; font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; letter-spacing:0.06em; }
+  .geo-info-head .tg.ur{ background:linear-gradient(90deg,var(--ur3),var(--ur2),var(--ur1)); color:#1a0a12; }
+  .geo-info-head .tg.ssr{ background:var(--ssr); color:#231400; }
+  .geo-info-head .tg.r{ background:var(--r); color:#0e0a24; }
+  .geo-info-head .tg.n{ background:var(--n); color:#0b0d12; }
+  .geo-info-text{ font-size:12.5px; color:#C9CCDA; line-height:1.6; }
+  .geo-placeholder{ font-size:12px; color:var(--muted); text-align:center; margin-top:10px; }
+
+  .history-label{ font-size:11px; color:var(--muted); letter-spacing:0.1em; margin-bottom:8px; text-align:center; }
+  .history{
+    display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; justify-content:flex-start;
+    scrollbar-width:thin;
+  }
+  .history::-webkit-scrollbar{ height:5px; }
+  .history::-webkit-scrollbar-thumb{ background:var(--panel2); border-radius:4px; }
+  .chip{
+    flex:0 0 auto; width:40px; height:40px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center; font-size:19px;
+    background:var(--panel); border:1px solid var(--line); cursor:pointer;
+  }
+  .chip.ur{ border-color:var(--ur2); }
+  .chip.ssr{ border-color:var(--ssr); }
+  .chip.r{ border-color:var(--r); }
+  .chip.n{ border-color:var(--n); opacity:0.7; }
+
+  footer{
+    margin:34px auto 0; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.8;
+    max-width:480px;
+  }
+  footer .rates{ font-family:'JetBrains Mono', monospace; font-size:10.5px; margin-top:6px; opacity:0.8; }
+
+  @media (max-width:480px){
+    .grid10{ grid-template-columns:repeat(5,1fr); gap:6px; }
+    .card{ width:170px; height:225px; }
+    .globe-stage{ width:240px; height:240px; }
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Reincarnation Gacha · 業力抽獎機</div>
+    <h1>投胎轉生機</h1>
+    <p class="sub">閉上眼，轉動輪迴。你將以何種國籍再臨人間，全憑一抽。<br>UR / SSR / R / N，四個等級，機率公開，不用課金。</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">總抽數</div></div>
+    <div class="stat ur"><div class="num" id="statUR">0</div><div class="lbl">UR</div></div>
+    <div class="stat ssr"><div class="num" id="statSSR">0</div><div class="lbl">SSR</div></div>
+    <div class="stat r"><div class="num" id="statR">0</div><div class="lbl">R</div></div>
+    <div class="stat n"><div class="num" id="statN">0</div><div class="lbl">N</div></div>
+  </div>
+
+  <div class="stage">
+    <div class="ring"></div>
+    <div class="ring r2"></div>
+    <div class="card empty" id="mainCard">
+      <div class="burst" id="burst"></div>
+      <div class="flag" id="cardFlag">🎴</div>
+      <div class="country" id="cardCountry">尚未投胎</div>
+      <div class="hint">按下方按鈕開始輪迴</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="pull primary" id="btnPull1">單抽 · 轉世一次</button>
+    <button class="pull" id="btnPull10">十連 · 投胎十次</button>
+  </div>
+  <div class="pity">距離保底 SSR 還有 <b id="pityCount">10</b> 抽（第10抽必出 SSR 以上）</div>
+
+  <div class="grid10" id="grid10"></div>
+
+  <div class="globe-panel">
+    <div class="globe-title">🌍 命定座標定位儀</div>
+    <div class="globe-stage">
+      <canvas id="globeCanvas" width="280" height="280"></canvas>
+      <div class="pin" id="pin"></div>
+    </div>
+    <div class="globe-controls">
+      <button class="globe-btn locate" id="btnLocate" disabled>📍 定位到該國</button>
+      <button class="globe-btn" id="btnReset">🔄 返回全球視角</button>
+    </div>
+    <div class="geo-placeholder" id="geoPlaceholder">先抽一張卡，再按「定位到該國」看地球轉過去</div>
+    <div class="geo-info" id="geoInfo">
+      <div class="geo-info-inner">
+        <div class="geo-info-head">
+          <span class="f" id="geoFlag"></span>
+          <span class="nm" id="geoName"></span>
+          <span class="tg" id="geoTier"></span>
+        </div>
+        <div class="geo-info-text" id="geoReason"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-label">最近紀錄（點一下可重新定位）</div>
+  <div class="history" id="history"></div>
+
+  <footer>
+    此遊戲純屬娛樂與機率模擬，國家分級僅依常見綜合指標排列組合而成，不代表任何國家的真實優劣或對其人民的評價。眾生平等，一切隨緣，抽到哪裡都好好活著最重要。
+    <div class="rates">機率：UR 1% · SSR 6% · R 25% · N 68%</div>
+  </footer>
+
+</div>
+
+<script>
+const TIERS = {
+  UR: { weight: 1, countries: [
+    ["🇱🇺","盧森堡",49.6,6.1,"綜合評分74.8分（快樂指數7.06・人均GDP $158,733・生活成本指數78.0）— 126國之中唯一擠進頂級的國家"]
+  ]},
+  SSR: { weight: 6, countries: [
+    ["🇮🇪","愛爾蘭",53.3,-6.3,"綜合評分72.8分（快樂指數6.93・人均GDP $140,186・生活成本指數70.6）"],
+    ["🇺🇸","美國",38.9,-77.0,"綜合評分63.2分（快樂指數6.82・人均GDP $94,430・生活成本指數68.8）"],
+    ["🇳🇴","挪威",59.9,10.7,"綜合評分62.5分（快樂指數7.24・人均GDP $105,877・生活成本指數83.7）"],
+    ["🇩🇰","丹麥",55.7,12.6,"綜合評分61.1分（快樂指數7.54・人均GDP $83,445・生活成本指數78.9）"],
+    ["🇫🇮","芬蘭",60.2,24.9,"綜合評分61.0分（快樂指數7.76・人均GDP $60,130・生活成本指數69.0）"],
+    ["🇸🇪","瑞典",59.3,18.1,"綜合評分60.8分（快樂指數7.26・人均GDP $70,676・生活成本指數68.0）"],
+    ["🇳🇱","荷蘭",52.4,4.9,"綜合評分60.7分（快樂指數7.22・人均GDP $79,918・生活成本指數73.4）"],
+    ["🇸🇦","沙烏地阿拉伯",24.7,46.7,"綜合評分60.3分（快樂指數6.82・人均GDP $37,811・生活成本指數43.9）"],
+    ["🇹🇼","台灣",25.0,121.6,"綜合評分58.6分（快樂指數6.71・人均GDP $42,103・生活成本指數49.7），CP值型的高分國家"]
+  ]},
+  R: { weight: 25, countries: [
+    ["🇰🇿","哈薩克",51.2,71.4,"綜合評分60.2分（快樂指數6.63・人均GDP $17,503・生活成本指數29.8）"],
+    ["🇮🇸","冰島",64.1,-21.9,"綜合評分60.1分（快樂指數7.54・人均GDP $110,048・生活成本指數97.2）"],
+    ["🇦🇺","澳洲",-35.3,149.1,"綜合評分60.1分（快樂指數6.92・人均GDP $75,648・生活成本指數67.9）"],
+    ["🇦🇪","阿聯",24.5,54.4,"綜合評分59.7分（快樂指數6.82・人均GDP $54,214・生活成本指數55.2）"],
+    ["🇧🇷","巴西",-15.8,-47.9,"綜合評分59.0分（快樂指數6.63・人均GDP $12,313・生活成本指數30.1）"],
+    ["🇰🇼","科威特",29.4,47.9,"綜合評分58.4分（快樂指數6.54・人均GDP $33,164・生活成本指數42.5）"],
+    ["🇳🇿","紐西蘭",-41.3,174.8,"綜合評分58.3分（快樂指數7.00・人均GDP $52,023・生活成本指數60.3）"],
+    ["🇸🇬","新加坡",1.35,103.8,"綜合評分58.0分（快樂指數6.59・人均GDP $107,758・生活成本指數87.7）"],
+    ["🇷🇴","羅馬尼亞",44.4,26.1,"綜合評分58.0分（快樂指數6.63・人均GDP $25,693・生活成本指數40.6）"],
+    ["🇨🇦","加拿大",45.4,-75.7,"綜合評分57.8分（快樂指數6.74・人均GDP $60,305・生活成本指數63.0）"],
+    ["🇧🇪","比利時",50.8,4.4,"綜合評分57.7分（快樂指數6.93・人均GDP $65,112・生活成本指數68.6）"],
+    ["🇻🇳","越南",21.0,105.8,"綜合評分57.7分（快樂指數6.43・人均GDP $5,115・生活成本指數26.4）"],
+    ["🇨🇿","捷克",50.1,14.4,"綜合評分57.5分（快樂指數6.82・人均GDP $39,795・生活成本指數53.0）"],
+    ["🇩🇪","德國",52.5,13.4,"綜合評分57.5分（快樂指數6.88・人均GDP $65,303・生活成本指數68.7）"],
+    ["🇵🇱","波蘭",52.2,21.0,"綜合評分57.5分（快樂指數6.77・人均GDP $31,336・生活成本指數47.3）"],
+    ["🇸🇮","斯洛維尼亞",46.1,14.5,"綜合評分57.5分（快樂指數6.87・人均GDP $40,630・生活成本指數54.1）"],
+    ["🇱🇾","利比亞",32.9,13.2,"綜合評分57.3分（快樂指數5.73・人均GDP $6,962・生活成本指數18.3）"],
+    ["🇲🇹","馬爾他",35.9,14.5,"綜合評分57.0分（快樂指數6.44・人均GDP $53,560・生活成本指數56.8）"],
+    ["🇲🇽","墨西哥",19.4,-99.1,"綜合評分57.0分（快樂指數6.97・人均GDP $15,779・生活成本指數42.6）"],
+    ["🇪🇸","西班牙",40.4,-3.7,"綜合評分56.9分（快樂指數6.54・人均GDP $41,563・生活成本指數51.6）"],
+    ["🇦🇹","奧地利",48.2,16.4,"綜合評分56.9分（快樂指數6.85・人均GDP $67,761・生活成本指數71.3）"],
+    ["🇱🇹","立陶宛",54.7,25.3,"綜合評分56.8分（快樂指數6.70・人均GDP $36,545・生活成本指數51.2）"],
+    ["🇨🇷","哥斯大黎加",9.9,-84.1,"綜合評分56.7分（快樂指數7.44・人均GDP $20,299・生活成本指數52.9）"],
+    ["🇵🇾","巴拉圭",-25.3,-57.6,"綜合評分56.6分（快樂指數6.20・人均GDP $9,372・生活成本指數28.5）"],
+    ["🇺🇿","烏茲別克",41.3,69.2,"綜合評分56.5分（快樂指數6.28・人均GDP $4,661・生活成本指數27.3）"],
+    ["🇨🇳","中國",39.9,116.4,"綜合評分56.4分（快樂指數6.07・人均GDP $14,874・生活成本指數30.5）"],
+    ["🇮🇱","以色列",31.8,35.2,"綜合評分56.1分（快樂指數7.19・人均GDP $69,804・生活成本指數79.7）"],
+    ["🇨🇭","瑞士",46.9,7.4,"綜合評分55.9分（快樂指數7.02・人均GDP $126,177・生活成本指數110.7）— 快樂與財富都高，但物價也是全球數一數二"],
+    ["🇬🇧","英國",51.5,-0.1,"綜合評分55.9分（快樂指數6.69・人均GDP $61,056・生活成本指數67.8）"],
+    ["🇷🇸","塞爾維亞",44.8,20.5,"綜合評分55.8分（快樂指數6.69・人均GDP $17,252・生活成本指數42.6）"],
+    ["🇨🇱","智利",-33.4,-70.6,"綜合評分55.7分（快樂指數6.30・人均GDP $20,240・生活成本指數39.0）"]
+  ]},
+  N: { weight: 68, countries: [
+    ["🇪🇨","厄瓜多",-0.2,-78.5,"綜合評分55.1分（快樂指數6.14・人均GDP $7,575・生活成本指數30.9）"],
+    ["🇵🇭","菲律賓",14.6,121.0,"綜合評分55.0分（快樂指數6.21・人均GDP $4,443・生活成本指數30.1）"],
+    ["🇰🇬","吉爾吉斯",42.9,74.6,"綜合評分55.0分（快樂指數6.05・人均GDP $3,202・生活成本指數27.3）"],
+    ["🇯🇵","日本",35.7,139.7,"綜合評分54.9分（快樂指數6.13・人均GDP $35,703・生活成本指數47.5）"],
+    ["🇨🇴","哥倫比亞",4.7,-74.1,"綜合評分54.8分（快樂指數6.04・人均GDP $10,104・生活成本指數31.7）"],
+    ["🇲🇾","馬來西亞",3.1,101.7,"綜合評分54.8分（快樂指數6.01・人均GDP $15,085・生活成本指數34.0）"],
+    ["🇵🇦","巴拿馬",9.0,-79.5,"綜合評分54.7分（快樂指數6.55・人均GDP $20,564・生活成本指數45.5）"],
+    ["🇧🇴","玻利維亞",-16.5,-68.1,"綜合評分54.5分（快樂指數5.84・人均GDP $6,333・生活成本指數27.3）"],
+    ["🇮🇹","義大利",41.9,12.5,"綜合評分54.5分（快樂指數6.57・人均GDP $46,505・生活成本指數61.4）"],
+    ["🇦🇷","阿根廷",-34.6,-58.4,"綜合評分54.3分（快樂指數6.43・人均GDP $14,357・生活成本指數41.3）"],
+    ["🇧🇭","巴林",26.2,50.6,"綜合評分54.3分（快樂指數6.25・人均GDP $29,569・生活成本指數47.6）"],
+    ["🇧🇦","波士尼亞",43.9,18.4,"綜合評分54.2分（快樂指數6.38・人均GDP $10,701・生活成本指數38.7）"],
+    ["🇵🇪","秘魯",-12.0,-77.0,"綜合評分54.0分（快樂指數5.97・人均GDP $10,960・生活成本指數33.5）"],
+    ["🇸🇻","薩爾瓦多",13.7,-89.2,"綜合評分53.9分（快樂指數6.58・人均GDP $6,196・生活成本指數39.6）"],
+    ["🇸🇰","斯洛伐克",48.1,17.1,"綜合評分53.9分（快樂指數6.26・人均GDP $31,242・生活成本指數49.6）"],
+    ["🇲🇳","蒙古",47.9,106.9,"綜合評分53.9分（快樂指數5.94・人均GDP $7,853・生活成本指數31.4）"],
+    ["🇳🇮","尼加拉瓜",12.1,-86.3,"綜合評分53.9分（快樂指數6.30・人均GDP $3,559・生活成本指數34.2）"],
+    ["🇵🇹","葡萄牙",38.7,-9.1,"綜合評分53.9分（快樂指數6.03・人均GDP $35,434・生活成本指數48.8）"],
+    ["🇷🇺","俄羅斯",55.8,37.6,"綜合評分53.7分（快樂指數5.83・人均GDP $18,525・生活成本指數36.5）"],
+    ["🇩🇿","阿爾及利亞",36.8,3.1,"綜合評分53.7分（快樂指數5.71・人均GDP $6,628・生活成本指數28.0）"],
+    ["🇴🇲","阿曼",23.6,58.6,"綜合評分53.7分（快樂指數6.20・人均GDP $21,645・生活成本指數43.6）"],
+    ["🇮🇩","印尼",-6.2,106.8,"綜合評分53.6分（快樂指數5.62・人均GDP $5,362・生活成本指數26.1）"],
+    ["🇬🇹","瓜地馬拉",14.6,-90.5,"綜合評分53.6分（快樂指數6.53・人均GDP $6,810・生活成本指數40.4）"],
+    ["🇫🇷","法國",48.9,2.3,"綜合評分53.5分（快樂指數6.59・人均GDP $52,083・生活成本指數67.7）"],
+    ["🇹🇭","泰國",13.8,100.5,"綜合評分53.4分（快樂指數6.30・人均GDP $8,105・生活成本指數38.0）"],
+    ["🇩🇴","多明尼加",18.5,-69.9,"綜合評分53.2分（快樂指數6.09・人均GDP $12,406・生活成本指數38.2）"],
+    ["🇺🇾","烏拉圭",-34.9,-56.2,"綜合評分53.0分（快樂指數6.64・人均GDP $27,608・生活成本指數55.6）"],
+    ["🇱🇻","拉脫維亞",56.9,24.1,"綜合評分53.0分（快樂指數6.37・人均GDP $28,913・生活成本指數52.3）"],
+    ["🇨🇾","賽普勒斯",35.2,33.4,"綜合評分52.9分（快樂指數6.13・人均GDP $45,409・生活成本指數58.8）"],
+    ["🇲🇪","蒙特內哥羅",42.4,19.3,"綜合評分52.7分（快樂指數6.14・人均GDP $16,377・生活成本指數42.7）"],
+    ["🇲🇺","模里西斯",-20.2,57.5,"綜合評分52.6分（快樂指數5.94・人均GDP $13,812・生活成本指數38.3）"],
+    ["🇭🇺","匈牙利",47.5,19.0,"綜合評分52.6分（快樂指數5.94・人均GDP $28,430・生活成本指數46.9）"],
+    ["🇪🇪","愛沙尼亞",59.4,24.7,"綜合評分52.4分（快樂指數6.41・人均GDP $37,718・生活成本指數59.7）"],
+    ["🇧🇿","貝里斯",17.25,-88.77,"綜合評分52.4分（快樂指數6.71・人均GDP $8,134・生活成本指數46.9）"],
+    ["🇧🇬","保加利亞",42.7,23.3,"綜合評分52.3分（快樂指數5.70・人均GDP $23,848・生活成本指數41.6）"],
+    ["🇲🇩","摩爾多瓦",47.0,28.9,"綜合評分52.1分（快樂指數5.85・人均GDP $9,354・生活成本指數35.8）"],
+    ["🇹🇯","塔吉克",38.6,68.8,"綜合評分52.1分（快樂指數5.59・人均GDP $1,939・生活成本指數27.9）"],
+    ["🇲🇰","北馬其頓",42.0,21.4,"綜合評分52.1分（快樂指數5.72・人均GDP $11,967・生活成本指數35.5）"],
+    ["🇭🇳","宏都拉斯",14.1,-87.2,"綜合評分52.0分（快樂指數6.10・人均GDP $3,711・生活成本指數36.6）"],
+    ["🇮🇷","伊朗",35.7,51.4,"綜合評分51.9分（快樂指數5.15・人均GDP $3,415・生活成本指數22.8）"],
+    ["🇬🇪","喬治亞",41.7,44.8,"綜合評分51.8分（快樂指數5.52・人均GDP $11,574・生活成本指數33.1）"],
+    ["🇳🇵","尼泊爾",27.7,85.3,"綜合評分51.6分（快樂指數5.15・人均GDP $1,548・生活成本指數22.6）"],
+    ["🇭🇷","克羅埃西亞",45.8,16.0,"綜合評分51.3分（快樂指數6.01・人均GDP $30,030・生活成本指數52.4）"],
+    ["🇵🇰","巴基斯坦",33.7,73.1,"綜合評分51.2分（快樂指數4.87・人均GDP $1,696・生活成本指數19.6）"],
+    ["🇮🇶","伊拉克",33.3,44.4,"綜合評分50.7分（快樂指數5.21・人均GDP $5,677・生活成本指數28.4）"],
+    ["🇹🇷","土耳其",39.9,32.9,"綜合評分50.0分（快樂指數5.30・人均GDP $19,018・生活成本指數39.2）"],
+    ["🇮🇳","印度",28.6,77.2,"綜合評分49.9分（快樂指數4.54・人均GDP $2,813・生活成本指數18.9）"],
+    ["🇻🇪","委內瑞拉",10.5,-66.9,"綜合評分49.9分（快樂指數5.76・人均GDP $4,140・生活成本指數37.7）"],
+    ["🇰🇷","南韓",37.6,127.0,"綜合評分49.7分（快樂指數6.04・人均GDP $37,412・生活成本指數61.6）"],
+    ["🇦🇿","亞塞拜然",40.4,49.9,"綜合評分49.1分（快樂指數4.99・人均GDP $7,467・生活成本指數30.7）"],
+    ["🇬🇷","希臘",38.0,23.7,"綜合評分49.1分（快樂指數5.70・人均GDP $29,696・生活成本指數54.0）"],
+    ["🇦🇲","亞美尼亞",40.2,44.5,"綜合評分49.1分（快樂指數5.58・人均GDP $10,410・生活成本指數40.9）"],
+    ["🇹🇹","千里達",10.7,-61.5,"綜合評分48.5分（快樂指數5.91・人均GDP $18,616・生活成本指數52.0）"],
+    ["🇦🇱","阿爾巴尼亞",41.3,19.8,"綜合評分48.2分（快樂指數5.66・人均GDP $12,493・生活成本指數45.8）"],
+    ["🇹🇳","突尼西亞",36.8,10.2,"綜合評分48.1分（快樂指數4.80・人均GDP $4,893・生活成本指數29.1）"],
+    ["🇺🇦","烏克蘭",50.5,30.5,"綜合評分48.1分（快樂指數4.66・人均GDP $6,980・生活成本指數28.2）"],
+    ["🇳🇬","奈及利亞",9.1,7.4,"綜合評分47.8分（快樂指數4.79・人均GDP $1,556・生活成本指數27.7）"],
+    ["🇧🇩","孟加拉",23.8,90.4,"綜合評分47.4分（快樂指數4.32・人均GDP $2,911・生活成本指數22.8）"],
+    ["🇲🇿","莫三比克",-25.9,32.6,"綜合評分47.2分（快樂指數5.34・人均GDP $632・生活成本指數36.9）"],
+    ["🇭🇰","香港",22.3,114.2,"綜合評分47.0分（快樂指數5.57・人均GDP $59,640・生活成本指數75.2）"],
+    ["🇰🇪","肯亞",-1.3,36.8,"綜合評分47.0分（快樂指數4.67・人均GDP $2,714・生活成本指數28.9）"],
+    ["🇿🇦","南非",-25.7,28.2,"綜合評分46.8分（快樂指數5.01・人均GDP $7,503・生活成本指數37.1）"],
+    ["🇺🇬","烏干達",0.3,32.6,"綜合評分46.5分（快樂指數4.49・人均GDP $1,476・生活成本指數27.0）"],
+    ["🇲🇦","摩洛哥",34.0,-6.8,"綜合評分46.5分（快樂指數4.65・人均GDP $5,107・生活成本指數31.4）"],
+    ["🇲🇬","馬達加斯加",-18.9,47.5,"綜合評分46.3分（快樂指數4.17・人均GDP $656・生活成本指數22.5）"],
+    ["🇪🇬","埃及",30.0,31.2,"綜合評分45.6分（快樂指數3.86・人均GDP $3,904・生活成本指數21.6）"],
+    ["🇳🇦","納米比亞",-22.6,17.1,"綜合評分45.5分（快樂指數4.78・人均GDP $5,573・生活成本指數36.3）"],
+    ["🇨🇲","喀麥隆",3.9,11.5,"綜合評分44.8分（快樂指數5.08・人均GDP $2,125・生活成本指數40.7）"],
+    ["🇬🇭","迦納",5.6,-0.2,"綜合評分44.7分（快樂指數4.55・人均GDP $3,314・生活成本指數33.9）"],
+    ["🇨🇮","象牙海岸",6.8,-5.3,"綜合評分43.9分（快樂指數5.15・人均GDP $3,313・生活成本指數44.8）"],
+    ["🇰🇭","柬埔寨",11.6,104.9,"綜合評分43.8分（快樂指數4.46・人均GDP $2,902・生活成本指數34.8）"],
+    ["🇿🇲","尚比亞",-15.4,28.3,"綜合評分43.5分（快樂指數4.11・人均GDP $1,831・生活成本指數29.9）"],
+    ["🇹🇿","坦尚尼亞",-6.2,35.7,"綜合評分43.5分（快樂指數3.90・人均GDP $1,362・生活成本指數26.6）"],
+    ["🇯🇴","約旦",31.9,35.9,"綜合評分42.8分（快樂指數4.48・人均GDP $5,601・生活成本指數39.4）"],
+    ["🇱🇰","斯里蘭卡",6.9,79.9,"綜合評分42.1分（快樂指數4.01・人均GDP $4,516・生活成本指數33.9）"],
+    ["🇲🇲","緬甸",19.8,96.1,"綜合評分41.5分（快樂指數4.29・人均GDP $1,519・生活成本指數38.0）"],
+    ["🇧🇼","波札那",-24.6,25.9,"綜合評分40.5分（快樂指數3.46・人均GDP $8,490・生活成本指數32.6）"],
+    ["🇸🇳","塞內加爾",14.7,-17.4,"綜合評分40.4分（快樂指數4.79・人均GDP $2,054・生活成本指數48.5）"],
+    ["🇵🇸","巴勒斯坦",31.9,35.2,"綜合評分40.2分（快樂指數4.69・人均GDP $2,443・生活成本指數48.1）"],
+    ["🇪🇹","衣索比亞",9.0,38.7,"綜合評分38.4分（快樂指數3.99・人均GDP $1,081・生活成本指數41.8）"],
+    ["🇱🇧","黎巴嫩",33.9,35.5,"綜合評分38.2分（快樂指數3.72・人均GDP $6,443・生活成本指數41.7）"],
+    ["🇿🇼","辛巴威",-17.8,31.0,"綜合評分37.6分（快樂指數3.35・人均GDP $3,199・生活成本指數35.9）"],
+    ["🇨🇩","剛果民主共和國",-4.3,15.3,"綜合評分34.2分（快樂指數3.76・人均GDP $1,122・生活成本指數50.2）"],
+    ["🇦🇫","阿富汗",34.5,69.2,"綜合評分32.3分（快樂指數1.45・人均GDP $448・生活成本指數21.1），126國中快樂指數最低"],
+    ["🇾🇪","葉門",15.4,44.2,"綜合評分31.8分（快樂指數3.53・人均GDP $384・生活成本指數53.1），126國排名墊底"]
+  ]}
+};
+const TIER_ORDER = ["UR","SSR","R","N"];
+const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));
+
+let stats = { total:0, UR:0, SSR:0, R:0, N:0 };
+let sincePity = 0;
+let historyData = [];
+let currentResult = null;
+
+function rollTier(forcePityBreak){
+  if(forcePityBreak){
+    const r = Math.random() * (TIERS.UR.weight + TIERS.SSR.weight);
+    return r < TIERS.UR.weight ? "UR" : "SSR";
+  }
+  const totalW = TIER_ORDER.reduce((s,t)=>s+TIERS[t].weight,0);
+  let r = Math.random() * totalW;
+  for(const t of TIER_ORDER){
+    if(r < TIERS[t].weight) return t;
+    r -= TIERS[t].weight;
+  }
+  return "N";
+}
+
+function rollOne(){
+  sincePity++;
+  const forcePity = sincePity >= 10;
+  const tier = rollTier(forcePity);
+  const pool = TIERS[tier].countries;
+  const c = pool[Math.floor(Math.random()*pool.length)];
+  if(tier === "SSR" || tier === "UR") sincePity = 0;
+
+  stats.total++; stats[tier]++;
+  const result = {tier, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]};
+  historyData.unshift(result);
+  historyData = historyData.slice(0, 30);
+  return result;
+}
+
+function updateStatsUI(){
+  document.getElementById('statTotal').textContent = stats.total;
+  document.getElementById('statUR').textContent = stats.UR;
+  document.getElementById('statSSR').textContent = stats.SSR;
+  document.getElementById('statR').textContent = stats.R;
+  document.getElementById('statN').textContent = stats.N;
+  document.getElementById('pityCount').textContent = Math.max(0, 10 - sincePity);
+  renderHistory();
+}
+
+function renderHistory(){
+  const h = document.getElementById('history');
+  h.innerHTML = '';
+  historyData.forEach(item => {
+    const chip = document.createElement('div');
+    chip.className = `chip ${item.tier.toLowerCase()}`;
+    chip.title = `${item.name} (${item.tier})`;
+    chip.textContent = item.flag;
+    chip.addEventListener('click', () => {
+      currentResult = item;
+      document.getElementById('btnLocate').disabled = false;
+      animateToLocation(item);
+    });
+    h.appendChild(chip);
+  });
+}
+
+function burstParticles(container, tier){
+  container.innerHTML = '';
+  const colors = tier === 'UR' ? ['#FFD866','#FF6EC7','#6EE7FF']
+               : tier === 'SSR' ? ['#FFB627','#FFD866']
+               : tier === 'R' ? ['#8B7FFF','#B3A8FF'] : [];
+  if(!colors.length) return;
+  const count = tier === 'UR' ? 28 : 18;
+  for(let i=0;i<count;i++){
+    const p = document.createElement('i');
+    const angle = (Math.random()*Math.PI*2);
+    const dist = 60 + Math.random()*90;
+    const dx = Math.cos(angle)*dist;
+    const dy = Math.sin(angle)*dist;
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.animate([
+      { transform:'translate(-50%,-50%) scale(1)', opacity:1 },
+      { transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.3)`, opacity:0 }
+    ], { duration: 900 + Math.random()*400, easing:'cubic-bezier(.2,.8,.3,1)' });
+    container.appendChild(p);
+  }
+}
+
+function showMainResult(result){
+  const card = document.getElementById('mainCard');
+  card.classList.remove('empty','ur','ssr','r','n','reveal','sweep');
+  void card.offsetWidth;
+  card.classList.add(result.tier.toLowerCase(), 'reveal');
+  if(result.tier === 'UR') card.classList.add('sweep');
+
+  document.getElementById('cardFlag').textContent = result.flag;
+  document.getElementById('cardCountry').textContent = result.name;
+
+  let badge = card.querySelector('.rarity-badge');
+  if(!badge){ badge = document.createElement('div'); badge.className = 'rarity-badge'; card.prepend(badge); }
+  badge.textContent = result.tier;
+
+  const hint = card.querySelector('.hint');
+  if(hint) hint.remove();
+  let reasonEl = card.querySelector('.reason');
+  if(!reasonEl){ reasonEl = document.createElement('div'); reasonEl.className='reason'; card.appendChild(reasonEl); }
+  reasonEl.textContent = result.reason;
+
+  burstParticles(document.getElementById('burst'), result.tier);
+
+  currentResult = result;
+  document.getElementById('btnLocate').disabled = false;
+}
+
+document.getElementById('btnPull1').addEventListener('click', () => {
+  document.getElementById('grid10').classList.remove('show');
+  const result = rollOne();
+  showMainResult(result);
+  updateStatsUI();
+});
+
+document.getElementById('btnPull10').addEventListener('click', () => {
+  const grid = document.getElementById('grid10');
+  grid.innerHTML = '';
+  grid.classList.add('show');
+  let results = [];
+  for(let i=0;i<10;i++) results.push(rollOne());
+
+  const rank = {UR:0, SSR:1, R:2, N:3};
+  const best = results.reduce((a,b)=> rank[b.tier] < rank[a.tier] ? b : a);
+  showMainResult(best);
+
+  results.forEach((r, i) => {
+    const div = document.createElement('div');
+    div.className = `mini ${r.tier.toLowerCase()}`;
+    div.style.animationDelay = (i*0.06)+'s';
+    div.title = r.reason;
+    div.innerHTML = `
+      <div class="flag">${r.flag}</div>
+      <div class="country">${r.name}</div>
+      <div class="badge">${r.tier}</div>
+    `;
+    div.addEventListener('click', () => {
+      currentResult = r;
+      document.getElementById('btnLocate').disabled = false;
+      animateToLocation(r);
+    });
+    grid.appendChild(div);
+  });
+
+  updateStatsUI();
+});
+
+const canvas = document.getElementById('globeCanvas');
+const ctx = canvas.getContext('2d');
+const CX = 140, CY = 140;
+let BASE_RADIUS = 108;
+let radius = BASE_RADIUS;
+let yaw = 0.6;
+let idleSpin = true;
+const TILT = toRad(16);
+let ambientAlpha = 0.55;
+
+function toRad(d){ return d * Math.PI / 180; }
+function normAngle(a){
+  while(a > Math.PI) a -= Math.PI*2;
+  while(a < -Math.PI) a += Math.PI*2;
+  return a;
+}
+
+function project(lat, lon, yawVal, tilt, rad){
+  const latR = toRad(lat);
+  const lonR = toRad(lon) - yawVal;
+  const x = Math.cos(latR) * Math.sin(lonR);
+  const y = Math.sin(latR);
+  const z = Math.cos(latR) * Math.cos(lonR);
+  const y2 = y*Math.cos(tilt) - z*Math.sin(tilt);
+  const z2 = y*Math.sin(tilt) + z*Math.cos(tilt);
+  const x2 = x;
+  return { x: CX + x2*rad, y: CY - y2*rad, depth: z2 };
+}
+
+/* simplified continent silhouettes [lat, lon] — stylised, not survey-accurate */
+const CONTINENTS = [
+  { name:"North America", pts:[[71,-156],[66,-165],[60,-140],[55,-133],[49,-123],[45,-124],
+    [40,-124],[34,-120],[27,-114],[23,-110],[20,-105],[16,-95],[9,-83],[9,-77],[15,-83],
+    [18,-93],[21,-97],[26,-97],[30,-89],[25,-80],[27,-82],[30,-81],[35,-75],[40,-74],
+    [42,-70],[44,-67],[47,-60],[52,-56],[58,-63],[60,-65],[65,-64],[70,-68],[71,-100],[71,-156]] },
+  { name:"South America", pts:[[12,-72],[11,-74],[8,-60],[5,-52],[-2,-44],[-13,-38],
+    [-23,-43],[-29,-49],[-34,-58],[-38,-58],[-42,-64],[-50,-68],[-55,-68],[-52,-74],
+    [-45,-73],[-33,-72],[-23,-70],[-18,-70],[-9,-78],[-5,-81],[1,-80],[8,-77],[12,-72]] },
+  { name:"Africa", pts:[[37,10],[35,-2],[32,-9],[24,-16],[14,-17],[7,-13],[4,-9],[5,-2],
+    [4,9],[-1,9],[-4,12],[-9,13],[-15,12],[-22,14],[-29,16],[-34,18],[-33,26],[-29,31],
+    [-26,33],[-20,35],[-15,40],[-10,40],[-4,40],[2,45],[11,43],[12,51],[15,39],[22,37],
+    [27,34],[31,32],[33,25],[33,11],[37,10]] },
+  { name:"Europe", pts:[[36,-9],[38,-9],[43,-9],[44,-2],[48,-5],[49,2],[51,2],[53,6],
+    [58,6],[63,10],[68,17],[71,25],[70,30],[66,33],[60,30],[59,24],[54,20],[50,19],
+    [46,15],[45,14],[41,16],[38,15],[40,20],[41,29],[37,23],[36,-9]] },
+  { name:"Asia", pts:[[60,30],[65,45],[70,60],[73,80],[75,100],[73,130],[68,150],[65,170],
+    [60,163],[55,155],[50,140],[45,140],[41,140],[38,127],[35,126],[30,122],[22,114],
+    [16,108],[10,105],[1,104],[6,80],[8,77],[15,73],[20,68],[24,63],[27,56],[26,52],
+    [24,53],[24,68],[29,48],[31,34],[35,36],[38,27],[41,29],[45,38],[52,38],[60,30]] },
+  { name:"Australia", pts:[[-11,131],[-12,136],[-14,143],[-17,146],[-22,150],[-28,153],
+    [-33,152],[-38,145],[-35,138],[-32,134],[-32,127],[-32,115],[-26,113],[-20,113],
+    [-16,123],[-14,127],[-11,131]] },
+  { name:"Japan", pts:[[45,142],[43,145],[40,141],[38,141],[35,140],[33,135],[31,131],
+    [34,133],[35,136],[38,139],[41,140],[45,142]] },
+  { name:"British Isles", pts:[[58,-3],[57,-4],[55,-6],[53,-10],[51,-10],[51,-8],[52,-6],
+    [51,-1],[51,1],[53,0],[55,-2],[57,-2],[58,-3]] }
+];
+
+function drawContinents(){
+  CONTINENTS.forEach(cont => {
+    const projected = cont.pts.map(([lat,lon]) => project(lat, lon, yaw, TILT, radius));
+    const avgDepth = projected.reduce((s,p)=>s+p.depth,0) / projected.length;
+    if(avgDepth < 0.02) return;
+    ctx.beginPath();
+    projected.forEach((p,i) => { if(i===0) ctx.moveTo(p.x,p.y); else ctx.lineTo(p.x,p.y); });
+    ctx.closePath();
+    const shade = Math.max(0.25, Math.min(1, avgDepth + 0.3));
+    ctx.fillStyle = `rgba(108,120,190,${0.30*shade})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(190,198,255,${0.35*shade})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+}
+
+function drawGlobe(){
+  ctx.clearRect(0,0,280,280);
+
+  const grad = ctx.createRadialGradient(CX-radius*0.35, CY-radius*0.35, radius*0.05, CX, CY, radius);
+  grad.addColorStop(0, 'rgba(139,127,255,0.22)');
+  grad.addColorStop(0.6, 'rgba(30,26,54,0.55)');
+  grad.addColorStop(1, 'rgba(6,7,14,0.92)');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(CX,CY,radius,0,Math.PI*2); ctx.fill();
+
+  ctx.strokeStyle = 'rgba(139,127,255,0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(CX,CY,radius,0,Math.PI*2); ctx.stroke();
+
+  drawContinents();
+
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(139,127,255,0.22)';
+  for(let lonDeg=0; lonDeg<360; lonDeg+=30){
+    ctx.beginPath(); let started=false;
+    for(let latDeg=-90; latDeg<=90; latDeg+=5){
+      const p = project(latDeg, lonDeg, yaw, TILT, radius);
+      if(p.depth < -0.05){ started=false; continue; }
+      if(!started){ ctx.moveTo(p.x,p.y); started=true; } else ctx.lineTo(p.x,p.y);
+    }
+    ctx.stroke();
+  }
+  for(let latDeg=-60; latDeg<=60; latDeg+=30){
+    ctx.beginPath(); let started=false;
+    for(let lonDeg=0; lonDeg<=360; lonDeg+=5){
+      const p = project(latDeg, lonDeg, yaw, TILT, radius);
+      if(p.depth < -0.05){ started=false; continue; }
+      if(!started){ ctx.moveTo(p.x,p.y); started=true; } else ctx.lineTo(p.x,p.y);
+    }
+    ctx.stroke();
+  }
+
+  ALL_COUNTRIES.forEach(c => {
+    const p = project(c.lat, c.lon, yaw, TILT, radius);
+    if(p.depth < -0.05) return;
+    const isTarget = currentResult && c.name === currentResult.name;
+    if(isTarget) return;
+    const depthFactor = Math.max(0.15, p.depth);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 1.6*depthFactor+0.6, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(180,190,255,${ambientAlpha*depthFactor})`;
+    ctx.fill();
+  });
+
+  if(currentResult){
+    const p = project(currentResult.lat, currentResult.lon, yaw, TILT, radius);
+    if(p.depth > -0.05){
+      const glow = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,14);
+      glow.addColorStop(0,'rgba(255,255,255,0.9)');
+      glow.addColorStop(0.4,'rgba(255,110,199,0.6)');
+      glow.addColorStop(1,'rgba(255,110,199,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(p.x,p.y,14,0,Math.PI*2); ctx.fill();
+    }
+    updatePinPosition(p);
+  }
+}
+
+function updatePinPosition(p){
+  const pin = document.getElementById('pin');
+  if(p.depth < -0.1){
+    pin.classList.remove('show');
+    return;
+  }
+  pin.style.left = p.x + 'px';
+  pin.style.top = p.y + 'px';
+}
+
+function loop(){
+  if(idleSpin){ yaw += 0.0022; }
+  drawGlobe();
+  requestAnimationFrame(loop);
+}
+loop();
+
+function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+function animateToLocation(country){
+  idleSpin = false;
+  document.getElementById('geoPlaceholder').style.display = 'none';
+  document.getElementById('pin').classList.remove('show');
+  document.querySelector('.globe-panel').scrollIntoView({ behavior:'smooth', block:'center' });
+
+  const startYaw = yaw;
+  const targetYaw = toRad(country.lon);
+  const delta = normAngle(targetYaw - startYaw);
+  const rotDuration = 1400;
+  const zoomDuration = 650;
+  const startRadius = radius;
+  const zoomRadius = BASE_RADIUS * 1.55;
+  const t0 = performance.now();
+
+  function rotStep(now){
+    const t = Math.min(1, (now - t0) / rotDuration);
+    yaw = startYaw + delta * easeOutCubic(t);
+    if(t < 1){
+      requestAnimationFrame(rotStep);
+    } else {
+      yaw = normAngle(targetYaw);
+      const t1 = performance.now();
+      function zoomStep(now2){
+        const tz = Math.min(1, (now2 - t1) / zoomDuration);
+        radius = startRadius + (zoomRadius - startRadius) * easeOutCubic(tz);
+        ambientAlpha = 0.55 * (1 - tz*0.7);
+        if(tz < 1){
+          requestAnimationFrame(zoomStep);
+        } else {
+          document.getElementById('pin').classList.add('show');
+          showGeoInfo(country);
+        }
+      }
+      requestAnimationFrame(zoomStep);
+    }
+  }
+  requestAnimationFrame(rotStep);
+}
+
+function showGeoInfo(country){
+  document.getElementById('geoFlag').textContent = country.flag;
+  document.getElementById('geoName').textContent = country.name;
+  const tg = document.getElementById('geoTier');
+  tg.textContent = country.tier;
+  tg.className = 'tg ' + country.tier.toLowerCase();
+  document.getElementById('geoReason').textContent = country.reason;
+  document.getElementById('geoInfo').classList.add('show');
+}
+
+document.getElementById('btnLocate').addEventListener('click', () => {
+  if(!currentResult) return;
+  animateToLocation(currentResult);
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  idleSpin = true;
+  radius = BASE_RADIUS;
+  ambientAlpha = 0.55;
+  document.getElementById('pin').classList.remove('show');
+  document.getElementById('geoInfo').classList.remove('show');
+  document.getElementById('geoPlaceholder').style.display = 'block';
+});
+
+updateStatsUI();
+</script>
+</body>
+</html>

@@ -243,7 +243,7 @@
     position:relative; width:280px; height:280px;
     display:flex; align-items:center; justify-content:center;
   }
-  #globeCanvas{ display:block; }
+  #globeCanvas{ display:block; width:100%; height:100%; }
   .pin{
     position:absolute; width:14px; height:14px; border-radius:50%;
     background:radial-gradient(circle, #fff, var(--ur2));
@@ -1029,8 +1029,9 @@ function updatePinPosition(p){
     pin.classList.remove('show');
     return;
   }
-  pin.style.left = p.x + 'px';
-  pin.style.top = p.y + 'px';
+  const scale = canvas.clientWidth / 280;
+  pin.style.left = (p.x * scale) + 'px';
+  pin.style.top = (p.y * scale) + 'px';
 }
 
 function loop(){

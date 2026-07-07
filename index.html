@@ -362,7 +362,7 @@
       <div class="hint">按下方按鈕開始輪迴</div>
     </div>
   </div>
-  <div class="num-legend">數字範圍：快樂指數 0–10 分（World Happiness Report，越高越快樂）・人均GDP 美元／人（IMF／World Bank／UN 名目數據）・生活成本指數以美國紐約市=100 為基準（Numbeo，數字越高消費越貴）</div>
+  <div class="num-legend">數字範圍：<br>快樂指數 0–10 分（World Happiness Report，越高越快樂）<br>人均GDP 美元／人（IMF／World Bank／UN 名目數據）<br>生活成本指數以美國紐約市=100 為基準（Numbeo，數字越高消費越貴）</div>
 
   <div class="controls">
     <button class="pull" id="btnPull1">單抽 · 轉世一次</button>
@@ -636,6 +636,37 @@ function formatReason(reason){
   if (desc) html += `<div class="stat-desc">${desc}</div>`;
   return html;
 }
+
+const _measureCtx = document.createElement('canvas').getContext('2d');
+function balanceText(el){
+  if(!el) return;
+  const text = el.textContent;
+  if(!text) return;
+  const cs = getComputedStyle(el);
+  _measureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const maxWidth = el.clientWidth;
+  const totalWidth = _measureCtx.measureText(text).width;
+  if(!maxWidth || totalWidth <= maxWidth) return;
+  const lines = Math.ceil(totalWidth / maxWidth);
+  const target = totalWidth / lines;
+  const breakChars = '，、。；！？';
+  const out = [];
+  let start = 0, acc = 0;
+  for(let i = 0; i < text.length; i++){
+    acc += _measureCtx.measureText(text[i]).width;
+    if(acc >= target && out.length < lines - 1){
+      let snap = i;
+      for(let w = 0; w <= 2 && i+w < text.length; w++){
+        if(breakChars.includes(text[i+w])){ snap = i+w; break; }
+      }
+      out.push(text.slice(start, snap+1));
+      start = snap+1;
+      acc = 0;
+    }
+  }
+  out.push(text.slice(start));
+  el.innerHTML = out.filter(s=>s).join('<br>');
+}
 const TIER_ORDER = ["UR","SSR","SR","R","N"];
 const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));
 
@@ -669,7 +700,6 @@ function rollOne(){
   stats.total++; stats[tier]++;
   const result = {tier, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]};
   historyData.unshift(result);
-  historyData = historyData.slice(0, 30);
   return result;
 }
 
@@ -731,7 +761,9 @@ function showMainResult(result){
   if(result.tier === 'UR') card.classList.add('sweep');
 
   document.getElementById('cardFlag').textContent = result.flag;
-  document.getElementById('cardCountry').textContent = result.name;
+  const cardCountryEl = document.getElementById('cardCountry');
+  cardCountryEl.textContent = result.name;
+  balanceText(cardCountryEl);
 
   let badge = card.querySelector('.rarity-badge');
   if(!badge){ badge = document.createElement('div'); badge.className = 'rarity-badge'; card.prepend(badge); }
@@ -742,6 +774,7 @@ function showMainResult(result){
   let reasonEl = card.querySelector('.reason');
   if(!reasonEl){ reasonEl = document.createElement('div'); reasonEl.className='reason'; card.appendChild(reasonEl); }
   reasonEl.innerHTML = formatReason(result.reason);
+  balanceText(reasonEl.querySelector('.stat-desc'));
 
   burstParticles(document.getElementById('burst'), result.tier);
 
@@ -782,6 +815,7 @@ document.getElementById('btnPull10').addEventListener('click', () => {
       animateToLocation(r);
     });
     grid.appendChild(div);
+    balanceText(div.querySelector('.country'));
   });
 
   updateStatsUI();
@@ -1092,7 +1126,9 @@ function showGeoInfo(country){
   const tg = document.getElementById('geoTier');
   tg.textContent = country.tier;
   tg.className = 'tg ' + country.tier.toLowerCase();
-  document.getElementById('geoReason').innerHTML = formatReason(country.reason);
+  const geoReasonEl = document.getElementById('geoReason');
+  geoReasonEl.innerHTML = formatReason(country.reason);
+  balanceText(geoReasonEl.querySelector('.stat-desc'));
   document.getElementById('geoInfo').classList.add('show');
 }
 

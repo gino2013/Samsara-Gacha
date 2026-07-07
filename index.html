@@ -28,6 +28,8 @@
   .reason .n-happy, .geo-info-text .n-happy{ color:var(--num-happy); font-weight:700; }
   .reason .n-gdp, .geo-info-text .n-gdp{ color:var(--num-gdp); font-weight:700; }
   .reason .n-cost, .geo-info-text .n-cost{ color:var(--num-cost); font-weight:700; }
+  .stat-grid{ display:inline-grid; grid-template-columns:auto auto; gap:2px 8px; width:fit-content; margin:2px auto; text-align:left; }
+  .stat-grid .stat-label{ text-align:right; opacity:0.85; }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
@@ -453,7 +455,7 @@ const TIERS = {
     ["🇺🇿","烏茲別克",41.3,69.2,"綜合評分56.5分（快樂指數6.28・人均GDP $4,661・生活成本指數27.3） ｜ 絲路古國，歷史文化資產豐厚"],
     ["🇨🇳","中國",39.9,116.4,"綜合評分56.4分（快樂指數6.07・人均GDP $14,874・生活成本指數30.5） ｜ 全球第二大經濟體，基礎建設與產業鏈完整"],
     ["🇮🇱","以色列",31.8,35.2,"綜合評分56.1分（快樂指數7.19・人均GDP $69,804・生活成本指數79.7） ｜ 科技新創密度高，教育與研發體系扎實"],
-    ["🇨🇭","瑞士",46.9,7.4,"綜合評分55.9分（快樂指數7.02・人均GDP $126,177・生活成本指數110.7）— 快樂與財富都高，但物價也是全球數一數二 ｜ 永久中立國，人均所得與生活品質長年位居世界頂尖"],
+    ["🇨🇭","瑞士",46.9,7.4,"綜合評分55.9分（快樂指數7.02・人均GDP $126,177・生活成本指數110.7） ｜ 永久中立國，人均所得與生活品質長年位居世界頂尖"],
     ["🇬🇧","英國",51.5,-0.1,"綜合評分55.9分（快樂指數6.69・人均GDP $61,056・生活成本指數67.8） ｜ 老牌強國底蘊深厚，教育與文化輸出全球影響力驚人"],
     ["🇷🇸","塞爾維亞",44.8,20.5,"綜合評分55.8分（快樂指數6.69・人均GDP $17,252・生活成本指數42.6） ｜ 巴爾幹樞紐，歷史文化底蘊深厚"],
     ["🇨🇱","智利",-33.4,-70.6,"綜合評分55.7分（快樂指數6.30・人均GDP $20,240・生活成本指數39.0） ｜ 南美經濟體質相對穩健，銅礦資源豐富"],
@@ -614,14 +616,18 @@ const TIERS = {
   ]}
 };
 function formatReason(reason){
-  return reason
-    .replace(/(綜合評分)([\d.]+)(分)/, '$1<span class="n-score">$2</span>$3')
-    .replace(/(快樂指數)([\d.]+)/, '$1<span class="n-happy">$2</span>')
-    .replace(/(人均GDP\s*\$)([\d,]+)/, '$1<span class="n-gdp">$2</span>')
-    .replace(/(生活成本指數)([\d.]+)/, '$1<span class="n-cost">$2</span>')
-    .replace(/\s*（/, '<br>（')
-    .replace(/・/g, '<br>')
-    .replace(/\s*｜\s*/, '<br>');
+  const m = reason.match(/^(.*?綜合評分)([\d.]+)(分)（快樂指數([\d.]+)・人均GDP\s*\$([\d,]+)・生活成本指數([\d.]+)）(.*)$/);
+  if (!m) return reason;
+  const [, prefix, score, unit, happy, gdp, cost, rest] = m;
+  const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim();
+  let html = `<div class="stat-score">${prefix}<span class="n-score">${score}</span>${unit}</div>`;
+  html += `<div class="stat-grid">`
+    + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`
+    + `<span class="stat-label">人均GDP</span><span class="n-gdp">$${gdp}</span>`
+    + `<span class="stat-label">生活成本指數</span><span class="n-cost">${cost}</span>`
+    + `</div>`;
+  if (desc) html += `<div class="stat-desc">${desc}</div>`;
+  return html;
 }
 const TIER_ORDER = ["UR","SSR","SR","R","N"];
 const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));

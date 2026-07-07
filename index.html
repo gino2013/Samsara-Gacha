@@ -134,8 +134,9 @@
     color:var(--muted);
   }
   .flag{ font-size:56px; line-height:1; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.4)); }
-  .country{ font-size:18px; font-weight:700; text-align:center; padding:0 6px; }
+  .country{ font-size:18px; font-weight:700; text-align:center; padding:0 6px; text-wrap:balance; }
   .reason{ font-size:11px; color:var(--muted); text-align:center; line-height:1.5; padding:0 8px; }
+  .stat-desc{ margin-top:4px; text-wrap:balance; }
   .hint{ font-size:12px; color:var(--muted); }
 
   .card.empty .flag{ font-size:40px; opacity:0.25; filter:grayscale(1); }
@@ -625,8 +626,7 @@ function formatReason(reason){
   if (!m) return reason;
   const [, prefix, score, unit, happy, gdp, cost, rest] = m;
   const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim()
-    .replace(/^(<br>)+/, '').replace(/(<br>)+$/, '')
-    .replace(/([，、。；])(?!$)/g, '$1<br>');
+    .replace(/^(<br>)+/, '').replace(/(<br>)+$/, '');
   let html = `<div class="stat-grid">`
     + `<span class="stat-label">${prefix}</span><span class="n-score">${score}</span>`
     + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`

@@ -16,7 +16,8 @@
     --muted:#8A8FA3;
     --ur1:#FFD866; --ur2:#FF6EC7; --ur3:#6EE7FF;
     --ssr:#FFB627;
-    --r:#8B7FFF;
+    --sr:#8B7FFF;
+    --r:#4EA1FF;
     --n:#6B7280;
   }
   *{box-sizing:border-box;}
@@ -84,6 +85,7 @@
   .stat .lbl{ font-size:10px; color:var(--muted); letter-spacing:0.08em; margin-top:2px; }
   .stat.ur .num{ color:var(--ur1); }
   .stat.ssr .num{ color:var(--ssr); }
+  .stat.sr .num{ color:var(--sr); }
   .stat.r .num{ color:var(--r); }
   .stat.n .num{ color:var(--n); }
 
@@ -133,7 +135,9 @@
   .card.ur .rarity-badge{ background:linear-gradient(90deg, var(--ur3), var(--ur2), var(--ur1)); color:#1a0a12; }
   .card.ssr{ border-color: var(--ssr); box-shadow: 0 0 40px rgba(255,182,39,0.4); }
   .card.ssr .rarity-badge{ background:var(--ssr); color:#231400; }
-  .card.r{ border-color: var(--r); box-shadow: 0 0 28px rgba(139,127,255,0.35); }
+  .card.sr{ border-color: var(--sr); box-shadow: 0 0 28px rgba(139,127,255,0.35); }
+  .card.sr .rarity-badge{ background:var(--sr); color:#0e0a24; }
+  .card.r{ border-color: var(--r); box-shadow: 0 0 24px rgba(78,161,255,0.3); }
   .card.r .rarity-badge{ background:var(--r); color:#0e0a24; }
   .card.n{ border-color: var(--n); }
   .card.n .rarity-badge{ background:var(--n); color:#0b0d12; }
@@ -207,6 +211,8 @@
   .mini.ur .badge{ background:linear-gradient(90deg,var(--ur3),var(--ur2),var(--ur1)); color:#1a0a12; }
   .mini.ssr{ border-color:var(--ssr); }
   .mini.ssr .badge{ background:var(--ssr); color:#231400; }
+  .mini.sr{ border-color:var(--sr); }
+  .mini.sr .badge{ background:var(--sr); color:#0e0a24; }
   .mini.r{ border-color:var(--r); }
   .mini.r .badge{ background:var(--r); color:#0e0a24; }
   .mini.n .badge{ background:var(--n); color:#0b0d12; }
@@ -275,6 +281,7 @@
   .geo-info-head .tg{ font-family:'Orbitron',sans-serif; font-size:9px; padding:2px 8px; border-radius:8px; font-weight:700; letter-spacing:0.06em; }
   .geo-info-head .tg.ur{ background:linear-gradient(90deg,var(--ur3),var(--ur2),var(--ur1)); color:#1a0a12; }
   .geo-info-head .tg.ssr{ background:var(--ssr); color:#231400; }
+  .geo-info-head .tg.sr{ background:var(--sr); color:#0e0a24; }
   .geo-info-head .tg.r{ background:var(--r); color:#0e0a24; }
   .geo-info-head .tg.n{ background:var(--n); color:#0b0d12; }
   .geo-info-text{ font-size:12.5px; color:#C9CCDA; line-height:1.6; }
@@ -294,6 +301,7 @@
   }
   .chip.ur{ border-color:var(--ur2); }
   .chip.ssr{ border-color:var(--ssr); }
+  .chip.sr{ border-color:var(--sr); }
   .chip.r{ border-color:var(--r); }
   .chip.n{ border-color:var(--n); opacity:0.7; }
 
@@ -324,6 +332,7 @@
     <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">總抽數</div></div>
     <div class="stat ur"><div class="num" id="statUR">0</div><div class="lbl">UR</div></div>
     <div class="stat ssr"><div class="num" id="statSSR">0</div><div class="lbl">SSR</div></div>
+    <div class="stat sr"><div class="num" id="statSR">0</div><div class="lbl">SR</div></div>
     <div class="stat r"><div class="num" id="statR">0</div><div class="lbl">R</div></div>
     <div class="stat n"><div class="num" id="statN">0</div><div class="lbl">N</div></div>
   </div>
@@ -375,7 +384,7 @@
 
   <footer>
     此遊戲純屬娛樂與機率模擬，國家分級僅依常見綜合指標排列組合而成，不代表任何國家的真實優劣或對其人民的評價。眾生平等，一切隨緣，抽到哪裡都好好活著最重要。
-    <div class="rates">機率：UR 1% · SSR 6% · R 25% · N 68%</div>
+    <div class="rates">機率：UR 1% · SSR 6% · SR 13% · R 12% · N 68%</div>
   </footer>
 
 </div>
@@ -396,7 +405,7 @@ const TIERS = {
     ["🇸🇦","沙烏地阿拉伯",24.7,46.7,"綜合評分60.3分（快樂指數6.82・人均GDP $37,811・生活成本指數43.9）"],
     ["🇹🇼","台灣",25.0,121.6,"綜合評分58.6分（快樂指數6.71・人均GDP $42,103・生活成本指數49.7），CP值型的高分國家"]
   ]},
-  R: { weight: 25, countries: [
+  SR: { weight: 13, countries: [
     ["🇰🇿","哈薩克",51.2,71.4,"綜合評分60.2分（快樂指數6.63・人均GDP $17,503・生活成本指數29.8）"],
     ["🇮🇸","冰島",64.1,-21.9,"綜合評分60.1分（快樂指數7.54・人均GDP $110,048・生活成本指數97.2）"],
     ["🇦🇺","澳洲",-35.3,149.1,"綜合評分60.1分（快樂指數6.92・人均GDP $75,648・生活成本指數67.9）"],
@@ -412,7 +421,9 @@ const TIERS = {
     ["🇨🇿","捷克",50.1,14.4,"綜合評分57.5分（快樂指數6.82・人均GDP $39,795・生活成本指數53.0）"],
     ["🇩🇪","德國",52.5,13.4,"綜合評分57.5分（快樂指數6.88・人均GDP $65,303・生活成本指數68.7）"],
     ["🇵🇱","波蘭",52.2,21.0,"綜合評分57.5分（快樂指數6.77・人均GDP $31,336・生活成本指數47.3）"],
-    ["🇸🇮","斯洛維尼亞",46.1,14.5,"綜合評分57.5分（快樂指數6.87・人均GDP $40,630・生活成本指數54.1）"],
+    ["🇸🇮","斯洛維尼亞",46.1,14.5,"綜合評分57.5分（快樂指數6.87・人均GDP $40,630・生活成本指數54.1）"]
+  ]},
+  R: { weight: 12, countries: [
     ["🇱🇾","利比亞",32.9,13.2,"綜合評分57.3分（快樂指數5.73・人均GDP $6,962・生活成本指數18.3）"],
     ["🇲🇹","馬爾他",35.9,14.5,"綜合評分57.0分（快樂指數6.44・人均GDP $53,560・生活成本指數56.8）"],
     ["🇲🇽","墨西哥",19.4,-99.1,"綜合評分57.0分（快樂指數6.97・人均GDP $15,779・生活成本指數42.6）"],
@@ -517,10 +528,10 @@ const TIERS = {
     ["🇾🇪","葉門",15.4,44.2,"綜合評分31.8分（快樂指數3.53・人均GDP $384・生活成本指數53.1），126國排名墊底"]
   ]}
 };
-const TIER_ORDER = ["UR","SSR","R","N"];
+const TIER_ORDER = ["UR","SSR","SR","R","N"];
 const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));
 
-let stats = { total:0, UR:0, SSR:0, R:0, N:0 };
+let stats = { total:0, UR:0, SSR:0, SR:0, R:0, N:0 };
 let sincePity = 0;
 let historyData = [];
 let currentResult = null;
@@ -558,6 +569,7 @@ function updateStatsUI(){
   document.getElementById('statTotal').textContent = stats.total;
   document.getElementById('statUR').textContent = stats.UR;
   document.getElementById('statSSR').textContent = stats.SSR;
+  document.getElementById('statSR').textContent = stats.SR;
   document.getElementById('statR').textContent = stats.R;
   document.getElementById('statN').textContent = stats.N;
   document.getElementById('pityCount').textContent = Math.max(0, 10 - sincePity);
@@ -643,7 +655,7 @@ document.getElementById('btnPull10').addEventListener('click', () => {
   let results = [];
   for(let i=0;i<10;i++) results.push(rollOne());
 
-  const rank = {UR:0, SSR:1, R:2, N:3};
+  const rank = {UR:0, SSR:1, SR:2, R:3, N:4};
   const best = results.reduce((a,b)=> rank[b.tier] < rank[a.tier] ? b : a);
   showMainResult(best);
 

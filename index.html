@@ -179,6 +179,7 @@
   }
 
   .controls{ display:flex; gap:12px; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
+  .num-legend{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); opacity:0.8; text-align:center; max-width:420px; margin:10px auto 18px; line-height:1.6; }
   button.pull{
     font-family:'Orbitron', sans-serif; font-weight:700; font-size:14px;
     letter-spacing:0.06em;
@@ -189,11 +190,16 @@
   }
   button.pull:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,0.25); }
   button.pull:active{ transform:translateY(0px) scale(0.98); }
-  button.pull.primary{
+  button.pull.mega{
     background:linear-gradient(120deg, var(--ur3), var(--ur2), var(--ur1));
+    background-size:200% 200%;
     color:#160a17; border:none;
-    box-shadow: 0 10px 30px rgba(255,110,199,0.25);
+    box-shadow: 0 10px 34px rgba(255,110,199,0.4), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    animation: megaShift 3s ease infinite;
+    transform:scale(1.04);
   }
+  button.pull.mega:hover{ transform:translateY(-2px) scale(1.06); }
+  @keyframes megaShift{ 0%,100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } }
   button.pull:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
 
   .pity{
@@ -355,10 +361,11 @@
       <div class="hint">按下方按鈕開始輪迴</div>
     </div>
   </div>
+  <div class="num-legend">數字範圍：快樂指數 0–10 分（World Happiness Report，越高越快樂）・人均GDP 美元／人（IMF／World Bank／UN 名目數據）・生活成本指數以美國紐約市=100 為基準（Numbeo，數字越高消費越貴）</div>
 
   <div class="controls">
-    <button class="pull primary" id="btnPull1">單抽 · 轉世一次</button>
-    <button class="pull" id="btnPull10">十連 · 投胎十次</button>
+    <button class="pull" id="btnPull1">單抽 · 轉世一次</button>
+    <button class="pull mega" id="btnPull10">十連 · 投胎十次</button>
   </div>
   <div class="pity">距離保底 SSR 還有 <b id="pityCount">10</b> 抽（第10抽必出 SSR 以上）</div>
 
@@ -394,7 +401,6 @@
     此遊戲純屬娛樂與機率模擬，國家分級僅依常見綜合指標排列組合而成，不代表任何國家的真實優劣或對其人民的評價。眾生平等，一切隨緣，抽到哪裡都好好活著最重要。
     <div class="rates">機率：UR 1% · SSR 6% · SR 13% · R 12% · N 68%</div>
     <div class="rates">評分公式：綜合評分 = 32.2 + 5.28×快樂指數（0–10）+ 0.21×人均GDP（千美元）− 0.36×生活成本指數，數值取自各國快樂指數、人均GDP與生活成本指數三項公開參考數據加權而成</div>
-    <div class="rates">數字範圍：快樂指數 0–10 分（World Happiness Report，越高越快樂）・人均GDP 美元／人（IMF／World Bank／UN 名目數據）・生活成本指數以美國紐約市=100 為基準（Numbeo，數字越高消費越貴）</div>
   </footer>
 
 </div>

@@ -620,7 +620,7 @@ function formatReason(reason){
   if (!m) return reason;
   const [, prefix, score, unit, happy, gdp, cost, rest] = m;
   const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim();
-  let html = `<div class="stat-score">${prefix}<span class="n-score">${score}</span>${unit}</div>`;
+  let html = `<div class="stat-score">${prefix} <span class="n-score">${score}</span> ${unit}</div>`;
   html += `<div class="stat-grid">`
     + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`
     + `<span class="stat-label">人均GDP</span><span class="n-gdp">$${gdp}</span>`

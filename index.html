@@ -396,6 +396,7 @@
     此遊戲純屬娛樂與機率模擬，國家分級僅依常見綜合指標排列組合而成，不代表任何國家的真實優劣或對其人民的評價。眾生平等，一切隨緣，抽到哪裡都好好活著最重要。
     <div class="rates">機率：UR 1% · SSR 6% · SR 13% · R 12% · N 68%</div>
     <div class="rates">評分公式：綜合評分 = 32.2 + 5.28×快樂指數（0–10）+ 0.21×人均GDP（千美元）− 0.36×生活成本指數，數值取自各國快樂指數、人均GDP與生活成本指數三項公開參考數據加權而成</div>
+    <div class="rates">數字範圍：快樂指數 0–10 分（World Happiness Report，越高越快樂）・人均GDP 美元／人（IMF／World Bank／UN 名目數據）・生活成本指數以美國紐約市=100 為基準（Numbeo，數字越高消費越貴）</div>
   </footer>
 
 </div>
@@ -619,7 +620,9 @@ function formatReason(reason){
   const m = reason.match(/^(.*?綜合評分)([\d.]+)(分)（快樂指數([\d.]+)・人均GDP\s*\$([\d,]+)・生活成本指數([\d.]+)）(.*)$/);
   if (!m) return reason;
   const [, prefix, score, unit, happy, gdp, cost, rest] = m;
-  const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim();
+  const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim()
+    .replace(/^(<br>)+/, '').replace(/(<br>)+$/, '')
+    .replace(/([，、。；])(?!$)/g, '$1<br>');
   let html = `<div class="stat-score">${prefix} <span class="n-score">${score}</span> ${unit}</div>`;
   html += `<div class="stat-grid">`
     + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`

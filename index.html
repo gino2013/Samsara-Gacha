@@ -138,7 +138,8 @@
   .reason{ font-size:11px; color:var(--muted); text-align:center; line-height:1.5; padding:0 8px; }
   .hint{ font-size:12px; color:var(--muted); }
 
-  .card.empty .flag{ font-size:40px; opacity:0.25; }
+  .card.empty .flag{ font-size:40px; opacity:0.25; filter:grayscale(1); }
+  .mono-icon{ filter:grayscale(1) contrast(1.1); }
   .card.empty .country{ color:var(--muted); font-weight:500; font-size:14px; }
 
   .card.ur{ border-color: var(--ur2); box-shadow: 0 0 50px rgba(255,110,199,0.45), 0 0 90px rgba(110,231,255,0.25); }
@@ -367,14 +368,14 @@
   <div class="grid10" id="grid10"></div>
 
   <div class="globe-panel">
-    <div class="globe-title">🌍 命定座標定位儀</div>
+    <div class="globe-title"><span class="mono-icon">🌍</span> 命定座標定位儀</div>
     <div class="globe-stage">
       <canvas id="globeCanvas" width="280" height="280"></canvas>
       <div class="pin" id="pin"></div>
     </div>
     <div class="globe-controls">
-      <button class="globe-btn locate" id="btnLocate" disabled>📍 定位到該國</button>
-      <button class="globe-btn" id="btnReset">🔄 返回全球視角</button>
+      <button class="globe-btn locate" id="btnLocate" disabled><span class="mono-icon">📍</span> 定位到該國</button>
+      <button class="globe-btn" id="btnReset"><span class="mono-icon">🔄</span> 返回全球視角</button>
     </div>
     <div class="geo-placeholder" id="geoPlaceholder">先抽一張卡，再按「定位到該國」看地球轉過去</div>
     <div class="geo-info" id="geoInfo">
@@ -624,7 +625,7 @@ function formatReason(reason){
     .replace(/^(<br>)+/, '').replace(/(<br>)+$/, '')
     .replace(/([，、。；])(?!$)/g, '$1<br>');
   let html = `<div class="stat-grid">`
-    + `<span class="stat-label">${prefix}</span><span><span class="n-score">${score}</span>${unit}</span>`
+    + `<span class="stat-label">${prefix}</span><span><span class="n-score">${score}</span> ${unit}</span>`
     + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`
     + `<span class="stat-label">人均GDP</span><span class="n-gdp">$${gdp}</span>`
     + `<span class="stat-label">生活成本指數</span><span class="n-cost">${cost}</span>`

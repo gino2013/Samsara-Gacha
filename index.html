@@ -778,8 +778,7 @@ document.getElementById('btnPull10').addEventListener('click', () => {
       <div class="badge">${r.tier}</div>
     `;
     div.addEventListener('click', () => {
-      currentResult = r;
-      document.getElementById('btnLocate').disabled = false;
+      showMainResult(r);
       animateToLocation(r);
     });
     grid.appendChild(div);

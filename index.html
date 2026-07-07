@@ -623,8 +623,8 @@ function formatReason(reason){
   const desc = rest.replace(/\s*｜\s*/g, '<br>').replace(/^，\s*/, '').trim()
     .replace(/^(<br>)+/, '').replace(/(<br>)+$/, '')
     .replace(/([，、。；])(?!$)/g, '$1<br>');
-  let html = `<div class="stat-score">${prefix} <span class="n-score">${score}</span> ${unit}</div>`;
-  html += `<div class="stat-grid">`
+  let html = `<div class="stat-grid">`
+    + `<span class="stat-label">${prefix}</span><span><span class="n-score">${score}</span>${unit}</span>`
     + `<span class="stat-label">快樂指數</span><span class="n-happy">${happy}</span>`
     + `<span class="stat-label">人均GDP</span><span class="n-gdp">$${gdp}</span>`
     + `<span class="stat-label">生活成本指數</span><span class="n-cost">${cost}</span>`

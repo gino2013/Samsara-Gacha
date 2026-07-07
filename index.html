@@ -281,7 +281,7 @@
     transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
     margin-top:0;
   }
-  .geo-info.show{ max-height:160px; opacity:1; margin-top:16px; }
+  .geo-info.show{ max-height:520px; opacity:1; margin-top:16px; }
   .geo-info-inner{
     background:var(--panel2); border:1px solid var(--line); border-radius:12px;
     padding:14px 16px; text-align:center;
@@ -300,11 +300,8 @@
 
   .history-label{ font-size:11px; color:var(--muted); letter-spacing:0.1em; margin-bottom:8px; text-align:center; }
   .history{
-    display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; justify-content:flex-start;
-    scrollbar-width:thin;
+    display:flex; flex-wrap:wrap; gap:6px; justify-content:center;
   }
-  .history::-webkit-scrollbar{ height:5px; }
-  .history::-webkit-scrollbar-thumb{ background:var(--panel2); border-radius:4px; }
   .chip{
     flex:0 0 auto; width:40px; height:40px; border-radius:9px;
     display:flex; align-items:center; justify-content:center; font-size:19px;

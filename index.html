@@ -377,6 +377,27 @@
   .year-picker{ margin:0 0 26px; }
   .year-picker input[type="range"]{ width:100%; accent-color:var(--ur2); }
   .year-readout{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted); margin-top:10px; }
+
+  .review-inner{ max-width:640px; }
+  .review-list{
+    max-height:46vh; overflow-y:auto; text-align:left;
+    margin:0 0 22px; display:flex; flex-direction:column; gap:10px;
+  }
+  .review-item{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:12px 14px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .review-item .flag{ font-size:28px; line-height:1; }
+  .review-item .ri-body{ flex:1; min-width:0; }
+  .review-item .ri-head{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+  .review-item .ri-life{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); }
+  .review-item .ri-name{ font-weight:700; font-size:13.5px; }
+  .review-item .ri-years{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); }
+  .review-item .ri-job{ font-size:11.5px; color:#C9CCDA; margin-bottom:3px; }
+  .review-item .ri-event{ font-size:11px; color:var(--muted); line-height:1.5; }
+
+  #chainEndOverlay .onboard-title{ margin-bottom:18px; }
+  #chainEndOverlay .onboard-sub{ margin:0 0 20px; }
 </style>
 </head>
 <body>
@@ -402,6 +423,16 @@
       <div class="year-readout" id="yearReadout">西元 1900 年</div>
     </div>
     <button class="pull mega" id="yearConfirm">開始輪迴鏈</button>
+  </div>
+</div>
+
+<div class="onboard hide" id="chainReviewOverlay">
+  <div class="onboard-inner review-inner">
+    <div class="onboard-eyebrow">Samsara Chain · 輪迴回顧</div>
+    <h2 class="onboard-title">十世流轉</h2>
+    <p class="onboard-sub">看看這十世，你都活成了誰</p>
+    <div class="review-list" id="reviewList"></div>
+    <button class="pull mega" id="reviewClose">闔上眼，回到此刻</button>
   </div>
 </div>
 
@@ -889,6 +920,26 @@ document.getElementById('chainEndClose').addEventListener('click', () => {
   document.getElementById('chainEndOverlay').classList.add('hide');
 });
 
+const OCCUPATIONS = {
+  UR: ['家族企業掌門人','跨國集團繼承人','私人銀行客戶關係總監','皇室旁系成員'],
+  SSR: ['科技新創創辦人','跨國企業高階主管','駐外外交官','避險基金經理人'],
+  SR: ['大學教授','建築師','主治醫師','中型企業經營者'],
+  R: ['基層公務員','中學教師','土木工程師','小型工廠廠長'],
+  N: ['農夫','市場小販','工廠作業員','計程車司機','漁夫']
+};
+function pickOccupation(tier){
+  const list = OCCUPATIONS[tier];
+  return list[Math.floor(Math.random()*list.length)];
+}
+
+document.getElementById('reviewClose').addEventListener('click', () => {
+  document.getElementById('chainReviewOverlay').classList.add('hide');
+  showChainEnd(pendingChainResults, pendingChainStartYear);
+});
+
+let pendingChainResults = null;
+let pendingChainStartYear = null;
+
 function runSamsaraChain(startYear){
   const grid = document.getElementById('grid10');
   grid.innerHTML = '';
@@ -897,10 +948,24 @@ function runSamsaraChain(startYear){
   let year = startYear;
   const results = [];
   for(let i=0;i<10;i++){
-    const r = rollOne();
+    let r;
+    if(i === 9){
+      // Final life converges on the player's chosen home country, not a random roll.
+      sincePity++;
+      if(selectedHome.tier === 'SSR' || selectedHome.tier === 'UR') sincePity = 0;
+      stats.total++; stats[selectedHome.tier]++;
+      r = { tier:selectedHome.tier, flag:selectedHome.flag, name:selectedHome.name, lat:selectedHome.lat, lon:selectedHome.lon, reason:selectedHome.reason };
+      historyData.unshift(r);
+    } else {
+      r = rollOne();
+    }
     r.life = i+1;
     r.year = (i === 9) ? 2026 : Math.round(year);
-    if(i < 9) year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
+    r.occupation = pickOccupation(r.tier);
+    if(i < 9){
+      year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
+      r.endYear = Math.round(year);
+    }
     results.push(r);
   }
 
@@ -928,13 +993,38 @@ function runSamsaraChain(startYear){
   });
 
   updateStatsUI();
-  setTimeout(() => showChainEnd(results, startYear), 1200);
+  pendingChainResults = results;
+  pendingChainStartYear = startYear;
+  setTimeout(() => showChainReview(results), 1200);
+}
+
+function showChainReview(results){
+  const list = document.getElementById('reviewList');
+  list.innerHTML = results.map(r => {
+    const event = (r.reason.split('｜').pop() || '').trim();
+    const years = r.life === 10 ? `${r.year}・此刻` : `${r.year}–${r.endYear}`;
+    return `
+      <div class="review-item">
+        <div class="flag">${r.flag}</div>
+        <div class="ri-body">
+          <div class="ri-head">
+            <span class="ri-life">第${r.life}世</span>
+            <span class="ri-name">${r.name}</span>
+            <span class="ri-years">${years}</span>
+          </div>
+          <div class="ri-job">職業：${r.occupation}</div>
+          <div class="ri-event">${event}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('chainReviewOverlay').classList.remove('hide');
 }
 
 function showChainEnd(results, startYear){
   const first = results[0], last = results[9];
   document.getElementById('chainEndSummary').innerHTML =
-    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>十世流轉，${last.flag} ${last.name}…就是此刻 2026 年的你。`;
+    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>十世流轉，${last.flag} ${last.name}… 此刻 2026 年的你生在一個很美好的國度。`;
   document.getElementById('chainEndOverlay').classList.remove('hide');
 }
 

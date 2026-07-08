@@ -54,3 +54,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 22:13 — Move home-country/age and gacha stats persistence from localStorage to cookies
 - 2026-07-08 22:13 — Enlarge the chain-end summary text and shorten the opening line so it doesn't wrap awkwardly
 - 2026-07-08 22:17 — Drop the 終點・ label and give the destination-country line its own row so it can't wrap mid-name
+- 2026-07-08 22:17 — Reword 被好好地放在 to 被溫柔地放在 in the chain-end summary

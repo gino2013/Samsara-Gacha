@@ -102,7 +102,7 @@
   .stage{
     position:relative;
     display:flex; align-items:center; justify-content:center;
-    height:300px; margin-bottom:14px;
+    min-height:300px; margin-bottom:14px; padding:20px 0;
   }
   .ring{
     position:absolute; width:230px; height:230px; border-radius:50%;
@@ -114,7 +114,7 @@
 
   .card{
     position:relative;
-    width:190px; height:250px;
+    width:100%; max-width:380px; min-height:250px; height:auto;
     border-radius:16px;
     background:linear-gradient(160deg, var(--panel2), var(--panel));
     border:1px solid var(--line);
@@ -123,8 +123,13 @@
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     transition: transform 0.5s cubic-bezier(.2,.9,.25,1), box-shadow 0.5s;
     transform-style:preserve-3d;
-    padding:14px;
+    padding:18px 20px 20px;
   }
+  .card .life-tag{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted);
+    letter-spacing:0.04em; margin-bottom:2px;
+  }
+  .card .life-story{ width:100%; margin-top:6px; }
   .card .rarity-badge{
     position:absolute; top:10px; left:10px;
     font-family:'Orbitron', sans-serif; font-weight:700; font-size:11px;
@@ -330,7 +335,6 @@
 
   @media (max-width:480px){
     .grid10{ grid-template-columns:repeat(5,1fr); gap:6px; }
-    .card{ width:170px; height:225px; }
     .globe-stage{ width:240px; height:240px; }
   }
 
@@ -399,9 +403,9 @@
   .review-item .ri-life{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); }
   .review-item .ri-name{ font-weight:700; font-size:17px; }
   .review-item .ri-years{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); }
-  .review-item .ri-job{ font-size:13.5px; color:#C9CCDA; margin-bottom:5px; line-height:1.6; }
   .review-item .ri-event{ font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:5px; }
-  .review-item .ri-meaning{ font-size:13px; color:var(--ur2); font-style:italic; line-height:1.65; margin-top:6px; }
+  .ri-job{ font-size:13.5px; color:#C9CCDA; margin-bottom:5px; line-height:1.6; text-align:left; }
+  .ri-meaning{ font-size:13px; color:var(--ur2); font-style:italic; line-height:1.65; margin-top:6px; text-align:left; }
 
   #chainEndOverlay .onboard-title{ margin-bottom:18px; }
   #chainEndOverlay .onboard-sub{ margin:0 0 20px; }
@@ -896,10 +900,29 @@ function showMainResult(result){
 
   const hint = card.querySelector('.hint');
   if(hint) hint.remove();
+
+  let lifeTag = card.querySelector('.life-tag');
+  if(result.life){
+    if(!lifeTag){ lifeTag = document.createElement('div'); lifeTag.className = 'life-tag'; card.insertBefore(lifeTag, document.getElementById('cardFlag')); }
+    const isPast = !!result.deathCause;
+    const years = isPast ? `${result.year}–${result.endYear}` : `${result.year}・此刻`;
+    lifeTag.textContent = `${isPast ? '你曾經是' : '此刻的你'}・第${result.life}世・${years}`;
+  } else if(lifeTag){
+    lifeTag.remove();
+  }
+
   let reasonEl = card.querySelector('.reason');
   if(!reasonEl){ reasonEl = document.createElement('div'); reasonEl.className='reason'; card.appendChild(reasonEl); }
   reasonEl.innerHTML = formatReason(result.reason);
   balanceText(reasonEl.querySelector('.stat-desc'));
+
+  let story = card.querySelector('.life-story');
+  if(result.occupation){
+    if(!story){ story = document.createElement('div'); story.className = 'life-story'; card.appendChild(story); }
+    story.innerHTML = `<div class="ri-job">職業：${result.occupation}</div>${buildLifeDetailHTML(result)}`;
+  } else if(story){
+    story.remove();
+  }
 
   burstParticles(document.getElementById('burst'), result.tier);
 
@@ -1169,6 +1192,17 @@ function runSamsaraChain(startYear){
   setTimeout(() => showChainReview(results), 1200);
 }
 
+function buildLifeDetailHTML(r){
+  const deathLine = r.deathCause ? `<div class="ri-job">死因：${r.deathCause}</div>` : '';
+  const marriageLine = (r.married !== undefined)
+    ? `<div class="ri-job">婚姻：${r.married ? `${r.marryAge}歲成婚，育有${r.children}名子女` : '終身未婚'}</div>`
+    : '';
+  const legacyBlock = r.legacy
+    ? `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`
+    : (r.childDeathNote ? `<div class="ri-meaning">「${r.childDeathNote}」</div>` : '');
+  return deathLine + marriageLine + legacyBlock;
+}
+
 function showChainReview(results){
   const list = document.getElementById('reviewList');
   const lastLife = results.length;
@@ -1177,14 +1211,6 @@ function showChainReview(results){
     const event = (r.reason.split('｜').pop() || '').trim();
     const age = isLast ? (2026 - r.year) : (r.endYear - r.year);
     const years = isLast ? `${r.year}・此刻・${age}歲` : `${r.year}–${r.endYear}・${age}歲`;
-
-    const marriageLine = (r.married !== undefined)
-      ? `<div class="ri-job">婚姻：${r.married ? `${r.marryAge}歲成婚，育有${r.children}名子女` : '終身未婚'}</div>`
-      : '';
-    const deathLine = isLast ? '' : `<div class="ri-job">死因：${r.deathCause}</div>`;
-    const legacyBlock = (r.legacy)
-      ? `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`
-      : (r.childDeathNote ? `<div class="ri-meaning">「${r.childDeathNote}」</div>` : '');
 
     return `
       <div class="review-item">
@@ -1197,9 +1223,7 @@ function showChainReview(results){
           </div>
           <div class="ri-job">職業：${r.occupation}</div>
           <div class="ri-event">${event}</div>
-          ${deathLine}
-          ${marriageLine}
-          ${legacyBlock}
+          ${buildLifeDetailHTML(r)}
         </div>
       </div>
     `;

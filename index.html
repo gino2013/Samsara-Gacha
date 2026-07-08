@@ -377,12 +377,18 @@
   .year-picker{ margin:0 0 26px; }
   .year-picker input[type="range"]{ width:100%; accent-color:var(--ur2); }
   .year-readout{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted); margin-top:10px; }
+  .age-label{ font-size:12px; color:var(--muted); margin-bottom:8px; }
 
   .review-inner{ max-width:640px; }
   .review-list{
     max-height:46vh; overflow-y:auto; text-align:left;
     margin:0 0 22px; display:flex; flex-direction:column; gap:10px;
+    scrollbar-color:var(--panel2) transparent; scrollbar-width:thin;
   }
+  .review-list::-webkit-scrollbar{ width:8px; }
+  .review-list::-webkit-scrollbar-track{ background:transparent; }
+  .review-list::-webkit-scrollbar-thumb{ background:var(--panel2); border-radius:8px; }
+  .review-list::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,0.25); }
   .review-item{
     background:var(--panel); border:1px solid var(--line); border-radius:12px;
     padding:12px 14px; display:flex; gap:12px; align-items:flex-start;
@@ -398,6 +404,7 @@
 
   #chainEndOverlay .onboard-title{ margin-bottom:18px; }
   #chainEndOverlay .onboard-sub{ margin:0 0 20px; }
+  #chainEndOverlay .pull.mega{ margin-top:8px; }
 </style>
 </head>
 <body>
@@ -409,6 +416,11 @@
     <h2 class="onboard-title">你這一世的國籍是？</h2>
     <p class="onboard-sub">左右滑動選擇，轉世結果會跟現世對照</p>
     <div class="onboard-track" id="onboardTrack"></div>
+    <div class="year-picker">
+      <div class="age-label">你今年幾歲？</div>
+      <input type="range" id="ageSlider" min="1" max="100" value="25" step="1">
+      <div class="year-readout" id="ageReadout">25 歲（西元 2001 年出生）</div>
+    </div>
     <button class="pull mega" id="onboardConfirm">確定，開始輪迴</button>
   </div>
 </div>
@@ -417,7 +429,7 @@
   <div class="onboard-inner">
     <div class="onboard-eyebrow">Samsara Chain · 輪迴鏈</div>
     <h2 class="onboard-title">這輪輪迴，你想從哪一年開始？</h2>
-    <p class="onboard-sub">十連＝十世輪迴，不論中途去了哪裡，最後一世終將收斂到 2026 年</p>
+    <p class="onboard-sub">從這一年開始投胎，一世接一世，直到你出生的那一年——最後這一世，就是此刻 2026 年的你</p>
     <div class="year-picker">
       <input type="range" id="yearSlider" min="1776" max="2010" value="1900" step="1">
       <div class="year-readout" id="yearReadout">西元 1900 年</div>
@@ -429,8 +441,8 @@
 <div class="onboard hide" id="chainReviewOverlay">
   <div class="onboard-inner review-inner">
     <div class="onboard-eyebrow">Samsara Chain · 輪迴回顧</div>
-    <h2 class="onboard-title">十世流轉</h2>
-    <p class="onboard-sub">看看這十世，你都活成了誰</p>
+    <h2 class="onboard-title">輪迴流轉</h2>
+    <p class="onboard-sub">看看這幾世，你都活成了誰</p>
     <div class="review-list" id="reviewList"></div>
     <button class="pull mega" id="reviewClose">闔上眼，回到此刻</button>
   </div>
@@ -478,7 +490,7 @@
 
   <div class="controls">
     <button class="pull" id="btnPull1">單抽 · 轉世一次</button>
-    <button class="pull mega" id="btnPull10">十連 · 投胎十次</button>
+    <button class="pull mega" id="btnPull10">輪迴鏈 · 直到今生</button>
   </div>
   <div class="pity">距離保底 SSR 還有 <b id="pityCount">10</b> 抽（第10抽必出 SSR 以上）</div>
 
@@ -902,6 +914,11 @@ document.getElementById('btnPull1').addEventListener('click', () => {
 });
 
 document.getElementById('btnPull10').addEventListener('click', () => {
+  const birthYear = 2026 - homeAge;
+  const maxStart = Math.min(2010, birthYear - 1);
+  yearSlider.max = maxStart;
+  if(parseInt(yearSlider.value, 10) > maxStart) yearSlider.value = maxStart;
+  yearReadout.textContent = `西元 ${yearSlider.value} 年`;
   document.getElementById('yearPickerOverlay').classList.remove('hide');
 });
 
@@ -945,29 +962,34 @@ function runSamsaraChain(startYear){
   grid.innerHTML = '';
   grid.classList.add('show');
 
-  let year = startYear;
+  // Past lives use each tier's real average lifespan (±20%, no rescaling) and
+  // keep going life after life until the timeline reaches the player's own birth year.
+  const birthYear = 2026 - homeAge;
   const results = [];
-  for(let i=0;i<10;i++){
-    let r;
-    if(i === 9){
-      // Final life converges on the player's chosen home country, not a random roll.
-      sincePity++;
-      if(selectedHome.tier === 'SSR' || selectedHome.tier === 'UR') sincePity = 0;
-      stats.total++; stats[selectedHome.tier]++;
-      r = { tier:selectedHome.tier, flag:selectedHome.flag, name:selectedHome.name, lat:selectedHome.lat, lon:selectedHome.lon, reason:selectedHome.reason };
-      historyData.unshift(r);
-    } else {
-      r = rollOne();
-    }
-    r.life = i+1;
-    r.year = (i === 9) ? 2026 : Math.round(year);
+  let year = startYear;
+  let life = 0;
+  while(year < birthYear && life < 30){ // ponytail: 30-life safety cap, unreachable at current lifespan/slider ranges
+    life++;
+    const r = rollOne();
+    r.life = life;
     r.occupation = pickOccupation(r.tier);
-    if(i < 9){
-      year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
-      r.endYear = Math.round(year);
-    }
+    r.year = Math.round(year);
+    year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
+    r.endYear = Math.round(Math.min(year, birthYear));
     results.push(r);
   }
+
+  // Final life: the player's real life, in their chosen home country, from birth to now.
+  life++;
+  sincePity++;
+  if(selectedHome.tier === 'SSR' || selectedHome.tier === 'UR') sincePity = 0;
+  stats.total++; stats[selectedHome.tier]++;
+  const finalLife = { tier:selectedHome.tier, flag:selectedHome.flag, name:selectedHome.name, lat:selectedHome.lat, lon:selectedHome.lon, reason:selectedHome.reason };
+  historyData.unshift(finalLife);
+  finalLife.life = life;
+  finalLife.occupation = pickOccupation(finalLife.tier);
+  finalLife.year = birthYear;
+  results.push(finalLife);
 
   const rank = {UR:0, SSR:1, SR:2, R:3, N:4};
   const best = results.reduce((a,b)=> rank[b.tier] < rank[a.tier] ? b : a);
@@ -1000,9 +1022,11 @@ function runSamsaraChain(startYear){
 
 function showChainReview(results){
   const list = document.getElementById('reviewList');
+  const lastLife = results.length;
   list.innerHTML = results.map(r => {
     const event = (r.reason.split('｜').pop() || '').trim();
-    const years = r.life === 10 ? `${r.year}・此刻` : `${r.year}–${r.endYear}`;
+    const age = r.life === lastLife ? (2026 - r.year) : (r.endYear - r.year);
+    const years = r.life === lastLife ? `${r.year}・此刻・${age}歲` : `${r.year}–${r.endYear}・${age}歲`;
     return `
       <div class="review-item">
         <div class="flag">${r.flag}</div>
@@ -1022,9 +1046,9 @@ function showChainReview(results){
 }
 
 function showChainEnd(results, startYear){
-  const first = results[0], last = results[9];
+  const first = results[0], last = results[results.length-1];
   document.getElementById('chainEndSummary').innerHTML =
-    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>十世流轉，${last.flag} ${last.name}… 此刻 2026 年的你生在一個很美好的國度。`;
+    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>${results.length}世流轉，${last.flag} ${last.name}… 此刻 2026 年的你生在一個很美好的國度。`;
   document.getElementById('chainEndOverlay').classList.remove('hide');
 }
 
@@ -1371,7 +1395,9 @@ document.getElementById('btnReset').addEventListener('click', () => {
 });
 
 const HOME_COUNTRY_KEY = 'samsara_home_country';
+const HOME_AGE_KEY = 'samsara_home_age';
 let selectedHome = ALL_COUNTRIES[0];
+let homeAge = 25;
 
 function renderOnboardTrack(){
   const track = document.getElementById('onboardTrack');
@@ -1401,9 +1427,17 @@ function updateActiveChip(){
 
 function applyHomeCountryLabel(){
   const label = document.getElementById('homeCountryLabel');
-  label.textContent = `現世國籍：${selectedHome.flag} ${selectedHome.name} · 點擊更換`;
+  label.textContent = `現世國籍：${selectedHome.flag} ${selectedHome.name}・${homeAge}歲 · 點擊更換`;
   label.classList.add('show');
 }
+
+const ageSlider = document.getElementById('ageSlider');
+const ageReadout = document.getElementById('ageReadout');
+function updateAgeReadout(){
+  const age = parseInt(ageSlider.value, 10);
+  ageReadout.textContent = `${age} 歲（西元 ${2026-age} 年出生）`;
+}
+ageSlider.addEventListener('input', updateAgeReadout);
 
 renderOnboardTrack();
 const onboardTrack = document.getElementById('onboardTrack');
@@ -1423,16 +1457,24 @@ onboardTrack.addEventListener('click', (e) => {
   if(chip) chip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
 });
 document.getElementById('onboardConfirm').addEventListener('click', () => {
+  homeAge = parseInt(ageSlider.value, 10);
   localStorage.setItem(HOME_COUNTRY_KEY, String(ALL_COUNTRIES.indexOf(selectedHome)));
+  localStorage.setItem(HOME_AGE_KEY, String(homeAge));
   applyHomeCountryLabel();
   document.getElementById('onboardOverlay').classList.add('hide');
 });
 document.getElementById('homeCountryLabel').addEventListener('click', () => {
   document.getElementById('onboardOverlay').classList.remove('hide');
+  ageSlider.value = homeAge;
+  updateAgeReadout();
   requestAnimationFrame(updateActiveChip);
 });
 
 const savedHomeIdx = parseInt(localStorage.getItem(HOME_COUNTRY_KEY), 10);
+const savedAge = parseInt(localStorage.getItem(HOME_AGE_KEY), 10);
+if(!isNaN(savedAge)) homeAge = savedAge;
+ageSlider.value = homeAge;
+updateAgeReadout();
 if(!isNaN(savedHomeIdx) && ALL_COUNTRIES[savedHomeIdx]){
   selectedHome = ALL_COUNTRIES[savedHomeIdx];
   applyHomeCountryLabel();

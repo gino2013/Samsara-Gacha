@@ -34,3 +34,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 16:31 — Implement Phase 1 of the Samsara Chain: 十連 becomes a 10-life reincarnation chain converging on 2026
 - 2026-07-08 16:39 — Polish chain-end screen: line break before 十世流轉, ellipsis instead of em-dash, reword close button
 - 2026-07-08 16:48 — Add a life-by-life chain review screen and force the final life to the player's chosen home country
+- 2026-07-08 17:06 — Switch the reincarnation chain to a floating life count anchored on the player's real age and birth year

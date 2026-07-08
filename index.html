@@ -1456,7 +1456,7 @@ function typewriterInto(el, html, speed=42){
 
 async function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
-  const summaryHTML = `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你降生在 ${last.flag} ${last.name}，<br>被好好地放在這個很美好的國度。`;
+  const summaryHTML = `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；<br>此刻 2026 年，繞了 ${results.length} 世輪迴，<br>你降生在 ${last.flag} ${last.name}，<br>被好好地放在這個很美好的國度。`;
 
   const summaryEl = document.getElementById('chainEndSummary');
   const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary):not(#chainEndAsk)');

@@ -416,7 +416,7 @@
     margin:0 0 20px; line-height:1.9; letter-spacing:0.01em;
     transition:opacity 1.6s ease;
   }
-  #chainEndOverlay #chainEndSummary{ font-size:14px; }
+  #chainEndOverlay #chainEndSummary{ font-size:17px; }
   #chainEndOverlay .onboard-sub:not(#chainEndSummary){ font-size:23px; line-height:1.65; }
   #chainEndOverlay .chain-end-choice{
     display:flex; gap:14px; justify-content:center; margin-top:8px;
@@ -816,8 +816,20 @@ function balanceText(el){
 const TIER_ORDER = ["UR","SSR","SR","R","N"];
 const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));
 
-let stats = { total:0, UR:0, SSR:0, SR:0, R:0, N:0 };
-let sincePity = 0;
+function setCookie(name, value, days=365){
+  document.cookie = `${name}=${encodeURIComponent(value)};max-age=${days*86400};path=/;samesite=lax`;
+}
+function getCookie(name){
+  const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+const STATS_KEY = 'samsara_stats';
+let savedStats = null;
+try { savedStats = JSON.parse(getCookie(STATS_KEY)); } catch(e){}
+
+let stats = savedStats?.stats || { total:0, UR:0, SSR:0, SR:0, R:0, N:0 };
+let sincePity = savedStats?.sincePity || 0;
 let historyData = [];
 let currentResult = null;
 
@@ -858,6 +870,7 @@ function updateStatsUI(){
   document.getElementById('statN').textContent = stats.N;
   document.getElementById('pityCount').textContent = Math.max(0, 10 - sincePity);
   renderHistory();
+  setCookie(STATS_KEY, JSON.stringify({stats, sincePity}));
 }
 
 function renderHistory(){
@@ -1443,7 +1456,7 @@ function typewriterInto(el, html, speed=42){
 
 async function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
-  const summaryHTML = `起點・西元 ${startYear} 年，你曾是 ${first.flag} ${first.name} 的一段生命，活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你降生在 ${last.flag} ${last.name}，<br>被好好地放在這個很美好的國度。`;
+  const summaryHTML = `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你降生在 ${last.flag} ${last.name}，<br>被好好地放在這個很美好的國度。`;
 
   const summaryEl = document.getElementById('chainEndSummary');
   const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary):not(#chainEndAsk)');
@@ -1876,8 +1889,8 @@ onboardTrack.addEventListener('click', (e) => {
 });
 document.getElementById('onboardConfirm').addEventListener('click', () => {
   homeAge = parseInt(ageSlider.value, 10);
-  localStorage.setItem(HOME_COUNTRY_KEY, String(ALL_COUNTRIES.indexOf(selectedHome)));
-  localStorage.setItem(HOME_AGE_KEY, String(homeAge));
+  setCookie(HOME_COUNTRY_KEY, String(ALL_COUNTRIES.indexOf(selectedHome)));
+  setCookie(HOME_AGE_KEY, String(homeAge));
   applyHomeCountryLabel();
   document.getElementById('onboardOverlay').classList.add('hide');
 });
@@ -1888,8 +1901,8 @@ document.getElementById('homeCountryLabel').addEventListener('click', () => {
   requestAnimationFrame(updateActiveChip);
 });
 
-const savedHomeIdx = parseInt(localStorage.getItem(HOME_COUNTRY_KEY), 10);
-const savedAge = parseInt(localStorage.getItem(HOME_AGE_KEY), 10);
+const savedHomeIdx = parseInt(getCookie(HOME_COUNTRY_KEY), 10);
+const savedAge = parseInt(getCookie(HOME_AGE_KEY), 10);
 if(!isNaN(savedAge)) homeAge = savedAge;
 ageSlider.value = homeAge;
 updateAgeReadout();

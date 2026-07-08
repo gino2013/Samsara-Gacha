@@ -51,3 +51,5 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 22:00 — Keep the chain-end narration lines on screen instead of fading them back out, and reword to 你降生在
 - 2026-07-08 22:03 — Remove the "2026・此生回眸" eyebrow label from the chain-end screen
 - 2026-07-08 22:08 — Replace the chain-end close button with a 是/否 confirmation asking whether to reincarnate again
+- 2026-07-08 22:13 — Move home-country/age and gacha stats persistence from localStorage to cookies
+- 2026-07-08 22:13 — Enlarge the chain-end summary text and shorten the opening line so it doesn't wrap awkwardly

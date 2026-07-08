@@ -564,7 +564,7 @@ const TIERS = {
     ["🇦🇺","澳洲",-35.3,149.1,"綜合評分60.1分（快樂指數6.92・人均GDP $75,648・生活成本指數67.9） ｜ 地廣人稀資源豐富，氣候宜人生活步調悠閒"],
     ["🇦🇪","阿聯",24.5,54.4,"綜合評分59.7分（快樂指數6.82・人均GDP $54,214・生活成本指數55.2） ｜ 石油紅利打造現代化都市，免稅環境吸引全球人才"],
     ["🇧🇷","巴西",-15.8,-47.9,"綜合評分59.0分（快樂指數6.63・人均GDP $12,313・生活成本指數30.1） ｜ 南美最大經濟體，自然資源與文化多元"],
-    ["🇹🇼","台灣",25.0,121.6,"綜合評分58.6分（快樂指數6.71・人均GDP $42,103・生活成本指數49.7），CP值型的高分國家 ｜ 健保制度完善治安良好，半導體供應鏈全球核心地位"],
+    ["🇹🇼","中華民國(台灣)",25.0,121.6,"綜合評分58.6分（快樂指數6.71・人均GDP $42,103・生活成本指數49.7），CP值型的高分國家 ｜ 健保制度完善治安良好，半導體供應鏈全球核心地位"],
     ["🇰🇼","科威特",29.4,47.9,"綜合評分58.4分（快樂指數6.54・人均GDP $33,164・生活成本指數42.5） ｜ 石油紅利豐厚，社會福利對公民相對優渥"],
     ["🇳🇿","紐西蘭",-41.3,174.8,"綜合評分58.3分（快樂指數7.00・人均GDP $52,023・生活成本指數60.3） ｜ 自然環境優美，社會穩定治理清廉"],
     ["🇸🇬","新加坡",1.35,103.8,"綜合評分58.0分（快樂指數6.59・人均GDP $107,758・生活成本指數87.7） ｜ 花園城市典範，治理效率與人均所得亞洲天花板"],
@@ -1327,13 +1327,6 @@ function runSamsaraChain(startYear){
   finalLife.life = life;
   finalLife.year = birthYear;
   finalLife.age = homeAge;
-  finalLife.occupation = pickOccupation(finalLife.tier, finalLife.year, homeAge);
-  if(homeAge > 14){
-    const m = pickMarriage(homeAge);
-    finalLife.married = m.married;
-    finalLife.marryAge = m.marryAge;
-    finalLife.children = pickChildren(m.married, homeAge);
-  }
   results.push(finalLife);
 
   const rank = {UR:0, SSR:1, SR:2, R:3, N:4};
@@ -1394,8 +1387,8 @@ function showChainReview(results){
             <span class="ri-name">${r.name}</span>
             <span class="ri-years">${years}</span>
           </div>
-          <div class="ri-job">職業：${r.occupation}</div>
           <div class="ri-event">${event}</div>
+          ${r.occupation ? `<div class="ri-job">職業：${r.occupation}</div>` : ''}
           ${buildLifeDetailHTML(r)}
         </div>
       </div>
@@ -1760,7 +1753,7 @@ let homeAge = 25;
 
 function renderOnboardTrack(){
   const track = document.getElementById('onboardTrack');
-  const twIdx = ALL_COUNTRIES.findIndex(c => c.name === '台灣');
+  const twIdx = ALL_COUNTRIES.findIndex(c => c.name === '中華民國(台灣)');
   const order = [twIdx, ...ALL_COUNTRIES.map((_,i) => i).filter(i => i !== twIdx)];
   track.innerHTML = order.map(i =>
     `<div class="onboard-chip" data-i="${i}"><div class="flag">${ALL_COUNTRIES[i].flag}</div><div class="name">${ALL_COUNTRIES[i].name}</div></div>`

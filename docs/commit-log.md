@@ -41,3 +41,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 17:33 — Give each past life age-appropriate work and death causes, plus marriage/children/legacy detail, and enlarge the review screen
 - 2026-07-08 17:46 — Persist each life's full story onto the main result card so it's still viewable after the review overlay closes
 - 2026-07-08 17:57 — Add a monochrome samsara-wheel favicon and expand the legacy/meaning/child-death text pools ~5x
+- 2026-07-08 18:06 — Drop occupation/marriage from the ongoing final life, move the country blurb above it, and rename Taiwan's entry to 中華民國(台灣)

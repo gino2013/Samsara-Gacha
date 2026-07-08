@@ -418,7 +418,10 @@
   }
   #chainEndOverlay #chainEndSummary{ font-size:14px; }
   #chainEndOverlay .onboard-sub:not(#chainEndSummary){ font-size:23px; line-height:1.65; }
-  #chainEndOverlay .pull.mega{ margin-top:8px; transition:opacity 1.4s ease; }
+  #chainEndOverlay .chain-end-choice{
+    display:flex; gap:14px; justify-content:center; margin-top:8px;
+    transition:opacity 1.4s ease;
+  }
   #chainEndOverlay .seq-hidden{ opacity:0; }
   #chainEndOverlay .onboard-title.seq-hidden{ transform:translateY(12px); }
 </style>
@@ -469,7 +472,11 @@
     <p class="onboard-sub" id="chainEndSummary"></p>
     <p class="onboard-sub">你在這裡不會沒有原因，一切都是最好的選擇。</p>
     <h2 class="onboard-title">這一世，你還記得嗎？<br>你一直想成為的人。</h2>
-    <button class="pull mega" id="chainEndClose">闔上眼，再次投入輪迴</button>
+    <p class="onboard-sub seq-hidden" id="chainEndAsk">你已經很努力很努力了，還想要再輪迴一次嗎？</p>
+    <div class="chain-end-choice seq-hidden" id="chainEndChoice">
+      <button class="pull" id="chainEndNo">否</button>
+      <button class="pull mega" id="chainEndYes">是</button>
+    </div>
   </div>
 </div>
 
@@ -967,7 +974,10 @@ document.getElementById('yearConfirm').addEventListener('click', () => {
   runSamsaraChain(parseInt(yearSlider.value, 10));
 });
 
-document.getElementById('chainEndClose').addEventListener('click', () => {
+document.getElementById('chainEndYes').addEventListener('click', () => {
+  document.getElementById('chainEndOverlay').classList.add('hide');
+});
+document.getElementById('chainEndNo').addEventListener('click', () => {
   document.getElementById('chainEndOverlay').classList.add('hide');
 });
 
@@ -1436,15 +1446,17 @@ async function showChainEnd(results, startYear){
   const summaryHTML = `起點・西元 ${startYear} 年，你曾是 ${first.flag} ${first.name} 的一段生命，活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你降生在 ${last.flag} ${last.name}，<br>被好好地放在這個很美好的國度。`;
 
   const summaryEl = document.getElementById('chainEndSummary');
-  const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary)');
+  const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary):not(#chainEndAsk)');
   const titleEl = document.querySelector('#chainEndOverlay .onboard-title');
-  const btnEl = document.getElementById('chainEndClose');
+  const askEl = document.getElementById('chainEndAsk');
+  const choiceEl = document.getElementById('chainEndChoice');
 
   summaryEl.innerHTML = '';
   summaryEl.classList.remove('seq-hidden');
   reasonEl.classList.add('seq-hidden');
   titleEl.classList.add('seq-hidden');
-  btnEl.classList.add('seq-hidden');
+  askEl.classList.add('seq-hidden');
+  choiceEl.classList.add('seq-hidden');
   document.getElementById('chainEndOverlay').classList.remove('hide');
 
   await typewriterInto(summaryEl, summaryHTML);
@@ -1453,7 +1465,9 @@ async function showChainEnd(results, startYear){
   await sleep(2200);
   titleEl.classList.remove('seq-hidden');
   await sleep(1400);
-  btnEl.classList.remove('seq-hidden');
+  askEl.classList.remove('seq-hidden');
+  await sleep(900);
+  choiceEl.classList.remove('seq-hidden');
 }
 
 const canvas = document.getElementById('globeCanvas');

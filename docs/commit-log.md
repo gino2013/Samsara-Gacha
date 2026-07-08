@@ -47,3 +47,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 21:41 — Give the review-close button and chain-end summary more evocative wording (clear start/end points)
 - 2026-07-08 21:46 — Animate the chain-end screen: typewriter the life summary, then crossfade through the reason and title at a slower, more readable pace
 - 2026-07-08 21:51 — Split the chain-end summary's closing clause onto its own line so long country names don't force an awkward mid-phrase wrap
+- 2026-07-08 21:52 — Match the reason line's font size to the title on the chain-end screen

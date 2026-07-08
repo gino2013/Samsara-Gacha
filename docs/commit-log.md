@@ -31,3 +31,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 16:00 — Add onboarding nationality picker and PRD for multi-life reincarnation chain
 - 2026-07-08 16:08 — Let players drag to spin the globe, scroll the picker with a wheel, and default it to Taiwan
 - 2026-07-08 16:23 — Fix nationality picker's active-chip detection using the wrong coordinate frame
+- 2026-07-08 16:31 — Implement Phase 1 of the Samsara Chain: 十連 becomes a 10-life reincarnation chain converging on 2026

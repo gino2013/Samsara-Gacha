@@ -58,3 +58,5 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 22:27 — Add a comforting rest screen for 否, even out the chain-end reveal pacing, and swap the summary's typewriter for a fade-in
 - 2026-07-08 22:32 — Add a THE END screen with a peaceful sunrise scene, reached after the rest screen's close button
 - 2026-07-08 23:01 — Document the chain-end reveal animation, 是/否 branch, rest/THE END screens, and cookie persistence in the PRD
+- 2026-07-08 23:27 — Add correlated 出身/職業/死因/此生印記/人生領悟 generation: occupations now carry a category+background, and death cause/legacy/meaning are drawn from matching category pools
+- 2026-07-08 23:27 — Split the labor category into farmer/miner/sailor/worker so e.g. a miner and a fisherman never share the same story beats

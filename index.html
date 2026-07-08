@@ -1006,7 +1006,7 @@ function showMainResult(result){
   let story = card.querySelector('.life-story');
   if(result.occupation){
     if(!story){ story = document.createElement('div'); story.className = 'life-story'; card.appendChild(story); }
-    story.innerHTML = `<div class="ri-job">職業：${result.occupation}</div>${buildLifeDetailHTML(result)}`;
+    story.innerHTML = buildLifeDetailHTML(result);
   } else if(story){
     story.remove();
   }
@@ -1057,70 +1057,285 @@ document.getElementById('theEndClose').addEventListener('click', () => {
   document.getElementById('theEndOverlay').classList.add('hide');
 });
 
+// Each occupation carries a category (ties it to a matching death-cause / legacy / meaning pool)
+// and a background phrase (出身), so a life's traits stay mutually consistent instead of independently random.
 const OCCUPATIONS_BY_ERA = [
   { before:1500, jobs:{
-    UR: ['封地領主','部落首領','大商賈','王室封臣'],
-    SSR: ['騎士','教會高階神職人員','行會會長','城邦執政官'],
-    SR: ['工匠師傅','鄉紳地主','隨軍書記官','地方稅吏'],
-    R: ['自耕農','鐵匠','士兵','樵夫'],
-    N: ['佃農','僕役','礦工','漁民']
+    UR: [
+      {name:'封地領主', category:'noble', background:'世襲貴族之家，生來就擁有封地與佃農'},
+      {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人'},
+      {name:'大商賈', category:'merchant', background:'商旅世家，自小跟著長輩走遍各地商路'},
+      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位'}
+    ],
+    SSR: [
+      {name:'騎士', category:'military', background:'騎士世家出身，自幼習武備戰'},
+      {name:'教會高階神職人員', category:'professional', background:'虔誠信徒之家，年少即入修道院受教'},
+      {name:'行會會長', category:'artisan', background:'工匠世家，繼承家族在行會的地位'},
+      {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培'}
+    ],
+    SR: [
+      {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝'},
+      {name:'鄉紳地主', category:'noble', background:'小地主家庭，繼承祖上留下的田產'},
+      {name:'隨軍書記官', category:'professional', background:'識字的小吏之家，靠書寫本事謀生'},
+      {name:'地方稅吏', category:'professional', background:'公門人家出身，子承父業當差'}
+    ],
+    R: [
+      {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭'},
+      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大'},
+      {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃'},
+      {name:'樵夫', category:'farmer', background:'山村獵戶或樵夫家庭出身'}
+    ],
+    N: [
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
+      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產'},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
+      {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶'}
+    ]
   }},
   { before:1750, jobs:{
-    UR: ['殖民地總督','香料貿易巨賈','特許公司股東','宮廷重臣'],
-    SSR: ['遠洋船長','種植園主','軍需官','宮廷畫師'],
-    SR: ['航海士','公證人','藥劑師','教區牧師'],
-    R: ['水手','裁縫','磨坊主','民兵'],
-    N: ['碼頭工人','佃農','礦工','漁夫']
+    UR: [
+      {name:'殖民地總督', category:'noble', background:'母國權貴世家，被派任海外統治一方'},
+      {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營遠洋貿易的商行'},
+      {name:'特許公司股東', category:'merchant', background:'投資特許公司起家的富商家族'},
+      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家'}
+    ],
+    SSR: [
+      {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海'},
+      {name:'種植園主', category:'merchant', background:'殖民地拓墾起家的地主家族'},
+      {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族'},
+      {name:'宮廷畫師', category:'professional', background:'師承名門畫派的藝匠世家'}
+    ],
+    SR: [
+      {name:'航海士', category:'military', background:'港口人家，自小熟悉船務與航海'},
+      {name:'公證人', category:'professional', background:'讀書識字的城鎮人家'},
+      {name:'藥劑師', category:'professional', background:'家傳藥鋪，自幼跟著長輩辨識藥材'},
+      {name:'教區牧師', category:'professional', background:'虔信之家，自幼受教會栽培'}
+    ],
+    R: [
+      {name:'水手', category:'sailor', background:'貧苦港口人家，靠出海謀生'},
+      {name:'裁縫', category:'artisan', background:'裁縫學徒出身，一手好針線'},
+      {name:'磨坊主', category:'artisan', background:'磨坊世家，繼承祖傳的磨坊生意'},
+      {name:'民兵', category:'military', background:'鄉里徵召的農家子弟'}
+    ],
+    N: [
+      {name:'碼頭工人', category:'sailor', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家'},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
+      {name:'漁夫', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶'}
+    ]
   }},
   { before:1900, jobs:{
-    UR: ['工業鉅子','鐵路大亨','銀行家族繼承人','貿易巨賈'],
-    SSR: ['工廠廠主','執業律師','報社主編','鐵路工程師'],
-    SR: ['醫師','學校教師','鐘錶匠','會計師'],
-    R: ['紡織工人','礦工','電報員','鐵匠'],
-    N: ['佃農','碼頭苦力','女僕','街頭小販']
+    UR: [
+      {name:'工業鉅子', category:'merchant', background:'白手起家的實業家族，靠工廠致富'},
+      {name:'鐵路大亨', category:'merchant', background:'投資鐵路發跡的新興富豪家族'},
+      {name:'銀行家族繼承人', category:'merchant', background:'家族數代經營銀行與放貸生意'},
+      {name:'貿易巨賈', category:'merchant', background:'跨國貿易起家的商行世家'}
+    ],
+    SSR: [
+      {name:'工廠廠主', category:'merchant', background:'從小工廠一路擴張起來的業主家庭'},
+      {name:'執業律師', category:'professional', background:'受過高等教育的城市中產家庭'},
+      {name:'報社主編', category:'professional', background:'書香門第，家中素來重視文墨'},
+      {name:'鐵路工程師', category:'professional', background:'新式學堂培養出來的技術人才世家'}
+    ],
+    SR: [
+      {name:'醫師', category:'professional', background:'家中栽培出的第一代受過正規醫學教育者'},
+      {name:'學校教師', category:'professional', background:'重視教育的清貧書香家庭'},
+      {name:'鐘錶匠', category:'artisan', background:'鐘錶匠世家，自幼學習精密手藝'},
+      {name:'會計師', category:'professional', background:'商行帳房出身，靠算數本事晉身'}
+    ],
+    R: [
+      {name:'紡織工人', category:'worker', background:'進城謀生的農家子弟'},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
+      {name:'電報員', category:'artisan', background:'略通文墨的城鎮小康人家'},
+      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大'}
+    ],
+    N: [
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
+      {name:'碼頭苦力', category:'sailor', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家'},
+      {name:'女僕', category:'worker', background:'貧苦人家，自幼被送入大戶人家幫傭'},
+      {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口'}
+    ]
   }},
   { before:1980, jobs:{
-    UR: ['跨國企業創辦人','石油大亨','政商世家繼承人','國際銀行家'],
-    SSR: ['外交官','航空公司高階主管','電影製片人','跨國企業高階主管'],
-    SR: ['大學教授','建築師','主治醫師','新聞記者'],
-    R: ['公務員','中學教師','工廠領班','電話接線生'],
-    N: ['農夫','工廠作業員','礦工','人力車伕']
+    UR: [
+      {name:'跨國企業創辦人', category:'merchant', background:'白手起家後建立跨國事業版圖的家族'},
+      {name:'石油大亨', category:'merchant', background:'靠油田投資一夕致富的新興豪門'},
+      {name:'政商世家繼承人', category:'noble', background:'政治與商業關係盤根錯節的世家'},
+      {name:'國際銀行家', category:'merchant', background:'數代經營金融的家族企業'}
+    ],
+    SSR: [
+      {name:'外交官', category:'professional', background:'外語與國際事務教育出身的菁英家庭'},
+      {name:'航空公司高階主管', category:'professional', background:'受過完整高等教育的中上階層家庭'},
+      {name:'電影製片人', category:'professional', background:'娛樂產業圈子出身的家族'},
+      {name:'跨國企業高階主管', category:'professional', background:'重視教育投資的中產菁英家庭'}
+    ],
+    SR: [
+      {name:'大學教授', category:'professional', background:'家中重視教育，一路栽培到高等學位'},
+      {name:'建築師', category:'professional', background:'受過專業訓練的城市中產家庭'},
+      {name:'主治醫師', category:'professional', background:'醫師世家，或苦讀出身的第一代醫師'},
+      {name:'新聞記者', category:'professional', background:'關心時事、重視文字表達的家庭'}
+    ],
+    R: [
+      {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職'},
+      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身'},
+      {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭'},
+      {name:'電話接線生', category:'worker', background:'進城討生活的鄉下人家'}
+    ],
+    N: [
+      {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭'},
+      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭'},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
+      {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活'}
+    ]
   }},
   { before:Infinity, jobs:{
-    UR: ['科技集團創辦人','避險基金經理人','跨國集團繼承人','皇室旁系成員'],
-    SSR: ['新創公司創辦人','跨國企業高階主管','駐外外交官','投資銀行家'],
-    SR: ['大學教授','建築師','主治醫師','軟體工程師'],
-    R: ['基層公務員','中學教師','土木工程師','客服主管'],
-    N: ['農夫','市場小販','工廠作業員','計程車司機','外送員']
+    UR: [
+      {name:'科技集團創辦人', category:'merchant', background:'白手起家後打造出科技帝國的家族'},
+      {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理'},
+      {name:'跨國集團繼承人', category:'noble', background:'家族企業橫跨多國的財閥世家'},
+      {name:'皇室旁系成員', category:'noble', background:'保有王室血統與頭銜的旁支家族'}
+    ],
+    SSR: [
+      {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭'},
+      {name:'跨國企業高階主管', category:'professional', background:'重視教育投資的中產菁英家庭'},
+      {name:'駐外外交官', category:'professional', background:'外語與國際事務教育出身的菁英家庭'},
+      {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭'}
+    ],
+    SR: [
+      {name:'大學教授', category:'professional', background:'家中重視教育，一路栽培到高等學位'},
+      {name:'建築師', category:'professional', background:'受過專業訓練的城市中產家庭'},
+      {name:'主治醫師', category:'professional', background:'醫師世家，或苦讀出身的第一代醫師'},
+      {name:'軟體工程師', category:'professional', background:'普通中產家庭，靠自己一路唸到理工科系'}
+    ],
+    R: [
+      {name:'基層公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職'},
+      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身'},
+      {name:'土木工程師', category:'worker', background:'技職體系栽培出的技術人才家庭'},
+      {name:'客服主管', category:'worker', background:'普通上班族家庭，一步步從基層做起'}
+    ],
+    N: [
+      {name:'農夫', category:'farmer', background:'守著幾分薄田過活的鄉下家庭'},
+      {name:'市場小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口'},
+      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭'},
+      {name:'計程車司機', category:'worker', background:'普通勞動家庭，白手起家討生活'},
+      {name:'外送員', category:'worker', background:'普通勞動家庭，靠一台機車跑遍全城'}
+    ]
   }}
 ];
 const CHILD_OCCUPATIONS = {
-  UR: ['貴族之子','富商之後','家族繼承人','宮廷寵兒'],
-  SSR: ['富裕人家之子','商賈之後','私塾學生'],
-  SR: ['書香門第之後','小地主之子','學徒'],
-  R: ['農家之子','工匠學徒','放牛娃'],
-  N: ['佃農之子','牧童','孤兒','街頭乞童']
+  UR: [
+    {name:'貴族之子', category:'noble', background:'生於貴族世家，含著金湯匙出生'},
+    {name:'富商之後', category:'merchant', background:'生於巨富商賈之家，從未愁吃穿'},
+    {name:'家族繼承人', category:'noble', background:'一出生就被寄予家族厚望'},
+    {name:'宮廷寵兒', category:'noble', background:'生於權貴之家，備受呵護長大'}
+  ],
+  SSR: [
+    {name:'富裕人家之子', category:'merchant', background:'生於小康以上的殷實人家'},
+    {name:'商賈之後', category:'merchant', background:'生於做生意的商家'},
+    {name:'私塾學生', category:'professional', background:'生於重視教育的書香家庭'}
+  ],
+  SR: [
+    {name:'書香門第之後', category:'professional', background:'生於讀書人家，自幼識字'},
+    {name:'小地主之子', category:'noble', background:'生於有幾分薄田的小地主家庭'},
+    {name:'學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+  ],
+  R: [
+    {name:'農家之子', category:'farmer', background:'生於一般務農人家'},
+    {name:'工匠學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+    {name:'放牛娃', category:'farmer', background:'生於鄉下貧苦人家，很早就要幫忙做事'}
+  ],
+  N: [
+    {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+    {name:'牧童', category:'farmer', background:'生於窮苦人家，年紀很小就要幫忙放牧'},
+    {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+    {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+  ]
 };
+// Returns {name, category, background} so occupation, 出身, death cause, legacy and meaning
+// can all be picked from the same category and read as one coherent life instead of a random mashup.
 function pickOccupation(tier, year, age){
-  if(age <= 14){
-    const list = CHILD_OCCUPATIONS[tier];
-    return list[Math.floor(Math.random()*list.length)];
-  }
-  const era = OCCUPATIONS_BY_ERA.find(e => year < e.before);
-  const list = era.jobs[tier];
+  const list = age <= 14 ? CHILD_OCCUPATIONS[tier] : OCCUPATIONS_BY_ERA.find(e => year < e.before).jobs[tier];
   return list[Math.floor(Math.random()*list.length)];
 }
 
+// Adult death causes are grouped per occupation category so how a life ends fits how it was lived
+// (a soldier falls in battle, a merchant loses a fortune to ruin, not a random mismatch).
 const DEATH_CAUSES_BY_ERA = [
-  { before:1500, child:['天花','痲疹','饑荒','難產'], adult:['瘟疫','饑荒','戰亂','傷寒'] },
-  { before:1750, child:['天花','痢疾','饑荒'], adult:['壞血病','海上意外','瘟疫','戰亂'] },
-  { before:1900, child:['白喉','麻疹','肺結核','饑荒'], adult:['肺結核','工殤','霍亂','戰亂'] },
-  { before:1980, child:['小兒麻痺','麻疹','肺炎'], adult:['戰爭','肺結核','心臟病','意外事故'] },
-  { before:Infinity, child:['意外事故','先天疾病','傳染病'], adult:['心臟病','癌症','車禍','意外'] }
+  { before:1500,
+    adult:{
+      noble:['宮廷鬥爭遇害','瘟疫','難產'],
+      merchant:['商旅途中遇劫','瘟疫','傷寒'],
+      military:['戰死沙場','重傷不治','屠城中喪生'],
+      professional:['瘟疫','傷寒','修道院內染疫'],
+      artisan:['工坊意外','瘟疫','火災'],
+      farmer:['饑荒','過勞而終','天災欠收','瘟疫'],
+      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
+      sailor:['船難','溺斃','風暴','瘟疫'],
+      worker:['過勞而終','饑荒','瘟疫','意外']
+    },
+    child:['天花','痲疹','饑荒','難產']
+  },
+  { before:1750,
+    adult:{
+      noble:['宮廷政爭失勢病故','瘟疫','痛風併發症'],
+      merchant:['商船沉沒血本無歸抑鬱而終','瘟疫','海盜襲擊'],
+      military:['海戰陣亡','壞血病','船難'],
+      professional:['瘟疫','傷寒','舟車勞頓積勞成疾'],
+      artisan:['工坊意外','瘟疫','火災'],
+      farmer:['饑荒','過勞而終','天災欠收','瘟疫'],
+      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
+      sailor:['船難','溺斃','壞血病','風暴'],
+      worker:['過勞而終','瘟疫','意外','饑荒']
+    },
+    child:['天花','痢疾','饑荒']
+  },
+  { before:1900,
+    adult:{
+      noble:['家道中落憂鬱而終','肺結核','霍亂'],
+      merchant:['投資失利破產鬱鬱而終','肺結核','霍亂'],
+      military:['戰亂喪生','肺結核','霍亂'],
+      professional:['肺結核','霍亂','積勞成疾'],
+      artisan:['工殤','肺結核','霍亂'],
+      farmer:['饑荒','過勞而終','肺結核','霍亂'],
+      miner:['礦坑坍塌','塵肺病','礦坑意外','霍亂'],
+      sailor:['船難','溺斃','風暴','霍亂'],
+      worker:['工殤','肺結核','霍亂','過勞而終']
+    },
+    child:['白喉','麻疹','肺結核','饑荒']
+  },
+  { before:1980,
+    adult:{
+      noble:['家族企業崩解抑鬱而終','心臟病','癌症'],
+      merchant:['事業破產一夕之間垮台','心臟病','癌症'],
+      military:['戰爭','意外事故','心臟病'],
+      professional:['積勞成疾','心臟病','癌症'],
+      artisan:['工殤意外','心臟病','肺結核'],
+      farmer:['過勞而終','心臟病','農藥中毒','意外'],
+      miner:['礦坑坍塌','塵肺病','礦坑意外','心臟病'],
+      sailor:['船難','溺斃','風暴','意外事故'],
+      worker:['意外事故','心臟病','過勞而終']
+    },
+    child:['小兒麻痺','麻疹','肺炎']
+  },
+  { before:Infinity,
+    adult:{
+      noble:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症'],
+      merchant:['創業失敗東山再起未果','心臟病','癌症'],
+      military:['公務意外殉職','心臟病','癌症'],
+      professional:['過勞猝死','心臟病','癌症'],
+      artisan:['職業傷害','心臟病','癌症'],
+      farmer:['過勞猝死','心臟病','癌症','意外'],
+      miner:['礦坑意外','塵肺病','心臟病','癌症'],
+      sailor:['海上意外','溺斃','風暴','心臟病'],
+      worker:['車禍','過勞猝死','心臟病','意外']
+    },
+    child:['意外事故','先天疾病','傳染病']
+  }
 ];
-function pickDeathCause(year, age){
+function pickDeathCause(year, age, category){
   const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
-  const list = age <= 14 ? era.child : era.adult;
+  if(age <= 14) return era.child[Math.floor(Math.random()*era.child.length)];
+  const list = era.adult[category] || era.adult.worker;
   return list[Math.floor(Math.random()*list.length)];
 }
 
@@ -1139,195 +1354,228 @@ function pickChildren(married, age){
   if(r < 0.90) return 3;
   return 4;
 }
-const LEGACY_TEMPLATES = [
-  '留下一手好手藝，教會了下一代',
-  '攢下的積蓄讓後代得以翻身',
-  '主持修建了鄉里的一座橋或水井，造福多年',
-  '寫下的家書與帳本，成了後代唯一的紀錄',
-  '沒能留下財富，但留下了被鄰里記得的好名聲',
-  '培養出的徒弟後來成了一方名匠',
-  '在動盪年代守住了家業，讓家人平安活下來',
-  '最大的成就，是把孩子都拉拔長大',
-  '推動了當地一項小小的改變，多年後仍被人記得',
-  '沒有留下什麼驚天動地的事，但活得問心無愧',
-  '一手創辦的事業，後來由子女接手延續下去',
-  '留下的手稿或發明，多年後才被人重新發現價值',
-  '收養了幾個無依無靠的孩子，把他們當親生的養大',
-  '一輩子省吃儉用，臨終前把積蓄全數捐給了鄉里的學堂',
-  '種下的一片林子，多年後成了後代乘涼的地方',
-  '在最艱難的那幾年，撐起了整個家族沒讓任何人餓死',
-  '留下的一套工具與筆記，後來成了徒弟們的傳家寶',
-  '默默資助了幾個窮困人家的孩子讀書，從未張揚',
-  '一場意外中救了鄰居的孩子，自己卻因此留下傷病',
-  '晚年開了一間小小的私塾，教會了整條街的孩子認字',
-  '把畢生所學寫成一本小冊子，流傳了好幾代人',
-  '沒有子女，卻把畢生積蓄留給了照顧他到最後的養女',
-  '一手打造的家傳菜色，成了後代逢年過節必吃的味道',
-  '收留過路的旅人與難民，家門始終為需要的人敞開',
-  '靠一己之力擋下一場即將爆發的家族紛爭，讓兄弟姊妹沒有反目',
-  '種下的一整片果園，養活了往後三代人',
-  '把僅有的土地分給了佃戶，自己晚年反倒一無所有卻心安',
-  '修復了一座年久失修的廟宇，成為鄉里的信仰中心',
-  '教會了整個部落辨識草藥，救回無數性命',
-  '用畢生積蓄贖回了被賣去異鄉的姪女',
-  '在饑荒年間開倉放糧，救了半個村子',
-  '留下的一手裁縫手藝，讓貧困人家的孩子也能穿上像樣的衣裳',
-  '默默記錄下家族與部落的口述歷史，成了唯一的文字紀錄',
-  '在戰亂中庇護了一整批被追捕的鄰居',
-  '一輩子沒攢下什麼財產，卻教會孩子如何誠實做人',
-  '留下的釀酒配方，後來成了整個地區的招牌',
-  '抵押房產救助了瀕臨破產的整條街的商家',
-  '培植出一種抗旱的作物品種，讓後代不再懼怕乾旱',
-  '收養了一整窩因戰爭失去父母的孩子',
-  '用一輩子的積蓄蓋了一間免費的診所',
-  '留下的木雕手藝，成了整個家族世代相傳的技藝',
-  '教會了全村識字，讓下一代得以走出去看世界',
-  '一手創立的互助會，撐過了好幾代人的難關',
-  '用有限的資源，養大了鄰居遺留下的三個孤兒',
-  '沒有留下財富，卻讓每個認識他的人都記得他的善良',
-  '修好了一條讓全村受惠的灌溉水道',
-  '把畢生的航海經驗寫成手札，指引了後來的水手',
-  '在異鄉打拚一輩子，最終讓子孫得以在當地扎根立足',
-  '靠一手好廚藝，撐起了全家人的溫飽',
-  '留下的一封封家書，成了後代了解那個年代最珍貴的紀錄',
-  '用畢生積蓄辦了一所免學費的私塾',
-  '一輩子替人接生，親手迎接了整個村莊三代人的誕生',
-  '沒有顯赫的成就，但鄰居家有難時，總是第一個伸出援手',
-  '留下的縫紉手藝，養活了好幾個徒弟一家老小',
-  '在最艱困的年代，堅持每天分一碗粥給乞討的路人',
-  '用自己的方式，悄悄保住了瀕臨失傳的一門古老技藝',
-  '幫助整條街的孩子免於失學，自己卻連書都沒讀完',
-  '留下的一本帳冊，意外成了後人研究那個年代物價的珍貴史料',
-  '拼盡全力保住了家族傳下來的那塊地，沒讓它落入他人之手',
-  '教會了子孫如何在逆境中仍然保持善良',
-  '沒能出人頭地，但把三個孩子都教養得正直善良',
-  '用一輩子的積蓄，換來了子孫接受教育的機會',
-  '靠著幾畝薄田，硬是撐過了戰亂與饑荒',
-  '留下的手繪地圖，多年後成了考證當地歷史的重要線索',
-  '收容了一群被驅逐的異鄉人，讓他們得以安身立命',
-  '一輩子鑽研一門手藝，直到臨終前才傳給唯一的徒弟',
-  '沒有留下財富，卻在鄰里之間留下了值得信賴的名聲',
-  '用僅剩的力氣，把家人一個個安置到了安全的地方',
-  '靠著誠信經商，讓家族生意撐過了好幾次危機',
-  '留下的織布手藝，撐起了整個家族好幾代的生計',
-  '一輩子行醫救人，卻從不收窮苦人家一分錢',
-  '沒能改變什麼大事，但讓身邊的人都感受到被在乎',
-  '留下的漁獲技巧，讓整個漁村得以年年豐收',
-  '拼死護住了村裡僅存的水源，讓全村得以撐過乾旱',
-  '一輩子沒離開過家鄉，卻把家鄉的故事說給了全世界聽',
-  '收留了流落異鄉的樂師，讓一門手藝得以流傳下去',
-  '靠自己摸索出的耕作方法，讓貧瘠的土地重新有了收成',
-  '留下的一手釀造技藝，成了後代謀生的依靠',
-  '用畢生積蓄，資助了村裡第一位走出去讀書的孩子',
-  '沒有顯赫地位，卻在動盪年代裡守住了全家人的性命',
-  '留下的一套木工工具，至今仍被後人使用著',
-  '一輩子替人修補漁網，卻從沒學會為自己求些什麼',
-  '用僅有的積蓄，買下了一塊地留給了後代安身',
-  '留下的手抄經文，成了後人唯一的信仰依託',
-  '靠一己之力扛住了整個家族在戰後的重建',
-  '沒能富貴一生，卻讓每個孩子都吃飽穿暖長大成人',
-  '留下的一手釀醋技藝，成了家傳事業的起點',
-  '一輩子沒有名分，卻用行動撐起了整個家',
-  '靠著一手好記性，替全村保存了幾乎失傳的歌謠',
-  '留下的紡織工具與圖樣，成了女兒與孫女的嫁妝',
-  '用一輩子的辛勞，換來了子孫不必再流離失所的日子',
-  '沒有留下財富與地位，但走的時候，整個村子都來送行',
-  '一手創立的商號，靠誠信經營撐過了三個世代',
-  '留下的釀茶手藝，成了後代在異鄉安身立命的本錢',
-  '靠著堅持，讓一整條街的孩子都學會了讀書寫字',
-  '沒能改變自己的命運，卻讓下一代有了選擇的機會',
-  '留下的漁船與技藝，成了整個家族世代賴以維生的根基',
-  '一輩子默默耕種，卻讓整片荒地變成了可以傳家的良田',
-  '用一生的積蓄，換來了子女免於重蹈自己貧困的命運',
-  '沒有留下驚人的成就，但走的時候問心無愧，這就夠了'
-];
-const MEANING_TEMPLATES = [
-  '直到臨終前，才明白陪伴家人比追求成就更重要',
-  '一輩子都在忙碌，晚年回頭看，覺得值得',
-  '始終沒想明白活著的意義，只是盡力把日子過好',
-  '曾以為要功成名就才算成功，後來才發現平凡也是一種圓滿',
-  '找到了屬於自己的答案：好好愛過的人，就沒有白活',
-  '一直在尋找答案，直到嚥氣那一刻，仍在路上，沒能找到',
-  '相信只要能讓後代過得更好，這一世就沒有白來',
-  '晚年篤定地說，這一生最大的意義，就是被人需要過',
-  '年輕時渴望被世界記住，老了才發現只想被家人記住',
-  '窮困了一輩子，卻始終覺得自己過得比誰都富有',
-  '從沒問過人生的意義是什麼，只是一天一天好好活著',
-  '直到失去至親那一刻，才真正懂得什麼叫做珍惜',
-  '花了大半輩子追逐一個夢想，最後才明白過程本身就是答案',
-  '一生顛沛流離，卻始終相信下一世會更好',
-  '從沒得到過什麼肯定，但從未後悔自己做過的每個選擇',
-  '晚年終於學會放下，才第一次真正感到自由',
-  '這一世活得平凡，但每一天都全力以赴，這就是答案',
-  '始終覺得自己欠家人一句道歉，直到最後也沒能說出口',
-  '直到最後一刻，才明白自己一直害怕的死亡，其實沒有那麼可怕',
-  '從沒特別追求什麼，但每一天能笑著入睡，就已經足夠',
-  '年輕時痛恨這個貧困的出身，年老後才懂得感激它教會自己的堅韌',
-  '一生沒能原諒傷害過自己的人，直到臨終前才終於放下',
-  '曾經以為自己一事無成，直到看見孩子長大成人，才明白這就是意義',
-  '從未想過人生有什麼意義，只覺得能吃飽穿暖，已是萬幸',
-  '用一輩子的時間，才學會不再和自己過不去',
-  '直到失去健康，才明白能平凡地活著本身就是一種幸運',
-  '從沒得到過愛人的回應，卻始終慶幸自己曾經真心愛過',
-  '用一生驗證了一件事：越是平凡的日子，越值得珍惜',
-  '始終相信，只要盡力活過，便無愧於這一世',
-  '一輩子都在等一個答案，臨終前才明白，答案就是不停尋找的過程本身',
-  '從沒後悔過當初的選擇，即使那個選擇讓他吃了一輩子的苦',
-  '直到年老才明白，年輕時以為的失敗，其實都是養分',
-  '曾以為快樂要靠外在的成就，後來才發現，快樂其實一直都在身邊',
-  '用一生守護著一個人，最後才明白，被需要本身就是意義',
-  '從未擁有過什麼，卻始終覺得自己的人生無比富足',
-  '直到臨終前，才鼓起勇氣說出那句一直沒能說出口的「謝謝」',
-  '一輩子在流浪，卻在異鄉找到了比故鄉更深的歸屬感',
-  '從沒想通生死的意義，但走的時候，心裡是平靜的',
-  '用一生證明了，善良的人不一定會被善待，但依然值得善良',
-  '曾經害怕平凡，老了才明白，能平凡地被愛，才是真正的幸運',
-  '直到失去至親，才懂得自己一直被愛著，卻從未好好珍惜',
-  '一輩子勞碌，卻在最後一刻，想起的都是些微不足道的小事，那才是最珍貴的',
-  '從沒等到世界的肯定，但家人的一句話，讓這一生值得',
-  '用一生的顛沛流離，換來了對「安穩」二字最深的體會',
-  '曾以為要走得很遠才算成功，後來才發現，能回家，才是真正的圓滿',
-  '直到最後，仍然相信這個世界值得被溫柔對待',
-  '一輩子沒得到過公平對待，卻始終沒有變得憤世嫉俗',
-  '從沒問過為什麼是自己承受這些苦難，只是默默扛了下來',
-  '用一生換來一個簡單的體悟：活著，本身就是一種勇氣',
-  '曾經渴望被所有人喜歡，老了才明白，被少數人真心愛著就夠了',
-  '直到臨終前，才終於原諒了年輕時犯下的錯',
-  '一輩子都在為別人而活，最後卻在其中找到了真正的自己',
-  '從未擁有太多，卻用僅有的一切，把日子過得有滋有味',
-  '用一生的等待，換來了明白「值得」這兩個字的重量',
-  '曾以為人生是一場競賽，最後才發現，它其實是一場陪伴',
-  '直到走到人生盡頭，才敢承認自己也曾脆弱過',
-  '一輩子沒能實現年輕時的夢想，卻在平凡的日常裡，找到了另一種滿足',
-  '從沒後悔選擇留下來陪伴，即使那意味著放棄了很多機會',
-  '用一生驗證了，苦難不會白白發生，它總會在某天開出花來',
-  '曾經以為自己被世界遺忘，後來才發現，一直有人默默記著他',
-  '直到臨終，才明白自己一直渴望的，不過是一句「辛苦了」',
-  '一輩子沒說過幾句浪漫的話，卻用行動愛了一個人一輩子',
-  '從沒能給家人富裕的生活，卻給了他們滿滿的安全感',
-  '用一生的堅持，換來了子孫不用再經歷同樣的苦',
-  '曾以為要功成名就才配得上被愛，後來才明白愛從不計較這些',
-  '直到失去一切，才發現自己一直擁有著最重要的東西——活著本身',
-  '一輩子活得小心翼翼，臨終前終於學會不再害怕犯錯',
-  '從沒真正快樂過，但也從沒真正絕望過，就這樣，活成了自己的樣子',
-  '用一生明白了，有些遺憾，不需要被解開，只需要被接受',
-  '曾經以為自己很渺小，直到看見自己的存在，如何悄悄改變了別人的一生',
-  '直到最後，都相信著下一世會更好，這份相信，支撐他走完了這一生',
-  '一輩子沒有轟轟烈烈的故事，但每一天都認真地活過，這就是答案',
-  '從沒找到人生的終極意義，但找到了每天早晨起床的理由，也就夠了',
-  '用一生證明，就算世界不公平，也不代表要放棄善良',
-  '曾以為孤獨是一種懲罰，老了才發現，那也是一種與自己相處的方式',
-  '直到臨終前，才明白自己這一生最大的成就，是從未放棄過任何一個至親',
-  '一輩子都在追趕，臨終前終於學會，慢下來看看身邊的風景',
-  '從沒等到遲來的公道，卻在放下執念的那一刻，感到前所未有的輕鬆',
-  '用一生詮釋了什麼叫做「盡人事，聽天命」',
-  '曾經以為活著只是為了生存，後來才明白，能愛與被愛，才是活著的理由',
-  '直到走到生命盡頭，仍然相信這一切都是值得的',
-  '一輩子沒能給出什麼驚天動地的答案，但用行動證明了，好好活著，就是意義',
-  '從沒真正搞懂命運為何如此安排，只是選擇了不抱怨地走完全程',
-  '用一生換來一個簡單的領悟：這一世，好好活過，就夠了',
-  '曾以為自己一事無成，直到嚥氣那一刻，才想起這一生幫助過的每一個人'
-];
+// Legacy (此生印記) and meaning (人生留下的話) are bucketed per occupation category so the
+// deed and the reflection both make sense for how that life was actually lived.
+const LEGACY_BY_CATEGORY = {
+  noble: [
+    '把家族產業與頭銜完整交棒給了下一代',
+    '一輩子沒能親手打拚什麼，卻守住了祖上留下的家業沒有敗掉',
+    '把僅有的土地分給了佃戶，自己晚年反倒一無所有卻心安',
+    '拼盡全力保住了家族傳下來的那塊地，沒讓它落入他人之手',
+    '用家族的財富資助了無數窮困人家的孩子讀書，卻從未張揚',
+    '在動盪年代守住了家業，讓家人平安活下來',
+    '沒有顯赫的政績，但治下百姓多年後仍念著他的好',
+    '把家族的財富轉為濟世的善舉，晚年開設了免費的診所與學堂',
+    '家道中落後，靠著僅存的人脈與尊嚴，撐住了家人的體面',
+    '在饑荒年間開倉放糧，救了半個村子'
+  ],
+  merchant: [
+    '一手創立的商號，靠誠信經營撐過了三個世代',
+    '白手起家打下的事業版圖，後來由子女接手延續下去',
+    '靠著誠信經商，讓家族生意撐過了好幾次危機',
+    '投資失利幾乎傾家蕩產，晚年卻靠東山再起挽回了名聲',
+    '把畢生積蓄捐建了一間造福鄉里的義倉',
+    '留下的一套經商心法，成了後代子孫做生意的圭臬',
+    '抵押房產救助了瀕臨破產的整條街的商家',
+    '沒有留下財富，卻留下了「誠信」二字的招牌，讓後代生意越做越大',
+    '一輩子精打細算，卻在臨終前把大半財產捐給了素不相識的窮人',
+    '靠一己之力扛住了家族企業在時代劇變下的轉型'
+  ],
+  military: [
+    '戰死沙場，卻換來了家鄉往後幾十年的太平',
+    '一輩子沒能升到多高的軍階，卻帶出了好幾個活下來的部下',
+    '靠著軍功換來的撫卹，讓家人得以在戰後重新站起來',
+    '在最慘烈的一役中，用自己換來了整支部隊的撤退',
+    '退役後把畢生的作戰經驗寫成手札，成了後輩的教材',
+    '沒有留下勳章與榮耀，但守住了自己不曾對平民舉刀的原則',
+    '一輩子提心吊膽，卻靠著這份警覺守住了全家人的性命',
+    '戰後花了餘生尋找失散的戰友，只為了完成一句沒說完的承諾',
+    '在戰亂中庇護了一整批被追捕的鄰居',
+    '靠著軍旅攢下的餉銀，讓家人終於不用再挨餓'
+  ],
+  professional: [
+    '一輩子行醫救人，卻從不收窮苦人家一分錢',
+    '教會了全村識字，讓下一代得以走出去看世界',
+    '用畢生積蓄辦了一所免學費的私塾',
+    '晚年開了一間小小的私塾，教會了整條街的孩子認字',
+    '留下的手稿或研究，多年後才被人重新發現價值',
+    '一輩子替人接生，親手迎接了整個村莊三代人的誕生',
+    '教過的學生後來都成了對社會有用的人，這是最大的成就感',
+    '用專業守住了無數個素不相識家庭的希望',
+    '晚年仍堅持義診，直到走不動的那一天',
+    '默默記錄下家族與部落的口述歷史，成了唯一的文字紀錄'
+  ],
+  artisan: [
+    '留下一手好手藝，教會了下一代',
+    '培養出的徒弟後來成了一方名匠',
+    '留下的一套工具與筆記，後來成了徒弟們的傳家寶',
+    '一手打造的家傳菜色，成了後代逢年過節必吃的味道',
+    '留下的木雕手藝，成了整個家族世代相傳的技藝',
+    '一輩子鑽研一門手藝，直到臨終前才傳給唯一的徒弟',
+    '留下的釀酒配方，後來成了整個地區的招牌',
+    '留下的裁縫手藝，讓貧困人家的孩子也能穿上像樣的衣裳',
+    '沒有顯赫的成就，但這門手藝靠他才沒有失傳',
+    '留下的一手釀醋技藝，成了家傳事業的起點'
+  ],
+  farmer: [
+    '種下的一整片果園，養活了往後三代人',
+    '靠著幾畝薄田，硬是撐過了戰亂與饑荒',
+    '靠自己摸索出的耕作方法，讓貧瘠的土地重新有了收成',
+    '一輩子默默耕種，卻讓整片荒地變成了可以傳家的良田',
+    '拼死護住了村裡僅存的水源，讓全村得以撐過乾旱',
+    '沒有留下財富與地位，但走的時候，整個村子都來送行',
+    '一輩子沒攢下什麼財產，卻教會孩子如何誠實做人',
+    '用一輩子的積蓄，換來了子孫接受教育的機會',
+    '沒能出人頭地，但把三個孩子都教養得正直善良',
+    '收養了幾個無依無靠的孩子，把他們當親生的養大'
+  ],
+  miner: [
+    '一輩子在地底下討生活，卻從沒讓家人挨過餓',
+    '教會了新來的礦工怎麼辨識坑道裡的危險徵兆，救過不少人的命',
+    '沒能留下財富，但工友們都記得他總是最後一個離開坑道確認安全',
+    '攢下的礦工津貼，讓孩子得以走出礦村讀書',
+    '在一次坍塌中把後面的工友推了出去，自己卻沒能出來',
+    '留下的一身職業病，換來了子女不必再下礦坑的日子',
+    '一輩子沒見過幾次陽光，卻把地底下的日子過得踏實',
+    '靠著礦坑的微薄工錢，撐起了一整個家',
+    '沒有留下什麼財產，但工友間都知道他從不偷工減料',
+    '用命換來的撫卹金，成了家人翻身的起點'
+  ],
+  sailor: [
+    '一輩子在海上討生活，卻總能平安把船帶回港',
+    '留下的航海經驗與海圖，指引了後來的水手少走許多冤枉路',
+    '在一次風暴中把僅有的救生位置讓給了年輕的水手',
+    '靠捕魚攢下的積蓄，讓孩子得以在岸上讀書識字',
+    '沒能留下財富，但整個漁村都記得他從不獨占漁獲',
+    '一輩子與海搏鬥，臨終前終於學會與它和平共處',
+    '留下的漁獲技巧，讓整個漁村得以年年豐收',
+    '靠著一手好船藝，撐起了全家人的溫飽',
+    '沒有顯赫的成就，但船員之間都信任他的判斷',
+    '把畢生的航海經驗寫成手札，指引了後來的水手'
+  ],
+  worker: [
+    '一輩子在流水線上度過，卻把日子過得有滋有味',
+    '靠著一份穩定的差事，讓孩子得以安穩長大',
+    '沒能出人頭地，但把三個孩子都教養得正直善良',
+    '用一輩子的積蓄，換來了子孫接受教育的機會',
+    '一輩子沒攢下什麼財產，卻教會孩子如何誠實做人',
+    '收養了幾個無依無靠的孩子，把他們當親生的養大',
+    '沒有留下財富與地位，但走的時候，鄰居都來送行',
+    '靠著日復一日的堅持，把一份平凡的工作做到了極致',
+    '沒有顯赫的成就，但同事之間都記得他總是最先伸出援手',
+    '用微薄的薪水，撐起了一整個家的溫飽'
+  ]
+};
+const MEANING_BY_CATEGORY = {
+  noble: [
+    '年輕時渴望被世界記住，老了才發現只想被家人記住',
+    '曾以為要功成名就才配得上被愛，後來才明白愛從不計較這些',
+    '一輩子活在祖蔭之下，直到臨終前才明白自己也曾真正努力過',
+    '曾以為家世決定了一切，後來才懂得，人品才是真正的傳家寶',
+    '直到失去財富與地位，才明白自己一直擁有著最重要的東西——家人',
+    '從未想過人生有什麼意義，只覺得能守住家業，已是萬幸',
+    '曾以為要走得很遠才算成功，後來才發現，能回家，才是真正的圓滿',
+    '一輩子沒得到過真正的自由，臨終前才學會放下身分的枷鎖',
+    '家道起落看過太多次，最後只想留給後代一份平靜的心',
+    '用一生驗證了：越是顯赫的出身，越容易忘了什麼是真正重要的事'
+  ],
+  merchant: [
+    '一輩子都在計算得失，臨終前才明白有些東西從來算不清',
+    '曾以為財富能買到一切，後來才發現買不到的東西才最珍貴',
+    '用一生追逐財富，最後才懂得，真正的富有是問心無愧',
+    '直到破產那一刻，才明白家人從未在乎他到底賺了多少錢',
+    '一輩子精打細算，卻在最後一刻，什麼都不想帶走',
+    '曾以為冒險是為了成功，後來才發現，是為了不留遺憾',
+    '用一生的顛沛流離，換來了對「安穩」二字最深的體會',
+    '直到晚年才明白，誠信比任何一筆生意都值錢',
+    '一輩子在賭一個更好的明天，臨終前終於贏得了內心的平靜',
+    '曾經以為要功成名就，後來才發現，家人圍在身邊就是最大的財富'
+  ],
+  military: [
+    '直到臨終前，才明白自己一直害怕的死亡，其實沒有那麼可怕',
+    '一輩子在戰場上求生，最後才懂得，活下來本身就是一種勇氣',
+    '曾以為榮耀值得用命去換，老了才明白，能回家才是最大的榮耀',
+    '從沒問過為什麼是自己上戰場，只是選擇了不抱怨地走完全程',
+    '直到失去袍澤，才懂得自己一直被那份情誼支撐著',
+    '用一生詮釋了什麼叫做「盡人事，聽天命」',
+    '一輩子提心吊膽，卻在放下武器的那一刻，第一次真正感到自由',
+    '曾以為打贏才是意義，後來才發現，能保護到誰，才是意義',
+    '直到走到人生盡頭，才敢承認自己也曾脆弱過',
+    '用一生換來一個簡單的體悟：活著，本身就是一種勇氣'
+  ],
+  professional: [
+    '直到臨終前，才明白陪伴家人比追求成就更重要',
+    '一輩子都在助人，最後才明白，自己也在被這些人溫柔對待著',
+    '從沒等到世界的肯定，但學生與病人的一句謝謝，讓這一生值得',
+    '用一生守護著別人，最後才明白，被需要本身就是意義',
+    '曾以為知識是為了改變世界，後來才發現，是為了溫柔地對待世界',
+    '一輩子沒能治好所有人，卻在陪伴中學會了與遺憾共處',
+    '直到年老才明白，年輕時以為的失敗，其實都是養分',
+    '用一生驗證了，苦難不會白白發生，它總會在某天開出花來',
+    '曾經以為自己一事無成，直到看見學生與病人的笑容，才明白這就是意義',
+    '一輩子沒有轟轟烈烈的故事，但每一天都認真地活過，這就是答案'
+  ],
+  artisan: [
+    '一輩子鑽研一門手藝，臨終前才明白，堅持本身就是意義',
+    '曾以為手藝是為了謀生，後來才發現，是為了留下點什麼',
+    '從未擁有過什麼，卻始終覺得自己的人生無比富足',
+    '用一生打磨一門技藝，換來的不是名利，而是問心無愧',
+    '直到手再也拿不動工具，才明白自己這輩子最愛的就是這份專注',
+    '曾經以為自己很渺小，直到看見自己的手藝，如何悄悄改變了別人的一生',
+    '一輩子沒有驚天動地的成就，但每一件作品都是認真活過的證明',
+    '用一生明白了，慢工出細活，人生也是一樣',
+    '從沒得到過世界的肯定，但徒弟的一句「謝謝師傅」，讓這一生值得',
+    '直到最後，仍然相信著手藝會留下來，這份相信支撐他走完了這一生'
+  ],
+  farmer: [
+    '從沒特別追求什麼，但每一天能吃飽穿暖、笑著入睡，就已經足夠',
+    '年輕時痛恨這個貧困的出身，年老後才懂得感激它教會自己的堅韌',
+    '用一生的堅持，換來了子孫不用再經歷同樣的苦',
+    '直到失去健康，才明白能平凡地活著本身就是一種幸運',
+    '一輩子看天吃飯，卻學會了與無常和平共處',
+    '曾以為豐收才是意義，後來才發現，播種本身就是意義',
+    '從未擁有太多，卻用僅有的一切，把日子過得有滋有味',
+    '一輩子沒得到過公平對待，卻始終沒有變得憤世嫉俗',
+    '用一生明白了，土地不會辜負用心對待它的人',
+    '曾以為自己一事無成，直到嚥氣那一刻，才想起這一生餵飽過的每一張嘴'
+  ],
+  miner: [
+    '一輩子在黑暗中工作，卻始終相信總有一天能見到光',
+    '從沒等到遲來的公道，卻在放下執念的那一刻，感到前所未有的輕鬆',
+    '用一生詮釋了什麼叫做「盡人事，聽天命」',
+    '一輩子提心吊膽下坑，卻在退休那天，第一次真正感到自由',
+    '曾以為活著只是為了生存，後來才明白，能平安回家，就是最大的幸福',
+    '直到失去健康，才明白能平凡地活著本身就是一種幸運',
+    '從沒問過為什麼是自己下坑，只是選擇了不抱怨地走完全程',
+    '一輩子勞碌，卻在最後一刻，想起的都是些微不足道的小事，那才是最珍貴的',
+    '用一生換來一個簡單的體悟：活著，本身就是一種勇氣',
+    '曾以為自己一事無成，直到嚥氣那一刻，才想起這一生幫助過的每一個工友'
+  ],
+  sailor: [
+    '一輩子與大海搏鬥，卻始終相信它不會真正拋棄自己',
+    '曾以為人生是一場競賽，最後才發現，它其實是一場陪伴',
+    '從未擁有太多，卻用僅有的一切，把日子過得有滋有味',
+    '一輩子在海上漂泊，卻在異鄉找到了比故鄉更深的歸屬感',
+    '曾以為要走得很遠才算成功，後來才發現，能回家，才是真正的圓滿',
+    '用一生的顛沛流離，換來了對「安穩」二字最深的體會',
+    '從沒等到風平浪靜，卻學會了在風浪裡也能睡得安穩',
+    '直到走到人生盡頭，才敢承認自己也曾脆弱過',
+    '一輩子看著潮起潮落，才懂得人生本就沒有永遠的順風',
+    '曾以為自己一事無成，直到嚥氣那一刻，才想起這一生渡過的每一趟航程'
+  ],
+  worker: [
+    '從沒特別追求什麼，但每一天能吃飽穿暖、笑著入睡，就已經足夠',
+    '年輕時痛恨這個貧困的出身，年老後才懂得感激它教會自己的堅韌',
+    '一輩子勞碌，卻在最後一刻，想起的都是些微不足道的小事，那才是最珍貴的',
+    '從未擁有太多，卻用僅有的一切，把日子過得有滋有味',
+    '一輩子沒得到過公平對待，卻始終沒有變得憤世嫉俗',
+    '從沒等到遲來的公道，卻在放下執念的那一刻，感到前所未有的輕鬆',
+    '曾以為人生是一場競賽，最後才發現，它其實是一場陪伴',
+    '直到失去健康，才明白能平凡地活著本身就是一種幸運',
+    '用一生的堅持，換來了子孫不用再經歷同樣的苦',
+    '曾以為自己一事無成，直到嚥氣那一刻，才想起這一生幫助過的每一個人'
+  ]
+};
 const CHILD_DEATH_NOTES = [
   '沒能長大，是這個家永遠的遺憾',
   '這一世很短，甚至沒能好好認識這個世界',
@@ -1365,8 +1613,14 @@ const CHILD_DEATH_NOTES = [
   '這一世很短，卻是父母心裡永遠柔軟的一塊',
   '沒能親口喊出「爸爸」「媽媽」以外的話'
 ];
-function pickLegacy(){ return LEGACY_TEMPLATES[Math.floor(Math.random()*LEGACY_TEMPLATES.length)]; }
-function pickMeaning(){ return MEANING_TEMPLATES[Math.floor(Math.random()*MEANING_TEMPLATES.length)]; }
+function pickLegacy(category){
+  const list = LEGACY_BY_CATEGORY[category] || LEGACY_BY_CATEGORY.worker;
+  return list[Math.floor(Math.random()*list.length)];
+}
+function pickMeaning(category){
+  const list = MEANING_BY_CATEGORY[category] || MEANING_BY_CATEGORY.worker;
+  return list[Math.floor(Math.random()*list.length)];
+}
 function pickChildDeathNote(){ return CHILD_DEATH_NOTES[Math.floor(Math.random()*CHILD_DEATH_NOTES.length)]; }
 
 document.getElementById('reviewClose').addEventListener('click', () => {
@@ -1397,15 +1651,17 @@ function runSamsaraChain(startYear){
     r.endYear = Math.round(Math.min(year, birthYear));
     const age = r.endYear - r.year;
     r.age = age;
-    r.occupation = pickOccupation(r.tier, r.year, age);
-    r.deathCause = pickDeathCause(r.year, age);
+    const occ = pickOccupation(r.tier, r.year, age);
+    r.occupation = occ.name;
+    r.background = occ.background;
+    r.deathCause = pickDeathCause(r.year, age, occ.category);
     if(age > 14){
       const m = pickMarriage(age);
       r.married = m.married;
       r.marryAge = m.marryAge;
       r.children = pickChildren(m.married, age);
-      r.legacy = pickLegacy();
-      r.meaning = pickMeaning();
+      r.legacy = pickLegacy(occ.category);
+      r.meaning = pickMeaning(occ.category);
     } else {
       r.childDeathNote = pickChildDeathNote();
     }
@@ -1454,6 +1710,8 @@ function runSamsaraChain(startYear){
 }
 
 function buildLifeDetailHTML(r){
+  const backgroundLine = r.background ? `<div class="ri-job">出身：${r.background}</div>` : '';
+  const occupationLine = r.occupation ? `<div class="ri-job">職業：${r.occupation}</div>` : '';
   const deathLine = r.deathCause ? `<div class="ri-job">死因：${r.deathCause}</div>` : '';
   const marriageLine = (r.married !== undefined)
     ? `<div class="ri-job">婚姻：${r.married ? `${r.marryAge}歲成婚，育有${r.children}名子女` : '終身未婚'}</div>`
@@ -1461,7 +1719,7 @@ function buildLifeDetailHTML(r){
   const legacyBlock = r.legacy
     ? `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`
     : (r.childDeathNote ? `<div class="ri-meaning">「${r.childDeathNote}」</div>` : '');
-  return deathLine + marriageLine + legacyBlock;
+  return backgroundLine + occupationLine + deathLine + marriageLine + legacyBlock;
 }
 
 function showChainReview(results){
@@ -1483,7 +1741,6 @@ function showChainReview(results){
             <span class="ri-years">${years}</span>
           </div>
           <div class="ri-event">${event}</div>
-          ${r.occupation ? `<div class="ri-job">職業：${r.occupation}</div>` : ''}
           ${buildLifeDetailHTML(r)}
         </div>
       </div>

@@ -46,6 +46,7 @@ FR-6 的原意是「起點完全隨機，不開放手動選國籍」，理由是
 | FR-12 | 結語畫面分段敘事動畫 | P0 | **已實作**：`#chainEndOverlay` 摘要／原因／標題／提問依序淡入並常駐畫面，不再互相取代消失 |
 | FR-13 | 「是否再輪迴一次」分支結局 | P0 | **已實作**：結語畫面改為是／否二選一；否 → 安撫畫面 → THE END 場景 |
 | FR-14 | 使用者狀態改用 cookie 持久化 | P1 | **已實作**：故鄉國籍/年齡與抽卡統計（含保底計數）從 localStorage 遷移為 cookie |
+| FR-15 | 出身／職業／死因／此生印記／人生領悟 互相關聯 | P0 | **已實作**：職業改為 `{name, category, background}`，死因／此生印記／人生領悟依 category 分池挑選，不再各自獨立隨機 |
 
 ## 詳細規格摘要
 
@@ -75,6 +76,17 @@ FR-6 的原意是「起點完全隨機，不開放手動選國籍」，理由是
 4. **安撫畫面（`#restOverlay`）**：依序淡入「辛苦了。」「這一路走來的酸甜苦辣，你都好好地承受過了。」「不用再悲傷，不用再難過，也不用再受苦了。」「就安安靜靜地，把這一世好好過完。屬於你的好結局，已經在前面等你了。」，按「嗯，我知道了」進入 THE END 畫面。
 5. **THE END 畫面（`#theEndOverlay`）**：純 CSS/漸層繪製的日出場景（暖色天空漸層＋發光太陽＋山丘剪影），置中淡入「THE END」字樣與「回到人間」按鈕，關閉後回到主畫面。三個畫面（結語→安撫→THE END）形成完整的「否」分支收尾體驗，不需要任何外部圖片素材。
 6. **cookie 持久化**：新增 `setCookie`/`getCookie` helper（`document.cookie`，`max-age` 365 天），取代原本 `HOME_COUNTRY_KEY`/`HOME_AGE_KEY` 的 `localStorage` 存取。另外新增 `STATS_KEY` cookie，把原本只存在記憶體、重新整理就歸零的 `stats`（總抽數/各稀有度數）與保底計數 `sincePity` 一併持久化，存檔動作統一收斂在 `updateStatsUI()` 內，所有變更 stats 的地方都會自動存檔，不用逐一補寫。
+
+### FR-15 實作說明（出身／職業／死因／此生印記／人生領悟 互相關聯，已上線）
+
+原本的問題：`OCCUPATIONS_BY_ERA`/`CHILD_OCCUPATIONS` 只是純字串陣列，`DEATH_CAUSES_BY_ERA`（死因）、`LEGACY_TEMPLATES`（此生印記，約 90 條）、`MEANING_TEMPLATES`（人生領悟，約 87 條）都是跟職業完全無關、各自獨立抽選的扁平清單，容易抽出「礦工卻死於海難」「乞丐卻留下『一手創立的商號』印記」這類互相矛盾的組合。
+
+改法：把每個職業改成 `{name, category, background}` 物件，`category` 是串連死因／印記／領悟的鍵：
+1. **9 個職業分類**：`noble`（貴族／世家）、`merchant`（商賈／實業）、`military`（軍人／武備）、`professional`（專業／學者／神職）、`artisan`（工匠／技術）、`farmer`（農民）、`miner`（礦工）、`sailor`（漁民／水手／碼頭工人）、`worker`（其餘勞動／服務業）。原本農民/礦工/漁夫/僕役/小販等全部混在一個籠統的 `labor` 分類，使用者實測發現「礦工跟漁夫不應該出現在同一個人的故事中」——現在拆開後，礦工只會抽到礦坑坍塌／塵肺病，漁夫只會抽到船難／溺斃，不會共用同一套死因或印記文案。
+2. **`pickOccupation(tier, year, age)`** 回傳整個 `{name, category, background}` 物件（不再只回傳字串），`background` 是跟該職業直接綁定的出身描述（如「殖民地總督」配「母國權貴世家，被派任海外統治一方」），成人與孩童（`CHILD_OCCUPATIONS`）都補齊了 background。
+3. **`DEATH_CAUSES_BY_ERA`** 的 `adult` 從扁平陣列改成依 9 個 category 分組，同一個時代裡不同職業類別的死因完全不同（如 1500 年前：`military` 是戰死沙場，`sailor` 是船難溺斃，`miner` 是礦坑坍塌）；孩童死因仍維持時代通用（不分職業類別）。`pickDeathCause(year, age, category)` 用 category 查表，查無則 fallback 到 `worker`。
+4. **`LEGACY_BY_CATEGORY`／`MEANING_BY_CATEGORY`** 取代原本的 `LEGACY_TEMPLATES`／`MEANING_TEMPLATES`，每個 category 各自維護約 10 條此生印記＋10 條人生領悟，內容直接呼應該職業的處境（如 `sailor` 的印記多半跟海／船有關，`noble` 的領悟多半跟家世／財富的意義有關）。`pickLegacy(category)`／`pickMeaning(category)` 同樣用 category 查表，查無則 fallback 到 `worker`。
+5. **顯示層**：`buildLifeDetailHTML(r)` 統一輸出「出身→職業→死因→婚姻→此生印記／人生領悟」的順序，`showMainResult`／`showChainReview` 兩處原本各自重複的「職業：」那行拿掉，改成完全交給 `buildLifeDetailHTML` 統一渲染，避免未來新增欄位要改兩個地方。
 
 ### FR-7～FR-11：仍是規劃中，尚未實作（見下方 Feature List 與詳細規格）
 

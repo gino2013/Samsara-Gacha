@@ -36,3 +36,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 16:48 — Add a life-by-life chain review screen and force the final life to the player's chosen home country
 - 2026-07-08 17:06 — Switch the reincarnation chain to a floating life count anchored on the player's real age and birth year
 - 2026-07-08 17:18 — Add era-appropriate occupations and widen the starting-year range so chains typically reach about ten lives
+- 2026-07-08 17:21 — Add logs/ with a detailed narrative record of today's session, backfilled from commit history

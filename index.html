@@ -1230,10 +1230,11 @@ function renderOnboardTrack(){
 
 function updateActiveChip(){
   const track = document.getElementById('onboardTrack');
-  const center = track.scrollLeft + track.clientWidth/2;
+  const center = track.getBoundingClientRect().left + track.clientWidth/2;
   let closest = null, closestDist = Infinity;
   [...track.children].forEach(chip => {
-    const mid = chip.offsetLeft + chip.offsetWidth/2;
+    const rect = chip.getBoundingClientRect();
+    const mid = rect.left + rect.width/2;
     const d = Math.abs(mid - center);
     chip.classList.remove('active');
     if(d < closestDist){ closestDist = d; closest = chip; }

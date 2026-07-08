@@ -29,3 +29,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-07 18:07 — Add /rock command with docs/commit-log.md logging
 - 2026-07-08 15:51 — Add design/ folder documenting the current visual and gameplay design
 - 2026-07-08 16:00 — Add onboarding nationality picker and PRD for multi-life reincarnation chain
+- 2026-07-08 16:08 — Let players drag to spin the globe, scroll the picker with a wheel, and default it to Taiwan

@@ -251,7 +251,8 @@
     position:relative; width:280px; height:280px;
     display:flex; align-items:center; justify-content:center;
   }
-  #globeCanvas{ display:block; width:100%; height:100%; }
+  #globeCanvas{ display:block; width:100%; height:100%; cursor:grab; touch-action:none; }
+  #globeCanvas:active{ cursor:grabbing; }
   .pin{
     position:absolute; width:14px; height:14px; border-radius:50%;
     background:radial-gradient(circle, #fff, var(--ur2));
@@ -1130,6 +1131,23 @@ function loop(){
 }
 loop();
 
+let isDraggingGlobe = false;
+let dragStartX = 0;
+let dragStartYaw = 0;
+canvas.addEventListener('pointerdown', (e) => {
+  isDraggingGlobe = true;
+  idleSpin = false;
+  dragStartX = e.clientX;
+  dragStartYaw = yaw;
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', (e) => {
+  if(!isDraggingGlobe) return;
+  yaw = dragStartYaw - (e.clientX - dragStartX) * 0.008;
+});
+canvas.addEventListener('pointerup', () => { isDraggingGlobe = false; });
+canvas.addEventListener('pointercancel', () => { isDraggingGlobe = false; });
+
 function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
 function animateToLocation(country){
@@ -1203,8 +1221,10 @@ let selectedHome = ALL_COUNTRIES[0];
 
 function renderOnboardTrack(){
   const track = document.getElementById('onboardTrack');
-  track.innerHTML = ALL_COUNTRIES.map((c,i) =>
-    `<div class="onboard-chip" data-i="${i}"><div class="flag">${c.flag}</div><div class="name">${c.name}</div></div>`
+  const twIdx = ALL_COUNTRIES.findIndex(c => c.name === '台灣');
+  const order = [twIdx, ...ALL_COUNTRIES.map((_,i) => i).filter(i => i !== twIdx)];
+  track.innerHTML = order.map(i =>
+    `<div class="onboard-chip" data-i="${i}"><div class="flag">${ALL_COUNTRIES[i].flag}</div><div class="name">${ALL_COUNTRIES[i].name}</div></div>`
   ).join('');
 }
 
@@ -1237,6 +1257,12 @@ onboardTrack.addEventListener('scroll', () => {
   clearTimeout(onboardScrollTimer);
   onboardScrollTimer = setTimeout(updateActiveChip, 80);
 });
+onboardTrack.addEventListener('wheel', (e) => {
+  if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+    e.preventDefault();
+    onboardTrack.scrollLeft += e.deltaY;
+  }
+}, {passive:false});
 onboardTrack.addEventListener('click', (e) => {
   const chip = e.target.closest('.onboard-chip');
   if(chip) chip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});

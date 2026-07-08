@@ -450,7 +450,7 @@
     <h2 class="onboard-title">輪迴流轉</h2>
     <p class="onboard-sub">看看這幾世，你都活成了誰</p>
     <div class="review-list" id="reviewList"></div>
-    <button class="pull mega" id="reviewClose">經歷了這麼多，我們還記得什麼？</button>
+    <button class="pull mega" id="reviewClose">所有的曾經，都活成了此刻的你</button>
   </div>
 </div>
 
@@ -1400,7 +1400,7 @@ function showChainReview(results){
 function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
   document.getElementById('chainEndSummary').innerHTML =
-    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>${results.length}世流轉，${last.flag} ${last.name}… 此刻 2026 年的你生在一個很美好的國度。`;
+    `起點・西元 ${startYear} 年，你曾是 ${first.flag} ${first.name} 的一段生命，活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你成為了 ${last.flag} ${last.name}，被好好地放在這個很美好的國度。`;
   document.getElementById('chainEndOverlay').classList.remove('hide');
 }
 

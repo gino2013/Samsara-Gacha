@@ -49,3 +49,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 21:51 — Split the chain-end summary's closing clause onto its own line so long country names don't force an awkward mid-phrase wrap
 - 2026-07-08 21:52 — Match the reason line's font size to the title on the chain-end screen
 - 2026-07-08 22:00 — Keep the chain-end narration lines on screen instead of fading them back out, and reword to 你降生在
+- 2026-07-08 22:03 — Remove the "2026・此生回眸" eyebrow label from the chain-end screen

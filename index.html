@@ -432,6 +432,36 @@
   }
   #restOverlay .pull.mega{ margin-top:12px; transition:opacity 1.6s ease; }
   #restOverlay .seq-hidden{ opacity:0; }
+
+  #theEndOverlay{
+    padding:0; overflow:hidden;
+    background:
+      radial-gradient(120% 55% at 50% 102%, rgba(255,216,102,0.45), transparent 60%),
+      linear-gradient(180deg, #140b28 0%, #3a2350 32%, #9a5470 58%, #e2895f 78%, #ffd866 100%);
+  }
+  #theEndOverlay .the-end-sun{
+    position:absolute; left:50%; bottom:16%; width:200px; height:200px;
+    background:radial-gradient(circle, #fff7dd 0%, #ffd866 45%, rgba(255,216,102,0) 72%);
+    border-radius:50%; transform:translateX(-50%);
+    box-shadow:0 0 140px 50px rgba(255,216,102,0.45);
+  }
+  #theEndOverlay .the-end-hills{
+    position:absolute; left:0; right:0; bottom:0; height:20%; background:#140b22;
+    clip-path:polygon(0 65%, 14% 42%, 28% 58%, 44% 18%, 58% 48%, 74% 12%, 88% 46%, 100% 28%, 100% 100%, 0 100%);
+  }
+  #theEndOverlay .onboard-inner{ position:relative; z-index:1; }
+  #theEndOverlay .the-end-title{
+    font-family:'Orbitron', sans-serif; font-size:48px; letter-spacing:0.4em;
+    margin:0 0 30px; color:#fff9ec;
+    text-shadow:0 0 30px rgba(255,255,255,0.55), 0 0 70px rgba(255,216,102,0.5);
+    transition:opacity 2s ease, transform 2s ease;
+  }
+  #theEndOverlay .the-end-title.seq-hidden{ transform:translateY(14px); }
+  #theEndOverlay .pull{
+    background:rgba(20,11,34,0.4); border-color:rgba(255,255,255,0.35); color:#fff9ec;
+    transition:opacity 1.6s ease;
+  }
+  #theEndOverlay .seq-hidden{ opacity:0; }
 </style>
 </head>
 <body>
@@ -495,6 +525,15 @@
     <p class="onboard-sub seq-hidden" id="restLine2">不用再悲傷，不用再難過，也不用再受苦了。</p>
     <p class="onboard-sub seq-hidden" id="restLine3">就安安靜靜地，把這一世好好過完。<br>屬於你的好結局，已經在前面等你了。</p>
     <button class="pull mega seq-hidden" id="restClose">嗯，我知道了</button>
+  </div>
+</div>
+
+<div class="onboard hide" id="theEndOverlay">
+  <div class="the-end-sun"></div>
+  <div class="the-end-hills"></div>
+  <div class="onboard-inner">
+    <h2 class="the-end-title seq-hidden">THE END</h2>
+    <button class="pull seq-hidden" id="theEndClose">回到人間</button>
   </div>
 </div>
 
@@ -1012,7 +1051,10 @@ document.getElementById('chainEndNo').addEventListener('click', () => {
   showRestScreen();
 });
 document.getElementById('restClose').addEventListener('click', () => {
-  document.getElementById('restOverlay').classList.add('hide');
+  showTheEnd();
+});
+document.getElementById('theEndClose').addEventListener('click', () => {
+  document.getElementById('theEndOverlay').classList.add('hide');
 });
 
 const OCCUPATIONS_BY_ERA = [
@@ -1498,6 +1540,20 @@ async function showRestScreen(){
   await sleep(2400);
   line3.classList.remove('seq-hidden');
   await sleep(2400);
+  btn.classList.remove('seq-hidden');
+}
+
+async function showTheEnd(){
+  document.getElementById('restOverlay').classList.add('hide');
+  const title = document.querySelector('#theEndOverlay .the-end-title');
+  const btn = document.getElementById('theEndClose');
+  title.classList.add('seq-hidden');
+  btn.classList.add('seq-hidden');
+  document.getElementById('theEndOverlay').classList.remove('hide');
+
+  await sleep(600);
+  title.classList.remove('seq-hidden');
+  await sleep(2200);
   btn.classList.remove('seq-hidden');
 }
 

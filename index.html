@@ -411,7 +411,7 @@
     <h2 class="onboard-title">這一世，你還記得嗎？<br>你一直想成為的人。</h2>
     <p class="onboard-sub">你在這裡不會沒有原因，一切都是最好的選擇。</p>
     <p class="onboard-sub" id="chainEndSummary"></p>
-    <button class="pull mega" id="chainEndClose">闔上眼，回到此刻</button>
+    <button class="pull mega" id="chainEndClose">闔上眼，再次投入輪迴</button>
   </div>
 </div>
 
@@ -933,8 +933,8 @@ function runSamsaraChain(startYear){
 
 function showChainEnd(results, startYear){
   const first = results[0], last = results[9];
-  document.getElementById('chainEndSummary').textContent =
-    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；十世流轉，${last.flag} ${last.name}——就是此刻 2026 年的你。`;
+  document.getElementById('chainEndSummary').innerHTML =
+    `西元 ${startYear} 年，你是 ${first.flag} ${first.name} 的一段生命；<br>十世流轉，${last.flag} ${last.name}…就是此刻 2026 年的你。`;
   document.getElementById('chainEndOverlay').classList.remove('hide');
 }
 

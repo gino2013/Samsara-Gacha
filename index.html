@@ -379,28 +379,29 @@
   .year-readout{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted); margin-top:10px; }
   .age-label{ font-size:12px; color:var(--muted); margin-bottom:8px; }
 
-  .review-inner{ max-width:640px; }
+  .review-inner{ max-width:820px; }
   .review-list{
-    max-height:46vh; overflow-y:auto; text-align:left;
-    margin:0 0 22px; display:flex; flex-direction:column; gap:10px;
+    max-height:62vh; overflow-y:auto; text-align:left;
+    margin:0 0 26px; display:flex; flex-direction:column; gap:16px;
     scrollbar-color:var(--panel2) transparent; scrollbar-width:thin;
   }
-  .review-list::-webkit-scrollbar{ width:8px; }
+  .review-list::-webkit-scrollbar{ width:9px; }
   .review-list::-webkit-scrollbar-track{ background:transparent; }
   .review-list::-webkit-scrollbar-thumb{ background:var(--panel2); border-radius:8px; }
   .review-list::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,0.25); }
   .review-item{
-    background:var(--panel); border:1px solid var(--line); border-radius:12px;
-    padding:12px 14px; display:flex; gap:12px; align-items:flex-start;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:18px 20px; display:flex; gap:16px; align-items:flex-start;
   }
-  .review-item .flag{ font-size:28px; line-height:1; }
+  .review-item .flag{ font-size:36px; line-height:1; }
   .review-item .ri-body{ flex:1; min-width:0; }
-  .review-item .ri-head{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
-  .review-item .ri-life{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); }
-  .review-item .ri-name{ font-weight:700; font-size:13.5px; }
-  .review-item .ri-years{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); }
-  .review-item .ri-job{ font-size:11.5px; color:#C9CCDA; margin-bottom:3px; }
-  .review-item .ri-event{ font-size:11px; color:var(--muted); line-height:1.5; }
+  .review-item .ri-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .review-item .ri-life{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); }
+  .review-item .ri-name{ font-weight:700; font-size:17px; }
+  .review-item .ri-years{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--muted); }
+  .review-item .ri-job{ font-size:13.5px; color:#C9CCDA; margin-bottom:5px; line-height:1.6; }
+  .review-item .ri-event{ font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:5px; }
+  .review-item .ri-meaning{ font-size:13px; color:var(--ur2); font-style:italic; line-height:1.65; margin-top:6px; }
 
   #chainEndOverlay .onboard-title{ margin-bottom:18px; }
   #chainEndOverlay .onboard-sub{ margin:0 0 20px; }
@@ -974,11 +975,108 @@ const OCCUPATIONS_BY_ERA = [
     N: ['農夫','市場小販','工廠作業員','計程車司機','外送員']
   }}
 ];
-function pickOccupation(tier, year){
+const CHILD_OCCUPATIONS = {
+  UR: ['貴族之子','富商之後','家族繼承人','宮廷寵兒'],
+  SSR: ['富裕人家之子','商賈之後','私塾學生'],
+  SR: ['書香門第之後','小地主之子','學徒'],
+  R: ['農家之子','工匠學徒','放牛娃'],
+  N: ['佃農之子','牧童','孤兒','街頭乞童']
+};
+function pickOccupation(tier, year, age){
+  if(age <= 14){
+    const list = CHILD_OCCUPATIONS[tier];
+    return list[Math.floor(Math.random()*list.length)];
+  }
   const era = OCCUPATIONS_BY_ERA.find(e => year < e.before);
   const list = era.jobs[tier];
   return list[Math.floor(Math.random()*list.length)];
 }
+
+const DEATH_CAUSES_BY_ERA = [
+  { before:1500, child:['天花','痲疹','饑荒','難產'], adult:['瘟疫','饑荒','戰亂','傷寒'] },
+  { before:1750, child:['天花','痢疾','饑荒'], adult:['壞血病','海上意外','瘟疫','戰亂'] },
+  { before:1900, child:['白喉','麻疹','肺結核','饑荒'], adult:['肺結核','工殤','霍亂','戰亂'] },
+  { before:1980, child:['小兒麻痺','麻疹','肺炎'], adult:['戰爭','肺結核','心臟病','意外事故'] },
+  { before:Infinity, child:['意外事故','先天疾病','傳染病'], adult:['心臟病','癌症','車禍','意外'] }
+];
+function pickDeathCause(year, age){
+  const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
+  const list = age <= 14 ? era.child : era.adult;
+  return list[Math.floor(Math.random()*list.length)];
+}
+
+function pickMarriage(age){
+  if(age < 16) return { married:false, marryAge:null };
+  const married = Math.random() < 0.75;
+  const marryAge = married ? 16 + Math.floor(Math.random()*Math.min(24, age-15)) : null;
+  return { married, marryAge };
+}
+function pickChildren(married, age){
+  if(!married || age < 18) return 0;
+  const r = Math.random();
+  if(r < 0.15) return 0;
+  if(r < 0.40) return 1;
+  if(r < 0.70) return 2;
+  if(r < 0.90) return 3;
+  return 4;
+}
+const LEGACY_TEMPLATES = [
+  '留下一手好手藝，教會了下一代',
+  '攢下的積蓄讓後代得以翻身',
+  '主持修建了鄉里的一座橋或水井，造福多年',
+  '寫下的家書與帳本，成了後代唯一的紀錄',
+  '沒能留下財富，但留下了被鄰里記得的好名聲',
+  '培養出的徒弟後來成了一方名匠',
+  '在動盪年代守住了家業，讓家人平安活下來',
+  '最大的成就，是把孩子都拉拔長大',
+  '推動了當地一項小小的改變，多年後仍被人記得',
+  '沒有留下什麼驚天動地的事，但活得問心無愧',
+  '一手創辦的事業，後來由子女接手延續下去',
+  '留下的手稿或發明，多年後才被人重新發現價值',
+  '收養了幾個無依無靠的孩子，把他們當親生的養大',
+  '一輩子省吃儉用，臨終前把積蓄全數捐給了鄉里的學堂',
+  '種下的一片林子，多年後成了後代乘涼的地方',
+  '在最艱難的那幾年，撐起了整個家族沒讓任何人餓死',
+  '留下的一套工具與筆記，後來成了徒弟們的傳家寶',
+  '默默資助了幾個窮困人家的孩子讀書，從未張揚',
+  '一場意外中救了鄰居的孩子，自己卻因此留下傷病',
+  '晚年開了一間小小的私塾，教會了整條街的孩子認字',
+  '把畢生所學寫成一本小冊子，流傳了好幾代人',
+  '沒有子女，卻把畢生積蓄留給了照顧他到最後的養女'
+];
+const MEANING_TEMPLATES = [
+  '直到臨終前，才明白陪伴家人比追求成就更重要',
+  '一輩子都在忙碌，晚年回頭看，覺得值得',
+  '始終沒想明白活著的意義，只是盡力把日子過好',
+  '曾以為要功成名就才算成功，後來才發現平凡也是一種圓滿',
+  '找到了屬於自己的答案：好好愛過的人，就沒有白活',
+  '一直在尋找答案，直到嚥氣那一刻，仍在路上，沒能找到',
+  '相信只要能讓後代過得更好，這一世就沒有白來',
+  '晚年篤定地說，這一生最大的意義，就是被人需要過',
+  '年輕時渴望被世界記住，老了才發現只想被家人記住',
+  '窮困了一輩子，卻始終覺得自己過得比誰都富有',
+  '從沒問過人生的意義是什麼，只是一天一天好好活著',
+  '直到失去至親那一刻，才真正懂得什麼叫做珍惜',
+  '花了大半輩子追逐一個夢想，最後才明白過程本身就是答案',
+  '一生顛沛流離，卻始終相信下一世會更好',
+  '從沒得到過什麼肯定，但從未後悔自己做過的每個選擇',
+  '晚年終於學會放下，才第一次真正感到自由',
+  '這一世活得平凡，但每一天都全力以赴，這就是答案',
+  '始終覺得自己欠家人一句道歉，直到最後也沒能說出口'
+];
+const CHILD_DEATH_NOTES = [
+  '沒能長大，是這個家永遠的遺憾',
+  '這一世很短，甚至沒能好好認識這個世界',
+  '離開得太早，只留下模糊的記憶',
+  '沒有機會活出自己的故事，就先走了一步',
+  '走得很快，家人甚至來不及為他取一個大名',
+  '短短幾年，卻是父母記憶裡最溫暖的一段時光',
+  '沒能等到長大成人的那一天，卻始終被深深惦記著',
+  '這一世像一場太短的夢，醒來得措手不及'
+];
+function pickLegacy(){ return LEGACY_TEMPLATES[Math.floor(Math.random()*LEGACY_TEMPLATES.length)]; }
+function pickMeaning(){ return MEANING_TEMPLATES[Math.floor(Math.random()*MEANING_TEMPLATES.length)]; }
+function pickChildDeathNote(){ return CHILD_DEATH_NOTES[Math.floor(Math.random()*CHILD_DEATH_NOTES.length)]; }
 
 document.getElementById('reviewClose').addEventListener('click', () => {
   document.getElementById('chainReviewOverlay').classList.add('hide');
@@ -1004,9 +1102,22 @@ function runSamsaraChain(startYear){
     const r = rollOne();
     r.life = life;
     r.year = Math.round(year);
-    r.occupation = pickOccupation(r.tier, r.year);
     year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
     r.endYear = Math.round(Math.min(year, birthYear));
+    const age = r.endYear - r.year;
+    r.age = age;
+    r.occupation = pickOccupation(r.tier, r.year, age);
+    r.deathCause = pickDeathCause(r.year, age);
+    if(age > 14){
+      const m = pickMarriage(age);
+      r.married = m.married;
+      r.marryAge = m.marryAge;
+      r.children = pickChildren(m.married, age);
+      r.legacy = pickLegacy();
+      r.meaning = pickMeaning();
+    } else {
+      r.childDeathNote = pickChildDeathNote();
+    }
     results.push(r);
   }
 
@@ -1019,7 +1130,14 @@ function runSamsaraChain(startYear){
   historyData.unshift(finalLife);
   finalLife.life = life;
   finalLife.year = birthYear;
-  finalLife.occupation = pickOccupation(finalLife.tier, finalLife.year);
+  finalLife.age = homeAge;
+  finalLife.occupation = pickOccupation(finalLife.tier, finalLife.year, homeAge);
+  if(homeAge > 14){
+    const m = pickMarriage(homeAge);
+    finalLife.married = m.married;
+    finalLife.marryAge = m.marryAge;
+    finalLife.children = pickChildren(m.married, homeAge);
+  }
   results.push(finalLife);
 
   const rank = {UR:0, SSR:1, SR:2, R:3, N:4};
@@ -1055,9 +1173,19 @@ function showChainReview(results){
   const list = document.getElementById('reviewList');
   const lastLife = results.length;
   list.innerHTML = results.map(r => {
+    const isLast = r.life === lastLife;
     const event = (r.reason.split('｜').pop() || '').trim();
-    const age = r.life === lastLife ? (2026 - r.year) : (r.endYear - r.year);
-    const years = r.life === lastLife ? `${r.year}・此刻・${age}歲` : `${r.year}–${r.endYear}・${age}歲`;
+    const age = isLast ? (2026 - r.year) : (r.endYear - r.year);
+    const years = isLast ? `${r.year}・此刻・${age}歲` : `${r.year}–${r.endYear}・${age}歲`;
+
+    const marriageLine = (r.married !== undefined)
+      ? `<div class="ri-job">婚姻：${r.married ? `${r.marryAge}歲成婚，育有${r.children}名子女` : '終身未婚'}</div>`
+      : '';
+    const deathLine = isLast ? '' : `<div class="ri-job">死因：${r.deathCause}</div>`;
+    const legacyBlock = (r.legacy)
+      ? `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`
+      : (r.childDeathNote ? `<div class="ri-meaning">「${r.childDeathNote}」</div>` : '');
+
     return `
       <div class="review-item">
         <div class="flag">${r.flag}</div>
@@ -1069,6 +1197,9 @@ function showChainReview(results){
           </div>
           <div class="ri-job">職業：${r.occupation}</div>
           <div class="ri-event">${event}</div>
+          ${deathLine}
+          ${marriageLine}
+          ${legacyBlock}
         </div>
       </div>
     `;

@@ -38,3 +38,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 17:18 — Add era-appropriate occupations and widen the starting-year range so chains typically reach about ten lives
 - 2026-07-08 17:21 — Add logs/ with a detailed narrative record of today's session, backfilled from commit history
 - 2026-07-08 17:24 — Line-break the year-picker subtitle before 最後這一世 and drop the em-dash
+- 2026-07-08 17:33 — Give each past life age-appropriate work and death causes, plus marriage/children/legacy detail, and enlarge the review screen

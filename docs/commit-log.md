@@ -57,3 +57,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 22:17 — Reword 被好好地放在 to 被溫柔地放在 in the chain-end summary
 - 2026-07-08 22:27 — Add a comforting rest screen for 否, even out the chain-end reveal pacing, and swap the summary's typewriter for a fade-in
 - 2026-07-08 22:32 — Add a THE END screen with a peaceful sunrise scene, reached after the rest screen's close button
+- 2026-07-08 23:01 — Document the chain-end reveal animation, 是/否 branch, rest/THE END screens, and cookie persistence in the PRD

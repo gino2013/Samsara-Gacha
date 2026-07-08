@@ -431,7 +431,7 @@
     <h2 class="onboard-title">這輪輪迴，你想從哪一年開始？</h2>
     <p class="onboard-sub">從這一年開始投胎，一世接一世，直到你出生的那一年——最後這一世，就是此刻 2026 年的你</p>
     <div class="year-picker">
-      <input type="range" id="yearSlider" min="1776" max="2010" value="1900" step="1">
+      <input type="range" id="yearSlider" min="1000" max="2010" value="1500" step="1">
       <div class="year-readout" id="yearReadout">西元 1900 年</div>
     </div>
     <button class="pull mega" id="yearConfirm">開始輪迴鏈</button>
@@ -937,15 +937,46 @@ document.getElementById('chainEndClose').addEventListener('click', () => {
   document.getElementById('chainEndOverlay').classList.add('hide');
 });
 
-const OCCUPATIONS = {
-  UR: ['家族企業掌門人','跨國集團繼承人','私人銀行客戶關係總監','皇室旁系成員'],
-  SSR: ['科技新創創辦人','跨國企業高階主管','駐外外交官','避險基金經理人'],
-  SR: ['大學教授','建築師','主治醫師','中型企業經營者'],
-  R: ['基層公務員','中學教師','土木工程師','小型工廠廠長'],
-  N: ['農夫','市場小販','工廠作業員','計程車司機','漁夫']
-};
-function pickOccupation(tier){
-  const list = OCCUPATIONS[tier];
+const OCCUPATIONS_BY_ERA = [
+  { before:1500, jobs:{
+    UR: ['封地領主','部落首領','大商賈','王室封臣'],
+    SSR: ['騎士','教會高階神職人員','行會會長','城邦執政官'],
+    SR: ['工匠師傅','鄉紳地主','隨軍書記官','地方稅吏'],
+    R: ['自耕農','鐵匠','士兵','樵夫'],
+    N: ['佃農','僕役','礦工','漁民']
+  }},
+  { before:1750, jobs:{
+    UR: ['殖民地總督','香料貿易巨賈','特許公司股東','宮廷重臣'],
+    SSR: ['遠洋船長','種植園主','軍需官','宮廷畫師'],
+    SR: ['航海士','公證人','藥劑師','教區牧師'],
+    R: ['水手','裁縫','磨坊主','民兵'],
+    N: ['碼頭工人','佃農','礦工','漁夫']
+  }},
+  { before:1900, jobs:{
+    UR: ['工業鉅子','鐵路大亨','銀行家族繼承人','貿易巨賈'],
+    SSR: ['工廠廠主','執業律師','報社主編','鐵路工程師'],
+    SR: ['醫師','學校教師','鐘錶匠','會計師'],
+    R: ['紡織工人','礦工','電報員','鐵匠'],
+    N: ['佃農','碼頭苦力','女僕','街頭小販']
+  }},
+  { before:1980, jobs:{
+    UR: ['跨國企業創辦人','石油大亨','政商世家繼承人','國際銀行家'],
+    SSR: ['外交官','航空公司高階主管','電影製片人','跨國企業高階主管'],
+    SR: ['大學教授','建築師','主治醫師','新聞記者'],
+    R: ['公務員','中學教師','工廠領班','電話接線生'],
+    N: ['農夫','工廠作業員','礦工','人力車伕']
+  }},
+  { before:Infinity, jobs:{
+    UR: ['科技集團創辦人','避險基金經理人','跨國集團繼承人','皇室旁系成員'],
+    SSR: ['新創公司創辦人','跨國企業高階主管','駐外外交官','投資銀行家'],
+    SR: ['大學教授','建築師','主治醫師','軟體工程師'],
+    R: ['基層公務員','中學教師','土木工程師','客服主管'],
+    N: ['農夫','市場小販','工廠作業員','計程車司機','外送員']
+  }}
+];
+function pickOccupation(tier, year){
+  const era = OCCUPATIONS_BY_ERA.find(e => year < e.before);
+  const list = era.jobs[tier];
   return list[Math.floor(Math.random()*list.length)];
 }
 
@@ -972,8 +1003,8 @@ function runSamsaraChain(startYear){
     life++;
     const r = rollOne();
     r.life = life;
-    r.occupation = pickOccupation(r.tier);
     r.year = Math.round(year);
+    r.occupation = pickOccupation(r.tier, r.year);
     year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
     r.endYear = Math.round(Math.min(year, birthYear));
     results.push(r);
@@ -987,8 +1018,8 @@ function runSamsaraChain(startYear){
   const finalLife = { tier:selectedHome.tier, flag:selectedHome.flag, name:selectedHome.name, lat:selectedHome.lat, lon:selectedHome.lon, reason:selectedHome.reason };
   historyData.unshift(finalLife);
   finalLife.life = life;
-  finalLife.occupation = pickOccupation(finalLife.tier);
   finalLife.year = birthYear;
+  finalLife.occupation = pickOccupation(finalLife.tier, finalLife.year);
   results.push(finalLife);
 
   const rank = {UR:0, SSR:1, SR:2, R:3, N:4};

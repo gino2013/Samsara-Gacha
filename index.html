@@ -408,9 +408,18 @@
   .ri-job{ font-size:13.5px; color:#C9CCDA; margin-bottom:5px; line-height:1.6; text-align:left; }
   .ri-meaning{ font-size:13px; color:var(--ur2); font-style:italic; line-height:1.65; margin-top:6px; text-align:left; }
 
-  #chainEndOverlay .onboard-title{ margin-bottom:18px; }
-  #chainEndOverlay .onboard-sub{ margin:0 0 20px; }
-  #chainEndOverlay .pull.mega{ margin-top:8px; }
+  #chainEndOverlay .onboard-title{
+    margin-bottom:18px; font-size:23px; line-height:1.65; letter-spacing:0.03em;
+    transition:opacity 1.6s ease, transform 1.6s ease;
+  }
+  #chainEndOverlay .onboard-sub{
+    margin:0 0 20px; line-height:1.9; letter-spacing:0.01em;
+    transition:opacity 1.6s ease;
+  }
+  #chainEndOverlay #chainEndSummary{ font-size:14px; }
+  #chainEndOverlay .pull.mega{ margin-top:8px; transition:opacity 1.4s ease; }
+  #chainEndOverlay .seq-hidden{ opacity:0; }
+  #chainEndOverlay .onboard-title.seq-hidden{ transform:translateY(12px); }
 </style>
 </head>
 <body>
@@ -1397,11 +1406,57 @@ function showChainReview(results){
   document.getElementById('chainReviewOverlay').classList.remove('hide');
 }
 
-function showChainEnd(results, startYear){
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function typewriterInto(el, html, speed=42){
+  return new Promise(resolve => {
+    const tokens = [];
+    html.split(/(<br>)/).forEach(part => {
+      if(part === '<br>'){ tokens.push('<br>'); return; }
+      if(!part) return;
+      if(window.Intl && Intl.Segmenter){
+        for(const seg of new Intl.Segmenter('zh', {granularity:'grapheme'}).segment(part)) tokens.push(seg.segment);
+      } else {
+        tokens.push(...Array.from(part));
+      }
+    });
+    el.innerHTML = '';
+    let out = '', i = 0;
+    (function step(){
+      if(i >= tokens.length){ resolve(); return; }
+      out += tokens[i++];
+      el.innerHTML = out;
+      setTimeout(step, speed);
+    })();
+  });
+}
+
+async function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
-  document.getElementById('chainEndSummary').innerHTML =
-    `起點・西元 ${startYear} 年，你曾是 ${first.flag} ${first.name} 的一段生命，活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你成為了 ${last.flag} ${last.name}，被好好地放在這個很美好的國度。`;
+  const summaryHTML = `起點・西元 ${startYear} 年，你曾是 ${first.flag} ${first.name} 的一段生命，活過、也離開過；<br>終點・此刻 2026 年，繞了 ${results.length} 世輪迴，你成為了 ${last.flag} ${last.name}，被好好地放在這個很美好的國度。`;
+
+  const summaryEl = document.getElementById('chainEndSummary');
+  const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary)');
+  const titleEl = document.querySelector('#chainEndOverlay .onboard-title');
+  const btnEl = document.getElementById('chainEndClose');
+
+  summaryEl.innerHTML = '';
+  summaryEl.classList.remove('seq-hidden');
+  reasonEl.classList.add('seq-hidden');
+  titleEl.classList.add('seq-hidden');
+  btnEl.classList.add('seq-hidden');
   document.getElementById('chainEndOverlay').classList.remove('hide');
+
+  await typewriterInto(summaryEl, summaryHTML);
+  await sleep(3200);
+  summaryEl.classList.add('seq-hidden');
+  await sleep(1800);
+  reasonEl.classList.remove('seq-hidden');
+  await sleep(3800);
+  reasonEl.classList.add('seq-hidden');
+  titleEl.classList.remove('seq-hidden');
+  await sleep(1800);
+  btnEl.classList.remove('seq-hidden');
 }
 
 const canvas = document.getElementById('globeCanvas');

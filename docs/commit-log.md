@@ -45,3 +45,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 21:35 — Rewrite the review-close button to a more reflective line: 經歷了這麼多，我們還記得什麼？
 - 2026-07-08 21:37 — Reorder the chain-end overlay (life summary, then reason, then title) and rename the eyebrow to 此生回眸
 - 2026-07-08 21:41 — Give the review-close button and chain-end summary more evocative wording (clear start/end points)
+- 2026-07-08 21:46 — Animate the chain-end screen: typewriter the life summary, then crossfade through the reason and title at a slower, more readable pace

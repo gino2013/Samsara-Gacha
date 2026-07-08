@@ -331,16 +331,68 @@
     .card{ width:170px; height:225px; }
     .globe-stage{ width:240px; height:240px; }
   }
+
+  .onboard{
+    position:fixed; inset:0; z-index:50;
+    background:var(--void);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .onboard.hide{ display:none; }
+  .onboard-inner{ width:100%; max-width:520px; text-align:center; }
+  .onboard-eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.25em;
+    color:var(--muted); text-transform:uppercase; margin-bottom:10px;
+  }
+  .onboard-title{ font-family:'Orbitron', sans-serif; font-size:22px; margin:0 0 8px; }
+  .onboard-sub{ color:var(--muted); font-size:13px; margin:0 0 10px; }
+  .onboard-track{
+    display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:30px calc(50% - 50px); margin:0 0 22px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .onboard-track::-webkit-scrollbar{ display:none; }
+  .onboard-chip{
+    flex:0 0 auto; scroll-snap-align:center; width:100px;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:16px 8px; opacity:0.4; transform:scale(0.85); cursor:pointer;
+    transition: opacity 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .onboard-chip .flag{ font-size:34px; }
+  .onboard-chip .name{ font-size:11px; margin-top:6px; font-weight:600; line-height:1.3; }
+  .onboard-chip.active{
+    opacity:1; transform:scale(1.05); border-color:var(--ur2);
+    box-shadow:0 0 20px rgba(255,110,199,0.3);
+  }
+  .home-pill{
+    display:none; margin:14px auto 0; font-family:'JetBrains Mono', monospace;
+    font-size:11px; background:var(--panel); border:1px solid var(--line);
+    border-radius:20px; padding:6px 14px; color:var(--muted); cursor:pointer;
+  }
+  .home-pill.show{ display:inline-block; }
+  .home-pill:hover{ border-color:rgba(255,255,255,0.25); }
 </style>
 </head>
 <body>
 <div class="stars"></div>
+
+<div class="onboard" id="onboardOverlay">
+  <div class="onboard-inner">
+    <div class="onboard-eyebrow">Before Rebirth · 投胎前</div>
+    <h2 class="onboard-title">你這一世的國籍是？</h2>
+    <p class="onboard-sub">左右滑動選擇，轉世結果會跟現世對照</p>
+    <div class="onboard-track" id="onboardTrack"></div>
+    <button class="pull mega" id="onboardConfirm">確定，開始輪迴</button>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header>
     <div class="eyebrow">Reincarnation Gacha · 輪迴扭蛋機</div>
     <h1>投胎轉生機</h1>
     <p class="sub">閉上眼，轉動輪迴。你將以何種國籍再臨人間，全憑一抽。<br>UR / SSR / SR / R / N，五個等級，機率公開，不用課金。</p>
+    <button class="home-pill" id="homeCountryLabel"></button>
   </header>
 
   <div class="stats">
@@ -1145,6 +1197,68 @@ document.getElementById('btnReset').addEventListener('click', () => {
   document.getElementById('geoInfo').classList.remove('show');
   document.getElementById('geoPlaceholder').style.display = 'block';
 });
+
+const HOME_COUNTRY_KEY = 'samsara_home_country';
+let selectedHome = ALL_COUNTRIES[0];
+
+function renderOnboardTrack(){
+  const track = document.getElementById('onboardTrack');
+  track.innerHTML = ALL_COUNTRIES.map((c,i) =>
+    `<div class="onboard-chip" data-i="${i}"><div class="flag">${c.flag}</div><div class="name">${c.name}</div></div>`
+  ).join('');
+}
+
+function updateActiveChip(){
+  const track = document.getElementById('onboardTrack');
+  const center = track.scrollLeft + track.clientWidth/2;
+  let closest = null, closestDist = Infinity;
+  [...track.children].forEach(chip => {
+    const mid = chip.offsetLeft + chip.offsetWidth/2;
+    const d = Math.abs(mid - center);
+    chip.classList.remove('active');
+    if(d < closestDist){ closestDist = d; closest = chip; }
+  });
+  if(closest){
+    closest.classList.add('active');
+    selectedHome = ALL_COUNTRIES[+closest.dataset.i];
+  }
+}
+
+function applyHomeCountryLabel(){
+  const label = document.getElementById('homeCountryLabel');
+  label.textContent = `現世國籍：${selectedHome.flag} ${selectedHome.name} · 點擊更換`;
+  label.classList.add('show');
+}
+
+renderOnboardTrack();
+const onboardTrack = document.getElementById('onboardTrack');
+let onboardScrollTimer;
+onboardTrack.addEventListener('scroll', () => {
+  clearTimeout(onboardScrollTimer);
+  onboardScrollTimer = setTimeout(updateActiveChip, 80);
+});
+onboardTrack.addEventListener('click', (e) => {
+  const chip = e.target.closest('.onboard-chip');
+  if(chip) chip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+});
+document.getElementById('onboardConfirm').addEventListener('click', () => {
+  localStorage.setItem(HOME_COUNTRY_KEY, String(ALL_COUNTRIES.indexOf(selectedHome)));
+  applyHomeCountryLabel();
+  document.getElementById('onboardOverlay').classList.add('hide');
+});
+document.getElementById('homeCountryLabel').addEventListener('click', () => {
+  document.getElementById('onboardOverlay').classList.remove('hide');
+  requestAnimationFrame(updateActiveChip);
+});
+
+const savedHomeIdx = parseInt(localStorage.getItem(HOME_COUNTRY_KEY), 10);
+if(!isNaN(savedHomeIdx) && ALL_COUNTRIES[savedHomeIdx]){
+  selectedHome = ALL_COUNTRIES[savedHomeIdx];
+  applyHomeCountryLabel();
+  document.getElementById('onboardOverlay').classList.add('hide');
+} else {
+  requestAnimationFrame(updateActiveChip);
+}
 
 updateStatsUI();
 </script>

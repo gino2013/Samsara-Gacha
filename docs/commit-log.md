@@ -73,3 +73,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 11:34 — Split natural old-age death causes by era: vague peaceful terms pre-1900, WHO-accurate chronic disease names (冠心病/中風/COPD/失智症等) for 1900+
 - 2026-07-09 11:34 — Add 產褥熱 (childbed fever) to several pre-1900 categories, reflecting real historical mortality patterns
 - 2026-07-09 11:40 — Change per-life lifespan roll to uniform 1~avg×1.1 per spec, add SSR wealth variety, tighten chain-end summary line spacing
+- 2026-07-09 11:43 — Switch to a bimodal lifespan roll: 88% normal avg±20%, 12% wide 1~avg×1.1 (occasional early death, not the norm)

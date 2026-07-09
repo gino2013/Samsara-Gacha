@@ -958,7 +958,12 @@ function runSamsaraChain(startYear){
     const r = rollOne();
     r.life = life;
     r.year = Math.round(year);
-    year += 1 + Math.random() * (TIERS[r.tier].lifespan * 1.1 - 1); // ponytail: uniform 1~avg*1.1 per user's spec; widens variance a lot, watch if young deaths feel too frequent
+    // Most lives run a normal length (avg ±20%); a 12% chance of a wide 1~avg*1.1 roll adds
+    // occasional early/random death, echoing the real bimodal pattern (infection/accident risk
+    // at any age vs. surviving to a full life) instead of shifting every life younger.
+    year += Math.random() < 0.12
+      ? 1 + Math.random() * (TIERS[r.tier].lifespan * 1.1 - 1)
+      : TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
     r.endYear = Math.round(Math.min(year, birthYear));
     const age = r.endYear - r.year;
     r.age = age;

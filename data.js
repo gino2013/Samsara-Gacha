@@ -219,178 +219,178 @@ const TIERS = {
 const OCCUPATIONS_BY_ERA = [
   { before:1500, jobs:{
     UR: [
-      {name:'封地領主', category:'noble', background:'世襲貴族之家，生來就擁有封地與佃農'},
-      {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人'},
-      {name:'大商賈', category:'merchant', background:'商旅世家，自小跟著長輩走遍各地商路'},
-      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位'},
-      {name:'主教兼領主', category:'noble', background:'教會高層兼世俗領主，掌握大片教產與封地'},
-      {name:'放貸金融家族之主', category:'merchant', background:'專營借貸生意的富裕家族，財富雄厚卻常受猜忌'}
+      {name:'封地領主', category:'noble', background:'世襲貴族之家，生來就擁有封地與佃農', death:['宮廷鬥爭遇害','遇刺','痛風併發症']},
+      {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
+      {name:'大商賈', category:'merchant', background:'商旅世家，自小跟著長輩走遍各地商路', death:['商旅途中遇劫','海盜襲擊','瘟疫']},
+      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位', death:['宮廷政爭失勢病故','遇刺','瘟疫']},
+      {name:'主教兼領主', category:'noble', background:'教會高層兼世俗領主，掌握大片教產與封地', death:['教產爭端遇害','瘟疫','痛風併發症']},
+      {name:'放貸金融家族之主', category:'merchant', background:'專營借貸生意的富裕家族，財富雄厚卻常受猜忌', death:['遭債務人尋仇','瘟疫','遇刺']}
     ],
     SSR: [
-      {name:'騎士', category:'military', background:'騎士世家出身，自幼習武備戰'},
-      {name:'教會高階神職人員', category:'educator', background:'虔誠信徒之家，年少即入修道院受教'},
-      {name:'行會會長', category:'artisan', background:'工匠世家，繼承家族在行會的地位'},
-      {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培'},
-      {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族'}
+      {name:'騎士', category:'military', background:'騎士世家出身，自幼習武備戰', death:['戰死沙場','比武意外','重傷不治']},
+      {name:'教會高階神職人員', category:'educator', background:'虔誠信徒之家，年少即入修道院受教', death:['修道院內染疫','瘟疫','傷寒']},
+      {name:'行會會長', category:'artisan', background:'工匠世家，繼承家族在行會的地位', death:['工坊火災','瘟疫','行會鬥爭遇害']},
+      {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培', death:['政爭遇刺','瘟疫','宮廷鬥爭失勢']},
+      {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','瘟疫','傷寒']}
     ],
     SR: [
-      {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝'},
-      {name:'鄉紳地主', category:'noble', background:'小地主家庭，繼承祖上留下的田產'},
-      {name:'隨軍書記官', category:'civic', background:'識字的小吏之家，靠書寫本事謀生'},
-      {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差'}
+      {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝', death:['工坊意外','瘟疫','火災']},
+      {name:'鄉紳地主', category:'noble', background:'小地主家庭，繼承祖上留下的田產', death:['家道爭產遇害','瘟疫','傷寒']},
+      {name:'隨軍書記官', category:'civic', background:'識字的小吏之家，靠書寫本事謀生', death:['隨軍染疫','傷寒','戰亂波及']},
+      {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']}
     ],
     R: [
-      {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭'},
-      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大'},
-      {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃'},
-      {name:'樵夫', category:'farmer', background:'山村獵戶或樵夫家庭出身'}
+      {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','瘟疫','火災']},
+      {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
+      {name:'樵夫', category:'farmer', background:'山村獵戶或樵夫家庭出身', death:['山林意外','野獸襲擊','饑荒']}
     ],
     N: [
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
-      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產'},
-      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
-      {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶'}
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','瘟疫']},
+      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產', death:['過勞而終','主人苛待致死','瘟疫']},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
+      {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
     ]
   }},
   { before:1750, jobs:{
     UR: [
-      {name:'殖民地總督', category:'noble', background:'母國權貴世家，被派任海外統治一方'},
-      {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營遠洋貿易的商行'},
-      {name:'特許公司股東', category:'merchant', background:'投資特許公司起家的富商家族'},
-      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家'},
-      {name:'黃金船隊船東', category:'merchant', background:'擁有整支遠洋船隊的巨富家族'},
-      {name:'世襲公爵', category:'noble', background:'血統顯赫的世襲貴族，領地橫跨數個省份'}
+      {name:'殖民地總督', category:'noble', background:'母國權貴世家，被派任海外統治一方', death:['熱帶疫病','遇刺','舟車勞頓積勞成疾']},
+      {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營遠洋貿易的商行', death:['商船沉沒血本無歸抑鬱而終','海盜襲擊','瘟疫']},
+      {name:'特許公司股東', category:'merchant', background:'投資特許公司起家的富商家族', death:['投資失利破產鬱鬱而終','瘟疫','痛風併發症']},
+      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢病故','遇刺','瘟疫']},
+      {name:'黃金船隊船東', category:'merchant', background:'擁有整支遠洋船隊的巨富家族', death:['船隊遇劫','瘟疫','海難']},
+      {name:'世襲公爵', category:'noble', background:'血統顯赫的世襲貴族，領地橫跨數個省份', death:['決鬥身亡','瘟疫','痛風併發症']}
     ],
     SSR: [
-      {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海'},
-      {name:'種植園主', category:'merchant', background:'殖民地拓墾起家的地主家族'},
-      {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族'},
-      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家'},
-      {name:'特許貿易公司高階股東', category:'merchant', background:'投資東印度公司一類特許貿易組織起家的富裕家族'}
+      {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海', death:['海戰陣亡','船難','壞血病']},
+      {name:'種植園主', category:'merchant', background:'殖民地拓墾起家的地主家族', death:['熱帶疫病','瘟疫','莊園暴動遇害']},
+      {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族', death:['戰亂喪生','瘟疫','舟車勞頓積勞成疾']},
+      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家', death:['瘟疫','傷寒','積勞而終']},
+      {name:'特許貿易公司高階股東', category:'merchant', background:'投資東印度公司一類特許貿易組織起家的富裕家族', death:['商船沉沒','熱帶疫病','瘟疫']}
     ],
     SR: [
-      {name:'航海士', category:'military', background:'港口人家，自小熟悉船務與航海'},
-      {name:'公證人', category:'civic', background:'讀書識字的城鎮人家'},
-      {name:'藥劑師', category:'medical', background:'家傳藥鋪，自幼跟著長輩辨識藥材'},
-      {name:'教區牧師', category:'educator', background:'虔信之家，自幼受教會栽培'}
+      {name:'航海士', category:'military', background:'港口人家，自小熟悉船務與航海', death:['船難','壞血病','風暴']},
+      {name:'公證人', category:'civic', background:'讀書識字的城鎮人家', death:['瘟疫','傷寒','舟車勞頓積勞成疾']},
+      {name:'藥劑師', category:'medical', background:'家傳藥鋪，自幼跟著長輩辨識藥材', death:['瘟疫','看診途中染疫','傷寒']},
+      {name:'教區牧師', category:'educator', background:'虔信之家，自幼受教會栽培', death:['瘟疫','傷寒','舟車勞頓積勞成疾']}
     ],
     R: [
-      {name:'水手', category:'sailor', background:'貧苦港口人家，靠出海謀生'},
-      {name:'裁縫', category:'artisan', background:'裁縫學徒出身，一手好針線'},
-      {name:'磨坊主', category:'artisan', background:'磨坊世家，繼承祖傳的磨坊生意'},
-      {name:'民兵', category:'military', background:'鄉里徵召的農家子弟'}
+      {name:'水手', category:'sailor', background:'貧苦港口人家，靠出海謀生', death:['壞血病','船難','溺斃']},
+      {name:'裁縫', category:'artisan', background:'裁縫學徒出身，一手好針線', death:['工坊意外','瘟疫','火災']},
+      {name:'磨坊主', category:'artisan', background:'磨坊世家，繼承祖傳的磨坊生意', death:['磨坊意外','瘟疫','火災']},
+      {name:'民兵', category:'military', background:'鄉里徵召的農家子弟', death:['戰亂喪生','壞血病','瘟疫']}
     ],
     N: [
-      {name:'碼頭工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家'},
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
-      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
-      {name:'漁夫', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶'}
+      {name:'碼頭工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','瘟疫']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','瘟疫']},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
+      {name:'漁夫', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','壞血病']}
     ]
   }},
   { before:1900, jobs:{
     UR: [
-      {name:'工業鉅子', category:'merchant', background:'白手起家的實業家族，靠工廠致富'},
-      {name:'鐵路大亨', category:'merchant', background:'投資鐵路發跡的新興富豪家族'},
-      {name:'銀行家族繼承人', category:'merchant', background:'家族數代經營銀行與放貸生意'},
-      {name:'貿易巨賈', category:'merchant', background:'跨國貿易起家的商行世家'},
-      {name:'鑽石礦業大亨', category:'merchant', background:'靠礦產暴富的新興巨富家族'},
-      {name:'世襲伯爵兼地主', category:'noble', background:'古老貴族頭銜加上龐大地產的傳統世家'}
+      {name:'工業鉅子', category:'merchant', background:'白手起家的實業家族，靠工廠致富', death:['投資失利破產鬱鬱而終','肺結核','霍亂']},
+      {name:'鐵路大亨', category:'merchant', background:'投資鐵路發跡的新興富豪家族', death:['鐵路意外','肺結核','霍亂']},
+      {name:'銀行家族繼承人', category:'merchant', background:'家族數代經營銀行與放貸生意', death:['金融危機破產','肺結核','霍亂']},
+      {name:'貿易巨賈', category:'merchant', background:'跨國貿易起家的商行世家', death:['貨船船難虧空','肺結核','霍亂']},
+      {name:'鑽石礦業大亨', category:'merchant', background:'靠礦產暴富的新興巨富家族', death:['礦區暴動遇害','肺結核','霍亂']},
+      {name:'世襲伯爵兼地主', category:'noble', background:'古老貴族頭銜加上龐大地產的傳統世家', death:['家道中落憂鬱而終','肺結核','霍亂']}
     ],
     SSR: [
-      {name:'工廠廠主', category:'merchant', background:'從小工廠一路擴張起來的業主家庭'},
-      {name:'執業律師', category:'civic', background:'受過高等教育的城市中產家庭'},
-      {name:'報社主編', category:'creative', background:'書香門第，家中素來重視文墨'},
-      {name:'鐵路工程師', category:'engineer', background:'新式學堂培養出來的技術人才世家'},
-      {name:'礦業投資股東', category:'merchant', background:'投資新興礦業致富的商人家族'}
+      {name:'工廠廠主', category:'merchant', background:'從小工廠一路擴張起來的業主家庭', death:['工廠火災','肺結核','霍亂']},
+      {name:'執業律師', category:'civic', background:'受過高等教育的城市中產家庭', death:['積勞成疾','肺結核','霍亂']},
+      {name:'報社主編', category:'creative', background:'書香門第，家中素來重視文墨', death:['積勞成疾','肺結核','霍亂']},
+      {name:'鐵路工程師', category:'engineer', background:'新式學堂培養出來的技術人才世家', death:['工殤意外','肺結核','霍亂']},
+      {name:'礦業投資股東', category:'merchant', background:'投資新興礦業致富的商人家族', death:['投資失利破產','肺結核','霍亂']}
     ],
     SR: [
-      {name:'醫師', category:'medical', background:'家中栽培出的第一代受過正規醫學教育者'},
-      {name:'學校教師', category:'educator', background:'重視教育的清貧書香家庭'},
-      {name:'鐘錶匠', category:'artisan', background:'鐘錶匠世家，自幼學習精密手藝'},
-      {name:'會計師', category:'civic', background:'商行帳房出身，靠算數本事晉身'}
+      {name:'醫師', category:'medical', background:'家中栽培出的第一代受過正規醫學教育者', death:['看診途中染疫','肺結核','霍亂']},
+      {name:'學校教師', category:'educator', background:'重視教育的清貧書香家庭', death:['肺結核','霍亂','積勞成疾']},
+      {name:'鐘錶匠', category:'artisan', background:'鐘錶匠世家，自幼學習精密手藝', death:['工殤','肺結核','霍亂']},
+      {name:'會計師', category:'civic', background:'商行帳房出身，靠算數本事晉身', death:['積勞成疾','肺結核','霍亂']}
     ],
     R: [
-      {name:'紡織工人', category:'worker', background:'進城謀生的農家子弟'},
-      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
-      {name:'電報員', category:'artisan', background:'略通文墨的城鎮小康人家'},
-      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大'}
+      {name:'紡織工人', category:'worker', background:'進城謀生的農家子弟', death:['工殤','肺結核','霍亂']},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
+      {name:'電報員', category:'artisan', background:'略通文墨的城鎮小康人家', death:['積勞成疾','肺結核','霍亂']},
+      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','肺結核','霍亂']}
     ],
     N: [
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有'},
-      {name:'碼頭苦力', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家'},
-      {name:'女僕', category:'worker', background:'貧苦人家，自幼被送入大戶人家幫傭'},
-      {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口'}
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
+      {name:'碼頭苦力', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','工殤']},
+      {name:'女僕', category:'worker', background:'貧苦人家，自幼被送入大戶人家幫傭', death:['過勞而終','肺結核','霍亂']},
+      {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['過勞而終','霍亂','意外']}
     ]
   }},
   { before:1980, jobs:{
     UR: [
-      {name:'跨國企業創辦人', category:'merchant', background:'白手起家後建立跨國事業版圖的家族'},
-      {name:'石油大亨', category:'merchant', background:'靠油田投資一夕致富的新興豪門'},
-      {name:'政商世家繼承人', category:'noble', background:'政治與商業關係盤根錯節的世家'},
-      {name:'國際銀行家', category:'merchant', background:'數代經營金融的家族企業'},
-      {name:'房地產開發大亨', category:'merchant', background:'靠土地開發致富的新興地產世家'},
-      {name:'王室旁支貴族', category:'noble', background:'保有頭銜與部分特權的沒落皇室分支'}
+      {name:'跨國企業創辦人', category:'merchant', background:'白手起家後建立跨國事業版圖的家族', death:['事業破產一夕之間垮台','心臟病','癌症']},
+      {name:'石油大亨', category:'merchant', background:'靠油田投資一夕致富的新興豪門', death:['油田意外','心臟病','癌症']},
+      {name:'政商世家繼承人', category:'noble', background:'政治與商業關係盤根錯節的世家', death:['家族企業崩解抑鬱而終','心臟病','癌症']},
+      {name:'國際銀行家', category:'merchant', background:'數代經營金融的家族企業', death:['金融危機破產','心臟病','癌症']},
+      {name:'房地產開發大亨', category:'merchant', background:'靠土地開發致富的新興地產世家', death:['投資失利破產','心臟病','癌症']},
+      {name:'王室旁支貴族', category:'noble', background:'保有頭銜與部分特權的沒落皇室分支', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']}
     ],
     SSR: [
-      {name:'外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭'},
-      {name:'航空公司高階主管', category:'civic', background:'受過完整高等教育的中上階層家庭'},
-      {name:'電影製片人', category:'creative', background:'娛樂產業圈子出身的家族'},
-      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭'},
-      {name:'私人銀行家', category:'merchant', background:'服務富豪客戶的金融世家'}
+      {name:'外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭', death:['派駐地意外','心臟病','癌症']},
+      {name:'航空公司高階主管', category:'civic', background:'受過完整高等教育的中上階層家庭', death:['積勞成疾','心臟病','癌症']},
+      {name:'電影製片人', category:'creative', background:'娛樂產業圈子出身的家族', death:['積勞成疾','心臟病','癌症']},
+      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭', death:['積勞成疾','心臟病','癌症']},
+      {name:'私人銀行家', category:'merchant', background:'服務富豪客戶的金融世家', death:['積勞成疾','心臟病','癌症']}
     ],
     SR: [
-      {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位'},
-      {name:'建築師', category:'engineer', background:'受過專業訓練的城市中產家庭'},
-      {name:'主治醫師', category:'medical', background:'醫師世家，或苦讀出身的第一代醫師'},
-      {name:'新聞記者', category:'creative', background:'關心時事、重視文字表達的家庭'}
+      {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位', death:['積勞成疾','心臟病','癌症']},
+      {name:'建築師', category:'engineer', background:'受過專業訓練的城市中產家庭', death:['工殤意外','心臟病','肺結核']},
+      {name:'主治醫師', category:'medical', background:'醫師世家，或苦讀出身的第一代醫師', death:['積勞成疾','心臟病','癌症']},
+      {name:'新聞記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['戰地採訪意外','心臟病','癌症']}
     ],
     R: [
-      {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職'},
-      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身'},
-      {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭'},
-      {name:'電話接線生', category:'worker', background:'進城討生活的鄉下人家'}
+      {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
+      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
+      {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
+      {name:'電話接線生', category:'worker', background:'進城討生活的鄉下人家', death:['意外事故','心臟病','過勞而終']}
     ],
     N: [
-      {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭'},
-      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭'},
-      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑'},
-      {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活'}
+      {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
+      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
+      {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
+      {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','心臟病','意外']}
     ]
   }},
   { before:Infinity, jobs:{
     UR: [
-      {name:'科技集團創辦人', category:'merchant', background:'白手起家後打造出科技帝國的家族'},
-      {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理'},
-      {name:'跨國集團繼承人', category:'noble', background:'家族企業橫跨多國的財閥世家'},
-      {name:'皇室旁系成員', category:'noble', background:'保有王室血統與頭銜的旁支家族'},
-      {name:'私募基金創辦人', category:'merchant', background:'白手起家後掌控龐大私募資金的金融新貴'},
-      {name:'能源集團繼承人', category:'noble', background:'家族壟斷礦產或能源事業數十年的世家'}
+      {name:'科技集團創辦人', category:'merchant', background:'白手起家後打造出科技帝國的家族', death:['創業失敗東山再起未果','心臟病','癌症']},
+      {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理', death:['過勞猝死','心臟病','癌症']},
+      {name:'跨國集團繼承人', category:'noble', background:'家族企業橫跨多國的財閥世家', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']},
+      {name:'皇室旁系成員', category:'noble', background:'保有王室血統與頭銜的旁支家族', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']},
+      {name:'私募基金創辦人', category:'merchant', background:'白手起家後掌控龐大私募資金的金融新貴', death:['過勞猝死','心臟病','癌症']},
+      {name:'能源集團繼承人', category:'noble', background:'家族壟斷礦產或能源事業數十年的世家', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']}
     ],
     SSR: [
-      {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭'},
-      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭'},
-      {name:'駐外外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭'},
-      {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭'},
-      {name:'加密貨幣早期投資人', category:'merchant', background:'靠早期押注新興資產致富的新興富豪家庭'}
+      {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭', death:['創業失敗東山再起未果','心臟病','癌症']},
+      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭', death:['過勞猝死','心臟病','癌症']},
+      {name:'駐外外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭', death:['派駐地意外','心臟病','癌症']},
+      {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭', death:['過勞猝死','心臟病','癌症']},
+      {name:'加密貨幣早期投資人', category:'merchant', background:'靠早期押注新興資產致富的新興富豪家庭', death:['投資失利破產','心臟病','癌症']}
     ],
     SR: [
-      {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位'},
-      {name:'建築師', category:'engineer', background:'受過專業訓練的城市中產家庭'},
-      {name:'主治醫師', category:'medical', background:'醫師世家，或苦讀出身的第一代醫師'},
-      {name:'軟體工程師', category:'engineer', background:'普通中產家庭，靠自己一路唸到理工科系'}
+      {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位', death:['過勞猝死','心臟病','癌症']},
+      {name:'建築師', category:'engineer', background:'受過專業訓練的城市中產家庭', death:['職業傷害','心臟病','癌症']},
+      {name:'主治醫師', category:'medical', background:'醫師世家，或苦讀出身的第一代醫師', death:['過勞猝死','心臟病','癌症']},
+      {name:'軟體工程師', category:'engineer', background:'普通中產家庭，靠自己一路唸到理工科系', death:['過勞猝死','心臟病','癌症']}
     ],
     R: [
-      {name:'基層公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職'},
-      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身'},
-      {name:'土木工程師', category:'worker', background:'技職體系栽培出的技術人才家庭'},
-      {name:'客服主管', category:'worker', background:'普通上班族家庭，一步步從基層做起'}
+      {name:'基層公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['過勞猝死','心臟病','意外']},
+      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['過勞猝死','心臟病','意外']},
+      {name:'土木工程師', category:'worker', background:'技職體系栽培出的技術人才家庭', death:['職業傷害','心臟病','意外']},
+      {name:'客服主管', category:'worker', background:'普通上班族家庭，一步步從基層做起', death:['過勞猝死','心臟病','意外']}
     ],
     N: [
-      {name:'農夫', category:'farmer', background:'守著幾分薄田過活的鄉下家庭'},
-      {name:'市場小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口'},
-      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭'},
-      {name:'計程車司機', category:'worker', background:'普通勞動家庭，白手起家討生活'},
-      {name:'外送員', category:'worker', background:'普通勞動家庭，靠一台機車跑遍全城'}
+      {name:'農夫', category:'farmer', background:'守著幾分薄田過活的鄉下家庭', death:['過勞猝死','心臟病','癌症']},
+      {name:'市場小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['車禍','心臟病','過勞猝死']},
+      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外','心臟病','過勞猝死']},
+      {name:'計程車司機', category:'worker', background:'普通勞動家庭，白手起家討生活', death:['車禍','心臟病','過勞猝死']},
+      {name:'外送員', category:'worker', background:'普通勞動家庭，靠一台機車跑遍全城', death:['車禍','職業傷害','過勞猝死']}
     ]
   }}
 ];

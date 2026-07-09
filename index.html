@@ -878,14 +878,17 @@ function pickOccupation(tier, year, age){
 // (ischaemic heart disease, stroke, COPD, dementia) rather than infection - so the pool matches era.
 const NATURAL_DEATH_CAUSES_CLASSIC = ['壽終正寢','自然老化','無疾而終','安詳離世','年邁體衰'];
 const NATURAL_DEATH_CAUSES_MODERN = ['缺血性心臟病（冠心病）','中風','慢性阻塞性肺病','阿茲海默症或失智症','糖尿病併發症','腎臟病','壽終正寢','安詳離世'];
-function pickDeathCause(year, age, category){
+// occ.death (set per-occupation in OCCUPATIONS_BY_ERA) takes priority - a soldier and a farmer
+// in the same "military"/"farmer" category still die differently. Falls back to the category
+// pool for occupations without their own list (child/teen roles).
+function pickDeathCause(year, age, occ){
   const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
   if(age <= 14) return era.child[Math.floor(Math.random()*era.child.length)];
   if(age >= 60 && Math.random() < 0.35){
     const pool = year >= 1900 ? NATURAL_DEATH_CAUSES_MODERN : NATURAL_DEATH_CAUSES_CLASSIC;
     return pool[Math.floor(Math.random()*pool.length)];
   }
-  const list = era.adult[category] || era.adult.worker;
+  const list = occ.death || era.adult[occ.category] || era.adult.worker;
   return list[Math.floor(Math.random()*list.length)];
 }
 
@@ -970,7 +973,7 @@ function runSamsaraChain(startYear){
     const occ = pickOccupation(r.tier, r.year, age);
     r.occupation = occ.name;
     r.background = occ.background;
-    r.deathCause = pickDeathCause(r.year, age, occ.category);
+    r.deathCause = pickDeathCause(r.year, age, occ);
     if(age > 19){
       const m = pickMarriage(age);
       r.married = m.married;

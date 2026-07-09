@@ -76,3 +76,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 11:43 — Switch to a bimodal lifespan roll: 88% normal avg±20%, 12% wide 1~avg×1.1 (occasional early death, not the norm)
 - 2026-07-09 11:49 — Expand LEGACY_BY_CATEGORY for medical/educator/civic/engineer/creative/dockworker/worker from 10 to 25 lines each, matching the other 7 categories
 - 2026-07-09 12:16 — Expand MEANING_BY_CATEGORY for all 14 categories from 10 to 25 lines each, matching LEGACY_BY_CATEGORY
+- 2026-07-09 15:37 — Give every one of the 116 adult occupations its own tailored death-cause list instead of sharing the 14 category pools

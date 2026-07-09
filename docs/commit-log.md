@@ -68,3 +68,5 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 11:11 — Fold the remainder into the previous life instead of generating a short fake-death penultimate life
 - 2026-07-09 11:11 — Filter legacy/meaning text so unmarried lives never imply raising biological descendants (adoption still allowed)
 - 2026-07-09 11:11 — Add natural old-age death causes (~35% chance past age 60) alongside occupation-specific causes
+- 2026-07-09 11:31 — Tighten the descendant-legacy whitelist (drop the loose '街' keyword, reword the one line that relied on it)
+- 2026-07-09 11:31 — Add 2 more UR-tier wealth occupations per era (old aristocracy/church wealth/new-money variants) for richer variety

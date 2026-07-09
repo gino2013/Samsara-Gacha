@@ -902,7 +902,7 @@ function pickChildren(married, age){
 // Lines that imply having raised one's own children only make sense if the life actually had
 // descendants (married with kids) - adoption lines are fine either way.
 const DESCENDANT_HINTS = ['子孫','後代','子女','兒女','孩子'];
-const ADOPTION_HINTS = ['收養','收留','養女','養子','螟蛉','教過','學生','街','病人','孤兒','窮困人家','貧困人家','鄰居','徒弟','素不相識'];
+const ADOPTION_HINTS = ['收養','收留','養女','養子','螟蛉','教過','學生','病人','孤兒','窮困人家','貧困人家','鄰居','徒弟','素不相識'];
 function filterByDescendants(list, hasDescendants){
   if(hasDescendants) return list;
   const filtered = list.filter(line =>

@@ -222,7 +222,9 @@ const OCCUPATIONS_BY_ERA = [
       {name:'封地領主', category:'noble', background:'世襲貴族之家，生來就擁有封地與佃農'},
       {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人'},
       {name:'大商賈', category:'merchant', background:'商旅世家，自小跟著長輩走遍各地商路'},
-      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位'}
+      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位'},
+      {name:'主教兼領主', category:'noble', background:'教會高層兼世俗領主，掌握大片教產與封地'},
+      {name:'放貸金融家族之主', category:'merchant', background:'專營借貸生意的富裕家族，財富雄厚卻常受猜忌'}
     ],
     SSR: [
       {name:'騎士', category:'military', background:'騎士世家出身，自幼習武備戰'},
@@ -254,7 +256,9 @@ const OCCUPATIONS_BY_ERA = [
       {name:'殖民地總督', category:'noble', background:'母國權貴世家，被派任海外統治一方'},
       {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營遠洋貿易的商行'},
       {name:'特許公司股東', category:'merchant', background:'投資特許公司起家的富商家族'},
-      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家'}
+      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家'},
+      {name:'黃金船隊船東', category:'merchant', background:'擁有整支遠洋船隊的巨富家族'},
+      {name:'世襲公爵', category:'noble', background:'血統顯赫的世襲貴族，領地橫跨數個省份'}
     ],
     SSR: [
       {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海'},
@@ -286,7 +290,9 @@ const OCCUPATIONS_BY_ERA = [
       {name:'工業鉅子', category:'merchant', background:'白手起家的實業家族，靠工廠致富'},
       {name:'鐵路大亨', category:'merchant', background:'投資鐵路發跡的新興富豪家族'},
       {name:'銀行家族繼承人', category:'merchant', background:'家族數代經營銀行與放貸生意'},
-      {name:'貿易巨賈', category:'merchant', background:'跨國貿易起家的商行世家'}
+      {name:'貿易巨賈', category:'merchant', background:'跨國貿易起家的商行世家'},
+      {name:'鑽石礦業大亨', category:'merchant', background:'靠礦產暴富的新興巨富家族'},
+      {name:'世襲伯爵兼地主', category:'noble', background:'古老貴族頭銜加上龐大地產的傳統世家'}
     ],
     SSR: [
       {name:'工廠廠主', category:'merchant', background:'從小工廠一路擴張起來的業主家庭'},
@@ -318,7 +324,9 @@ const OCCUPATIONS_BY_ERA = [
       {name:'跨國企業創辦人', category:'merchant', background:'白手起家後建立跨國事業版圖的家族'},
       {name:'石油大亨', category:'merchant', background:'靠油田投資一夕致富的新興豪門'},
       {name:'政商世家繼承人', category:'noble', background:'政治與商業關係盤根錯節的世家'},
-      {name:'國際銀行家', category:'merchant', background:'數代經營金融的家族企業'}
+      {name:'國際銀行家', category:'merchant', background:'數代經營金融的家族企業'},
+      {name:'房地產開發大亨', category:'merchant', background:'靠土地開發致富的新興地產世家'},
+      {name:'王室旁支貴族', category:'noble', background:'保有頭銜與部分特權的沒落皇室分支'}
     ],
     SSR: [
       {name:'外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭'},
@@ -350,7 +358,9 @@ const OCCUPATIONS_BY_ERA = [
       {name:'科技集團創辦人', category:'merchant', background:'白手起家後打造出科技帝國的家族'},
       {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理'},
       {name:'跨國集團繼承人', category:'noble', background:'家族企業橫跨多國的財閥世家'},
-      {name:'皇室旁系成員', category:'noble', background:'保有王室血統與頭銜的旁支家族'}
+      {name:'皇室旁系成員', category:'noble', background:'保有王室血統與頭銜的旁支家族'},
+      {name:'私募基金創辦人', category:'merchant', background:'白手起家後掌控龐大私募資金的金融新貴'},
+      {name:'能源集團繼承人', category:'noble', background:'家族壟斷礦產或能源事業數十年的世家'}
     ],
     SSR: [
       {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭'},
@@ -655,7 +665,7 @@ const LEGACY_BY_CATEGORY = {
   educator: [
     '教會了全村識字，讓下一代得以走出去看世界',
     '用畢生積蓄辦了一所免學費的私塾',
-    '晚年開了一間小小的私塾，教會了整條街的孩子認字',
+    '晚年開了一間小小的私塾，教會了鄰居家的孩子認字',
     '教過的學生後來都成了對社會有用的人，這是最大的成就感',
     '靠著一己之力，把家鄉的識字率拉高了一大截',
     '一輩子鑽研學問，卻始終記得把知識用在幫助人身上',

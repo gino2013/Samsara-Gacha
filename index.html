@@ -871,9 +871,13 @@ function pickOccupation(tier, year, age){
 
 // Adult death causes are grouped per occupation category so how a life ends fits how it was lived
 // (a soldier falls in battle, a merchant loses a fortune to ruin, not a random mismatch).
+// A long life shouldn't always end in disease/disaster - past a certain age, natural old-age
+// death becomes a real possibility alongside the occupation-specific causes.
+const NATURAL_DEATH_CAUSES = ['壽終正寢','自然老化','無疾而終','安詳離世','年邁體衰'];
 function pickDeathCause(year, age, category){
   const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
   if(age <= 14) return era.child[Math.floor(Math.random()*era.child.length)];
+  if(age >= 60 && Math.random() < 0.35) return NATURAL_DEATH_CAUSES[Math.floor(Math.random()*NATURAL_DEATH_CAUSES.length)];
   const list = era.adult[category] || era.adult.worker;
   return list[Math.floor(Math.random()*list.length)];
 }
@@ -895,12 +899,23 @@ function pickChildren(married, age){
 }
 // Legacy (此生印記) and meaning (人生留下的話) are bucketed per occupation category so the
 // deed and the reflection both make sense for how that life was actually lived.
-function pickLegacy(category){
-  const list = LEGACY_BY_CATEGORY[category] || LEGACY_BY_CATEGORY.worker;
+// Lines that imply having raised one's own children only make sense if the life actually had
+// descendants (married with kids) - adoption lines are fine either way.
+const DESCENDANT_HINTS = ['子孫','後代','子女','兒女','孩子'];
+const ADOPTION_HINTS = ['收養','收留','養女','養子','螟蛉','教過','學生','街','病人','孤兒','窮困人家','貧困人家','鄰居','徒弟','素不相識'];
+function filterByDescendants(list, hasDescendants){
+  if(hasDescendants) return list;
+  const filtered = list.filter(line =>
+    ADOPTION_HINTS.some(h => line.includes(h)) || !DESCENDANT_HINTS.some(h => line.includes(h))
+  );
+  return filtered.length ? filtered : list;
+}
+function pickLegacy(category, hasDescendants){
+  const list = filterByDescendants(LEGACY_BY_CATEGORY[category] || LEGACY_BY_CATEGORY.worker, hasDescendants);
   return list[Math.floor(Math.random()*list.length)];
 }
-function pickMeaning(category){
-  const list = MEANING_BY_CATEGORY[category] || MEANING_BY_CATEGORY.worker;
+function pickMeaning(category, hasDescendants){
+  const list = filterByDescendants(MEANING_BY_CATEGORY[category] || MEANING_BY_CATEGORY.worker, hasDescendants);
   return list[Math.floor(Math.random()*list.length)];
 }
 function pickChildDeathNote(){ return CHILD_DEATH_NOTES[Math.floor(Math.random()*CHILD_DEATH_NOTES.length)]; }
@@ -924,7 +939,14 @@ function runSamsaraChain(startYear){
   const results = [];
   let year = startYear;
   let life = 0;
+  const MIN_NEW_LIFE_SPAN = 20; // ponytail: below this, folding the remainder into the previous life reads better than a fake short "death"
   while(year < birthYear && life < 30){ // ponytail: 30-life safety cap, unreachable at current lifespan/slider ranges
+    if(birthYear - year < MIN_NEW_LIFE_SPAN && results.length > 0){
+      const prev = results[results.length - 1];
+      prev.endYear = birthYear;
+      prev.age = prev.endYear - prev.year;
+      break;
+    }
     life++;
     const r = rollOne();
     r.life = life;
@@ -937,13 +959,20 @@ function runSamsaraChain(startYear){
     r.occupation = occ.name;
     r.background = occ.background;
     r.deathCause = pickDeathCause(r.year, age, occ.category);
-    if(age > 14){
+    if(age > 19){
       const m = pickMarriage(age);
       r.married = m.married;
       r.marryAge = m.marryAge;
       r.children = pickChildren(m.married, age);
-      r.legacy = pickLegacy(occ.category);
-      r.meaning = pickMeaning(occ.category);
+      const hasDescendants = m.married && r.children > 0;
+      r.legacy = pickLegacy(occ.category, hasDescendants);
+      r.meaning = pickMeaning(occ.category, hasDescendants);
+    } else if(age > 14){
+      const m = pickMarriage(age);
+      r.married = m.married;
+      r.marryAge = m.marryAge;
+      r.children = pickChildren(m.married, age);
+      r.childDeathNote = pickYoungDeathNote();
     } else {
       r.childDeathNote = pickChildDeathNote();
     }

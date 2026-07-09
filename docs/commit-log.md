@@ -65,3 +65,6 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 10:35 — Extract country/occupation/death-cause/legacy/meaning content pools out of index.html into data.js
 - 2026-07-09 10:35 — Split professional into medical/educator/civic/engineer/creative, and sailor into sailor/dockworker, so specific jobs never share mismatched death-cause/legacy text
 - 2026-07-09 10:35 — Add a teen (15-19) occupation tier so young lives don't get senior-executive titles, and wire it into pickOccupation
+- 2026-07-09 11:11 — Fold the remainder into the previous life instead of generating a short fake-death penultimate life
+- 2026-07-09 11:11 — Filter legacy/meaning text so unmarried lives never imply raising biological descendants (adoption still allowed)
+- 2026-07-09 11:11 — Add natural old-age death causes (~35% chance past age 60) alongside occupation-specific causes

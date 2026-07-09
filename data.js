@@ -1468,6 +1468,345 @@ const TEEN_OCCUPATIONS = {
     {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
   ]
 };
+
+// Region-specific child/teen pools, same shape as CHILD_OCCUPATIONS/TEEN_OCCUPATIONS above.
+// A child or teen life in China/India/Nigeria was getting the generic "貴族之子"/"少東家" set
+// regardless of region even after adult occupations were region-aware - this closes that gap.
+const CHILD_OCCUPATIONS_BY_REGION = {
+  eastAsia: {
+    UR: [
+      {name:'藩王世子', category:'noble', background:'生於藩王世家，自幼被栽培為繼承人'},
+      {name:'宰輔世家之後', category:'noble', background:'生於累世為官的宰輔家族'},
+      {name:'大鹽商之後', category:'merchant', background:'生於壟斷鹽業貿易的巨富商賈之家'}
+    ],
+    SSR: [
+      {name:'富商之後', category:'merchant', background:'生於做生意的商家'},
+      {name:'書香門第之後', category:'educator', background:'生於讀書人家，自幼識字'},
+      {name:'將門之後', category:'military', background:'生於世代領兵的將門世家'}
+    ],
+    SR: [
+      {name:'舉人之後', category:'civic', background:'生於科舉中第的書香人家'},
+      {name:'地主之子', category:'noble', background:'生於累世積田的地主家庭'},
+      {name:'學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+    ],
+    R: [
+      {name:'農家之子', category:'farmer', background:'生於一般務農人家'},
+      {name:'鐵匠學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+      {name:'放牛娃', category:'farmer', background:'生於鄉下貧苦人家，很早就要幫忙做事'}
+    ],
+    N: [
+      {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+      {name:'牧童', category:'farmer', background:'生於窮苦人家，年紀很小就要幫忙放牧'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+    ]
+  },
+  southAsia: {
+    UR: [
+      {name:'土邦君主之子', category:'noble', background:'生於世襲統治一方的土邦王族'},
+      {name:'香料貿易巨賈之後', category:'merchant', background:'生於掌控香料貿易的富商世家'},
+      {name:'宮廷祭司之後', category:'educator', background:'生於世代擔任宮廷顧問的學者家族'}
+    ],
+    SSR: [
+      {name:'富商之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'學者祭司之後', category:'educator', background:'生於世代誦習經典的學者家庭'},
+      {name:'武士貴族之後', category:'military', background:'生於世襲騎戰的貴族家庭'}
+    ],
+    SR: [
+      {name:'書香門第之後', category:'educator', background:'生於讀書人家，自幼識字'},
+      {name:'地主之子', category:'noble', background:'生於累世積田的地主家庭'},
+      {name:'紡織學徒', category:'artisan', background:'生於織布匠人家庭，很小就被送去學手藝'}
+    ],
+    R: [
+      {name:'農家之子', category:'farmer', background:'生於一般務農人家'},
+      {name:'紡織學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+      {name:'放牛娃', category:'farmer', background:'生於鄉下貧苦人家，很早就要幫忙做事'}
+    ],
+    N: [
+      {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+      {name:'牧童', category:'farmer', background:'生於窮苦人家，年紀很小就要幫忙放牧'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+    ]
+  },
+  africaMiddleEast: {
+    UR: [
+      {name:'蘇丹王子', category:'noble', background:'生於統治一方王國的蘇丹世家'},
+      {name:'黃金貿易巨賈之後', category:'merchant', background:'生於掌控黃金貿易路線的富商世家'},
+      {name:'部落大酋長之後', category:'noble', background:'生於統領部落聯盟的世襲酋長家族'}
+    ],
+    SSR: [
+      {name:'富商之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'學者顯貴之後', category:'educator', background:'生於精通經典教義的宗教學者世家'},
+      {name:'戰士貴族之後', category:'military', background:'生於世襲騎戰的貴族武士家庭'}
+    ],
+    SR: [
+      {name:'商人之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'地主之子', category:'noble', background:'生於累世積田的地主家庭'},
+      {name:'學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+    ],
+    R: [
+      {name:'農家之子', category:'farmer', background:'生於一般務農人家'},
+      {name:'金屬工匠學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+      {name:'牧童', category:'farmer', background:'生於遊牧家庭，很早就要幫忙放牧'}
+    ],
+    N: [
+      {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+      {name:'牧童', category:'farmer', background:'生於窮苦人家，年紀很小就要幫忙放牧'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+    ]
+  },
+  seAsia: {
+    UR: [
+      {name:'蘇丹王子', category:'noble', background:'生於統治一方王國的蘇丹世家'},
+      {name:'香料貿易巨賈之後', category:'merchant', background:'生於掌控香料貿易的富商世家'},
+      {name:'王室宗親之後', category:'noble', background:'生於古老王國統治家族'}
+    ],
+    SSR: [
+      {name:'富商之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'佛寺沙彌', category:'educator', background:'生於虔誠信徒之家，年少即入寺院受教'},
+      {name:'水師將領之後', category:'military', background:'生於世代統領艦隊的將門世家'}
+    ],
+    SR: [
+      {name:'商人之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'地主之子', category:'noble', background:'生於累世積田的地主家庭'},
+      {name:'木雕學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+    ],
+    R: [
+      {name:'農家之子', category:'farmer', background:'生於一般種稻人家'},
+      {name:'木雕學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+      {name:'漁家子', category:'sailor', background:'生於靠海吃海的漁戶家庭'}
+    ],
+    N: [
+      {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+      {name:'漁家子', category:'sailor', background:'生於窮苦漁戶家庭，很早就要幫忙出海'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+    ]
+  },
+  centralAsia: {
+    UR: [
+      {name:'可汗之子', category:'noble', background:'生於統領草原部族的世襲可汗世家'},
+      {name:'絲路貿易巨賈之後', category:'merchant', background:'生於掌控絲路貿易的富商世家'},
+      {name:'部落大汗之後', category:'noble', background:'生於統領遊牧部族聯盟的世襲家族'}
+    ],
+    SSR: [
+      {name:'富商之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'學者顯貴之後', category:'educator', background:'生於精通經典教義的宗教學者世家'},
+      {name:'遊牧貴族之後', category:'military', background:'生於世襲騎戰的遊牧貴族家庭'}
+    ],
+    SR: [
+      {name:'商人之後', category:'merchant', background:'生於經商致富的商人家庭'},
+      {name:'地主之子', category:'noble', background:'生於累世積田的地主家庭'},
+      {name:'皮革學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+    ],
+    R: [
+      {name:'牧民之子', category:'farmer', background:'生於世代逐水草而居的遊牧家庭'},
+      {name:'皮革學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'},
+      {name:'牧童', category:'farmer', background:'生於鄉下貧苦人家，很早就要幫忙做事'}
+    ],
+    N: [
+      {name:'佃農之子', category:'farmer', background:'生於世代租地耕種、一無所有的佃農家庭'},
+      {name:'牧童', category:'farmer', background:'生於窮苦人家，年紀很小就要幫忙放牧'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'街頭乞童', category:'worker', background:'生於一貧如洗的家庭，流落街頭'}
+    ]
+  },
+  pacific: {
+    UR: [
+      {name:'大酋長之子', category:'noble', background:'生於統領島嶼聯盟的世襲大酋長世家'},
+      {name:'航海貿易首領之後', category:'merchant', background:'生於率領長程獨木舟貿易船隊的世家'},
+      {name:'祭司頭領之後', category:'educator', background:'生於世代主持祭祀的高階祭司家族'}
+    ],
+    SSR: [
+      {name:'部落酋長之後', category:'noble', background:'生於統領一方部落的世襲酋長家庭'},
+      {name:'領航員世家之後', category:'sailor', background:'生於世代精通星象與洋流的領航員家族'},
+      {name:'戰士貴族之後', category:'military', background:'生於世襲戰士的貴族家庭'}
+    ],
+    SR: [
+      {name:'部落長老之後', category:'civic', background:'生於受部落敬重的長老家族'},
+      {name:'獨木舟工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'},
+      {name:'農園主之子', category:'noble', background:'生於擁有芋頭與麵包樹園的地主家庭'}
+    ],
+    R: [
+      {name:'漁家子', category:'sailor', background:'生於靠海吃海的漁戶家庭'},
+      {name:'農家之子', category:'farmer', background:'生於種植芋頭與麵包樹的農家'},
+      {name:'編織學徒', category:'artisan', background:'生於手藝人家庭，跟著長輩學本事'}
+    ],
+    N: [
+      {name:'底層勞工之子', category:'worker', background:'生於從事最卑微勞役的貧困家庭'},
+      {name:'漁家子', category:'sailor', background:'生於窮苦漁戶家庭，很早就要幫忙出海'},
+      {name:'孤兒', category:'worker', background:'自幼失去父母，無依無靠'},
+      {name:'工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝'}
+    ]
+  }
+};
+
+const TEEN_OCCUPATIONS_BY_REGION = {
+  eastAsia: {
+    UR: [
+      {name:'世子見習', category:'noble', background:'生於藩王世家，正接受成為繼承人的栽培'},
+      {name:'少東家', category:'merchant', background:'商賈世家之後，剛開始跟著長輩學做生意'},
+      {name:'書院學生', category:'educator', background:'生於書香世家，在書院裡接受栽培'}
+    ],
+    SSR: [
+      {name:'見習武將', category:'military', background:'將門世家出身，剛開始接受軍事養成教育'},
+      {name:'商行學徒', category:'merchant', background:'殷實商家之後，被送去商行歷練'},
+      {name:'書院生員', category:'educator', background:'讀書人家之後，正在書院裡受教'}
+    ],
+    SR: [
+      {name:'工匠學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'},
+      {name:'私塾生員', category:'educator', background:'讀書人家之後，仍在私塾苦讀'},
+      {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
+    ],
+    R: [
+      {name:'學徒工', category:'worker', background:'普通人家出身，剛拜師當學徒'},
+      {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'流浪打零工', category:'worker', background:'一貧如洗的家庭，四處打零工糊口'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  },
+  southAsia: {
+    UR: [
+      {name:'土邦繼承人見習', category:'noble', background:'生於土邦王族，正接受成為繼承人的栽培'},
+      {name:'商行少東家', category:'merchant', background:'商賈世家之後，剛開始跟著長輩學做生意'},
+      {name:'經典學院學生', category:'educator', background:'生於學者世家，在經典學院裡接受栽培'}
+    ],
+    SSR: [
+      {name:'見習武士貴族', category:'military', background:'武士世家出身，剛開始接受騎戰養成教育'},
+      {name:'商行學徒', category:'merchant', background:'殷實商家之後，被送去商行歷練'},
+      {name:'學者見習', category:'educator', background:'學者世家之後，正在經典學院裡受教'}
+    ],
+    SR: [
+      {name:'紡織學徒', category:'artisan', background:'織布匠人家庭出身，剛拜師學藝沒幾年'},
+      {name:'私塾生員', category:'educator', background:'讀書人家之後，仍在私塾苦讀'},
+      {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
+    ],
+    R: [
+      {name:'紡織學徒', category:'artisan', background:'普通人家出身，剛拜師當學徒'},
+      {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'流浪打零工', category:'worker', background:'一貧如洗的家庭，四處打零工糊口'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  },
+  africaMiddleEast: {
+    UR: [
+      {name:'王子見習', category:'noble', background:'生於蘇丹世家，正接受成為繼承人的栽培'},
+      {name:'商行少東家', category:'merchant', background:'商賈世家之後，剛開始跟著長輩學做生意'},
+      {name:'經學院學生', category:'educator', background:'生於學者世家，在經學院裡接受栽培'}
+    ],
+    SSR: [
+      {name:'見習戰士貴族', category:'military', background:'武士世家出身，剛開始接受騎戰養成教育'},
+      {name:'商隊學徒', category:'merchant', background:'殷實商家之後，被送去商隊歷練'},
+      {name:'學者見習', category:'educator', background:'學者世家之後，正在經學院裡受教'}
+    ],
+    SR: [
+      {name:'工匠學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'},
+      {name:'經學院生員', category:'educator', background:'讀書人家之後，仍在經學院苦讀'},
+      {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
+    ],
+    R: [
+      {name:'遊牧幫工', category:'farmer', background:'遊牧家庭出身，跟著長輩逐水草而居'},
+      {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'流浪打零工', category:'worker', background:'一貧如洗的家庭，四處打零工糊口'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  },
+  seAsia: {
+    UR: [
+      {name:'王子見習', category:'noble', background:'生於蘇丹世家，正接受成為繼承人的栽培'},
+      {name:'商行少東家', category:'merchant', background:'商賈世家之後，剛開始跟著長輩學做生意'},
+      {name:'佛學院學生', category:'educator', background:'生於虔誠信徒之家，在佛學院裡接受栽培'}
+    ],
+    SSR: [
+      {name:'見習水師軍官', category:'military', background:'將門世家出身，剛開始接受海戰養成教育'},
+      {name:'商行學徒', category:'merchant', background:'殷實商家之後，被送去商行歷練'},
+      {name:'佛學院生員', category:'educator', background:'虔信之家，正在佛學院裡受教'}
+    ],
+    SR: [
+      {name:'木雕學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'},
+      {name:'佛學院生員', category:'educator', background:'虔信之家，仍在佛學院苦讀'},
+      {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
+    ],
+    R: [
+      {name:'漁撈幫工', category:'sailor', background:'漁戶家庭出身，跟著長輩出海捕魚'},
+      {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'流浪打零工', category:'worker', background:'一貧如洗的家庭，四處打零工糊口'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  },
+  centralAsia: {
+    UR: [
+      {name:'可汗繼承人見習', category:'noble', background:'生於可汗世家，正接受成為繼承人的栽培'},
+      {name:'商行少東家', category:'merchant', background:'商賈世家之後，剛開始跟著長輩學做生意'},
+      {name:'經學院學生', category:'educator', background:'生於學者世家，在經學院裡接受栽培'}
+    ],
+    SSR: [
+      {name:'見習遊牧貴族', category:'military', background:'貴族世家出身，剛開始接受騎戰養成教育'},
+      {name:'商隊學徒', category:'merchant', background:'殷實商家之後，被送去商隊歷練'},
+      {name:'學者見習', category:'educator', background:'學者世家之後，正在經學院裡受教'}
+    ],
+    SR: [
+      {name:'皮革學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'},
+      {name:'經學院生員', category:'educator', background:'讀書人家之後，仍在經學院苦讀'},
+      {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
+    ],
+    R: [
+      {name:'遊牧幫工', category:'farmer', background:'遊牧家庭出身，跟著長輩逐水草而居'},
+      {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'流浪打零工', category:'worker', background:'一貧如洗的家庭，四處打零工糊口'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  },
+  pacific: {
+    UR: [
+      {name:'酋長繼承人見習', category:'noble', background:'生於大酋長世家，正接受成為繼承人的栽培'},
+      {name:'貿易首領學徒', category:'merchant', background:'貿易世家之後，剛開始跟著長輩學習航海貿易'},
+      {name:'祭司見習', category:'educator', background:'生於祭司世家，正接受祭祀栽培'}
+    ],
+    SSR: [
+      {name:'見習領航員', category:'sailor', background:'領航員世家出身，剛開始學習星象與洋流'},
+      {name:'見習戰士', category:'military', background:'戰士世家出身，剛開始接受戰技訓練'},
+      {name:'祭司見習', category:'educator', background:'祭司世家之後，正在學習祭祀與醫療'}
+    ],
+    SR: [
+      {name:'獨木舟工匠學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'},
+      {name:'漁撈見習', category:'sailor', background:'漁戶家庭出身，跟著長輩學習出海捕魚'},
+      {name:'編織學徒', category:'artisan', background:'工匠家庭出身，剛拜師學藝沒幾年'}
+    ],
+    R: [
+      {name:'漁撈幫工', category:'sailor', background:'漁戶家庭出身，跟著長輩出海捕魚'},
+      {name:'戰士見習', category:'military', background:'貧苦人家出身，剛開始接受戰技訓練'},
+      {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在園裡幫忙'}
+    ],
+    N: [
+      {name:'童工', category:'worker', background:'窮苦人家出身，很早就得出來做工貼補家用'},
+      {name:'漁撈幫工', category:'sailor', background:'窮苦漁戶家庭，很早就要幫忙出海'},
+      {name:'幫傭', category:'worker', background:'貧苦人家出身，很早就被送去幫傭'}
+    ]
+  }
+};
 // A life ending at 15-19 hasn't lived long enough for "一輩子"/"畢生積蓄" framing, so it gets a
 // short-life reflection instead of the full adult legacy/meaning pools.
 

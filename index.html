@@ -865,11 +865,11 @@ function pickYoungDeathNote(){ return YOUNG_DEATH_NOTES[Math.floor(Math.random()
 // colonial-flavored) default, so e.g. a life in China doesn't get "騎士" or "教會神職人員".
 // Unmapped countries (Europe, the Americas, Oceania, etc.) fall back to the default table.
 function pickOccupation(tier, year, age, countryName){
+  const region = COUNTRY_REGION[countryName];
   let list;
-  if(age <= 14) list = CHILD_OCCUPATIONS[tier];
-  else if(age <= 19) list = TEEN_OCCUPATIONS[tier];
+  if(age <= 14) list = (region && CHILD_OCCUPATIONS_BY_REGION[region]?.[tier]) || CHILD_OCCUPATIONS[tier];
+  else if(age <= 19) list = (region && TEEN_OCCUPATIONS_BY_REGION[region]?.[tier]) || TEEN_OCCUPATIONS[tier];
   else {
-    const region = COUNTRY_REGION[countryName];
     const table = (region && OCCUPATIONS_BY_REGION[region]) || OCCUPATIONS_BY_ERA;
     list = table.find(e => year < e.before).jobs[tier];
   }

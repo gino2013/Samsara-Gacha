@@ -441,13 +441,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'藩王', category:'noble', background:'皇室宗親分封的藩王世家，享有封地與軍權', death:['奪嫡政爭遇害','瘟疫','痛風併發症']},
         {name:'世襲宰輔世家之主', category:'noble', background:'累世為官的宰輔家族，權傾朝野', death:['朝廷政爭失勢','瘟疫','遇刺']},
         {name:'大鹽商', category:'merchant', background:'壟斷鹽業貿易的巨富商賈世家', death:['官府查抄致死','瘟疫','傷寒']},
-        {name:'皇親國戚', category:'noble', background:'與皇室聯姻的貴戚家族', death:['宮廷鬥爭遇害','瘟疫','痛風併發症']}
+        {name:'皇親國戚', category:'noble', background:'與皇室聯姻的貴戚家族', death:['宮廷鬥爭遇害','瘟疫','痛風併發症']},
+        {name:'皇商世家', category:'merchant', background:'獲皇室特許經營專賣生意的富商世家', death:['官府查抄致死','瘟疫','傷寒']},
+        {name:'前朝遺老貴族', category:'noble', background:'前朝沒落貴族，仍保有部分田產與人脈', death:['家道中落憂鬱而終','瘟疫','傷寒']}
       ],
       SSR: [
         {name:'節度使', category:'military', background:'手握重兵的地方軍閥世家', death:['征戰陣亡','兵變遇害','瘟疫']},
         {name:'狀元及第官員', category:'educator', background:'科舉高中入朝為官的書香門第', death:['朝廷政爭失勢','瘟疫','積勞成疾']},
         {name:'絲綢商行大東家', category:'merchant', background:'經營絲路貿易的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'寺院方丈', category:'educator', background:'佛門高僧兼帝王師的清望之家', death:['寺院染疫','瘟疫','積勞而終']}
+        {name:'寺院方丈', category:'educator', background:'佛門高僧兼帝王師的清望之家', death:['寺院染疫','瘟疫','積勞而終']},
+        {name:'鹽鐵專賣巨賈', category:'merchant', background:'掌控鹽鐵專賣特許權的富商世家', death:['官府查抄致死','瘟疫','傷寒']}
       ],
       SR: [
         {name:'舉人官員', category:'civic', background:'科舉中第任職地方的書香人家', death:['遭政敵構陷','瘟疫','傷寒']},
@@ -473,13 +476,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'攝政親王', category:'noble', background:'代理朝政的皇族世家', death:['奪權政爭失勢','瘟疫','痛風併發症']},
         {name:'皇商世家之主', category:'merchant', background:'專供宮廷用度的御用商行家族', death:['官府查抄致死','瘟疫','傷寒']},
         {name:'世襲藩王', category:'noble', background:'鎮守一方的世襲藩王家族', death:['朝廷削藩失勢','瘟疫','痛風併發症']},
-        {name:'旗人貴族世家', category:'noble', background:'開國功勳世家，享有世襲俸祿', death:['宮廷鬥爭遇害','瘟疫','傷寒']}
+        {name:'旗人貴族世家', category:'noble', background:'開國功勳世家，享有世襲俸祿', death:['宮廷鬥爭遇害','瘟疫','傷寒']},
+        {name:'十三行行商世家', category:'merchant', background:'獲官方特許壟斷對外貿易的行商世家', death:['商船遇劫','瘟疫','傷寒']},
+        {name:'沒落貴族世家', category:'noble', background:'祖上顯赫如今家道中落的舊貴族', death:['家道中落憂鬱而終','瘟疫','傷寒']}
       ],
       SSR: [
         {name:'封疆大吏', category:'civic', background:'總督一方的封疆大吏世家', death:['朝廷政爭失勢','瘟疫','積勞成疾']},
         {name:'儒學大家', category:'educator', background:'帝王師出身的儒學世家', death:['瘟疫','傷寒','積勞而終']},
         {name:'票號東家', category:'merchant', background:'經營跨省匯兌票號的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'武舉將領', category:'military', background:'武舉出身的將門世家', death:['征戰陣亡','兵變遇害','瘟疫']}
+        {name:'武舉將領', category:'military', background:'武舉出身的將門世家', death:['征戰陣亡','兵變遇害','瘟疫']},
+        {name:'漕運糧商巨賈', category:'merchant', background:'壟斷南北漕運糧食貿易的富商世家', death:['商隊遇劫','瘟疫','傷寒']}
       ],
       SR: [
         {name:'進士官員', category:'civic', background:'科舉高中任職朝廷的書香人家', death:['遭政敵構陷','瘟疫','傷寒']},
@@ -505,13 +511,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'買辦資本家', category:'merchant', background:'替洋行牽線發跡的買辦富商家族', death:['投資失利破產鬱鬱而終','肺結核','霍亂']},
         {name:'洋務派大臣', category:'noble', background:'主持新政改革的朝廷重臣世家', death:['政爭失勢','肺結核','霍亂']},
         {name:'財閥創始人', category:'merchant', background:'白手起家打造企業集團的新興豪門', death:['事業擴張過度崩解','肺結核','霍亂']},
-        {name:'世襲王公', category:'noble', background:'古老王公頭銜加上龐大地產的傳統世家', death:['家道中落憂鬱而終','肺結核','霍亂']}
+        {name:'世襲王公', category:'noble', background:'古老王公頭銜加上龐大地產的傳統世家', death:['家道中落憂鬱而終','肺結核','霍亂']},
+        {name:'招商官督商辦企業家', category:'merchant', background:'官方扶植的新式企業創辦家族', death:['投資失利破產鬱鬱而終','肺結核','霍亂']},
+        {name:'前朝遺老世家', category:'noble', background:'改朝換代後沒落的舊朝顯貴世家', death:['家道中落憂鬱而終','肺結核','霍亂']}
       ],
       SSR: [
         {name:'留洋歸國士紳', category:'civic', background:'負笈海外歸國任職的新式菁英家庭', death:['積勞成疾','肺結核','霍亂']},
         {name:'地方新式軍閥', category:'military', background:'亂世崛起的地方武裝勢力世家', death:['戰亂喪生','肺結核','霍亂']},
         {name:'絲廠廠主', category:'merchant', background:'經營新式紡織廠致富的實業家族', death:['工廠火災','肺結核','霍亂']},
-        {name:'洋行買辦', category:'merchant', background:'替外商牽線致富的買辦家族', death:['投資失利破產','肺結核','霍亂']}
+        {name:'洋行買辦', category:'merchant', background:'替外商牽線致富的買辦家族', death:['投資失利破產','肺結核','霍亂']},
+        {name:'錢莊票號集團股東', category:'merchant', background:'經營跨區域錢莊票號網絡的富商世家', death:['擠兌破產','肺結核','霍亂']}
       ],
       SR: [
         {name:'新式學堂教師', category:'educator', background:'新式學堂培養出來的知識分子家庭', death:['肺結核','霍亂','積勞成疾']},
@@ -537,13 +546,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'財閥集團創辦人', category:'merchant', background:'白手起家打造企業集團版圖的家族', death:['事業破產一夕之間垮台','心臟病','癌症']},
         {name:'政商世家繼承人', category:'noble', background:'政治與商業關係盤根錯節的世家', death:['家族企業崩解抑鬱而終','心臟病','癌症']},
         {name:'銀行家族繼承人', category:'merchant', background:'數代經營金融的家族企業', death:['金融危機破產','心臟病','癌症']},
-        {name:'地產大亨', category:'merchant', background:'靠土地開發致富的新興地產世家', death:['投資失利破產','心臟病','癌症']}
+        {name:'地產大亨', category:'merchant', background:'靠土地開發致富的新興地產世家', death:['投資失利破產','心臟病','癌症']},
+        {name:'家族企業集團繼承人', category:'noble', background:'家族企業橫跨多項產業的財閥世家', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']},
+        {name:'華僑貿易巨賈', category:'merchant', background:'海外經商致富後返鄉置產的僑商世家', death:['投資失利破產','心臟病','癌症']}
       ],
       SSR: [
         {name:'外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭', death:['派駐地意外','心臟病','癌症']},
         {name:'大學校長', category:'educator', background:'學術世家出身的教育界菁英', death:['積勞成疾','心臟病','癌症']},
         {name:'電影公司老闆', category:'creative', background:'娛樂產業圈子出身的家族', death:['積勞成疾','心臟病','癌症']},
-        {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭', death:['積勞成疾','心臟病','癌症']}
+        {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭', death:['積勞成疾','心臟病','癌症']},
+        {name:'私人銀行家', category:'merchant', background:'服務富豪客戶的金融世家', death:['積勞成疾','心臟病','癌症']}
       ],
       SR: [
         {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位', death:['積勞成疾','心臟病','癌症']},
@@ -569,13 +581,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'科技集團創辦人', category:'merchant', background:'白手起家後打造出科技帝國的家族', death:['創業失敗東山再起未果','心臟病','癌症']},
         {name:'半導體產業大亨', category:'merchant', background:'掌握關鍵晶片技術致富的產業世家', death:['過勞猝死','心臟病','癌症']},
         {name:'財閥集團繼承人', category:'noble', background:'家族企業橫跨多國的財閥世家', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']},
-        {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理', death:['過勞猝死','心臟病','癌症']}
+        {name:'避險基金經理人', category:'merchant', background:'金融菁英世家，數代經營資產管理', death:['過勞猝死','心臟病','癌症']},
+        {name:'電商平台創辦人', category:'merchant', background:'白手起家打造電商帝國的新興富豪家族', death:['過勞猝死','心臟病','癌症']},
+        {name:'家族信託基金繼承人', category:'noble', background:'數代累積財富、透過家族信託管理資產的世家', death:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症']}
       ],
       SSR: [
         {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭', death:['創業失敗東山再起未果','心臟病','癌症']},
         {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭', death:['過勞猝死','心臟病','癌症']},
         {name:'醫師世家繼承人', category:'medical', background:'數代行醫的醫師世家', death:['過勞猝死','心臟病','癌症']},
-        {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭', death:['過勞猝死','心臟病','癌症']}
+        {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭', death:['過勞猝死','心臟病','癌症']},
+        {name:'加密貨幣早期投資人', category:'merchant', background:'靠早期押注新興資產致富的新興富豪家庭', death:['投資失利破產','心臟病','癌症']}
       ],
       SR: [
         {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位', death:['過勞猝死','心臟病','癌症']},

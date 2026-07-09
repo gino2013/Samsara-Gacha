@@ -416,7 +416,7 @@
     margin:0 0 20px; line-height:1.9; letter-spacing:0.01em;
     transition:opacity 1.6s ease;
   }
-  #chainEndOverlay #chainEndSummary{ font-size:17px; }
+  #chainEndOverlay #chainEndSummary{ font-size:17px; line-height:1.5; }
   #chainEndOverlay .fit-line{ display:block; white-space:nowrap; }
   #chainEndOverlay .onboard-sub:not(#chainEndSummary){ font-size:23px; line-height:1.65; }
   #chainEndOverlay .chain-end-choice{
@@ -958,7 +958,7 @@ function runSamsaraChain(startYear){
     const r = rollOne();
     r.life = life;
     r.year = Math.round(year);
-    year += TIERS[r.tier].lifespan * (0.8 + Math.random()*0.4);
+    year += 1 + Math.random() * (TIERS[r.tier].lifespan * 1.1 - 1); // ponytail: uniform 1~avg*1.1 per user's spec; widens variance a lot, watch if young deaths feel too frequent
     r.endYear = Math.round(Math.min(year, birthYear));
     const age = r.endYear - r.year;
     r.age = age;

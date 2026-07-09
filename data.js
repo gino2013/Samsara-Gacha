@@ -230,7 +230,8 @@ const OCCUPATIONS_BY_ERA = [
       {name:'騎士', category:'military', background:'騎士世家出身，自幼習武備戰'},
       {name:'教會高階神職人員', category:'educator', background:'虔誠信徒之家，年少即入修道院受教'},
       {name:'行會會長', category:'artisan', background:'工匠世家，繼承家族在行會的地位'},
-      {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培'}
+      {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培'},
+      {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族'}
     ],
     SR: [
       {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝'},
@@ -264,7 +265,8 @@ const OCCUPATIONS_BY_ERA = [
       {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海'},
       {name:'種植園主', category:'merchant', background:'殖民地拓墾起家的地主家族'},
       {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族'},
-      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家'}
+      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家'},
+      {name:'特許貿易公司高階股東', category:'merchant', background:'投資東印度公司一類特許貿易組織起家的富裕家族'}
     ],
     SR: [
       {name:'航海士', category:'military', background:'港口人家，自小熟悉船務與航海'},
@@ -298,7 +300,8 @@ const OCCUPATIONS_BY_ERA = [
       {name:'工廠廠主', category:'merchant', background:'從小工廠一路擴張起來的業主家庭'},
       {name:'執業律師', category:'civic', background:'受過高等教育的城市中產家庭'},
       {name:'報社主編', category:'creative', background:'書香門第，家中素來重視文墨'},
-      {name:'鐵路工程師', category:'engineer', background:'新式學堂培養出來的技術人才世家'}
+      {name:'鐵路工程師', category:'engineer', background:'新式學堂培養出來的技術人才世家'},
+      {name:'礦業投資股東', category:'merchant', background:'投資新興礦業致富的商人家族'}
     ],
     SR: [
       {name:'醫師', category:'medical', background:'家中栽培出的第一代受過正規醫學教育者'},
@@ -332,7 +335,8 @@ const OCCUPATIONS_BY_ERA = [
       {name:'外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭'},
       {name:'航空公司高階主管', category:'civic', background:'受過完整高等教育的中上階層家庭'},
       {name:'電影製片人', category:'creative', background:'娛樂產業圈子出身的家族'},
-      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭'}
+      {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭'},
+      {name:'私人銀行家', category:'merchant', background:'服務富豪客戶的金融世家'}
     ],
     SR: [
       {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位'},
@@ -366,7 +370,8 @@ const OCCUPATIONS_BY_ERA = [
       {name:'新創公司創辦人', category:'merchant', background:'受過高等教育、勇於創業的中產家庭'},
       {name:'跨國企業高階主管', category:'civic', background:'重視教育投資的中產菁英家庭'},
       {name:'駐外外交官', category:'civic', background:'外語與國際事務教育出身的菁英家庭'},
-      {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭'}
+      {name:'投資銀行家', category:'merchant', background:'金融背景濃厚的都會家庭'},
+      {name:'加密貨幣早期投資人', category:'merchant', background:'靠早期押注新興資產致富的新興富豪家庭'}
     ],
     SR: [
       {name:'大學教授', category:'educator', background:'家中重視教育，一路栽培到高等學位'},

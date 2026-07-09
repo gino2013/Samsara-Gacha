@@ -861,11 +861,18 @@ document.getElementById('theEndClose').addEventListener('click', () => {
 function pickYoungDeathNote(){ return YOUNG_DEATH_NOTES[Math.floor(Math.random()*YOUNG_DEATH_NOTES.length)]; }
 // Returns {name, category, background} so occupation, 出身, death cause, legacy and meaning
 // can all be picked from the same category and read as one coherent life instead of a random mashup.
-function pickOccupation(tier, year, age){
+// Countries in a mapped region use that region's occupation table instead of the (Europe/
+// colonial-flavored) default, so e.g. a life in China doesn't get "騎士" or "教會神職人員".
+// Unmapped countries (Europe, the Americas, Oceania, etc.) fall back to the default table.
+function pickOccupation(tier, year, age, countryName){
   let list;
   if(age <= 14) list = CHILD_OCCUPATIONS[tier];
   else if(age <= 19) list = TEEN_OCCUPATIONS[tier];
-  else list = OCCUPATIONS_BY_ERA.find(e => year < e.before).jobs[tier];
+  else {
+    const region = COUNTRY_REGION[countryName];
+    const table = (region && OCCUPATIONS_BY_REGION[region]) || OCCUPATIONS_BY_ERA;
+    list = table.find(e => year < e.before).jobs[tier];
+  }
   return list[Math.floor(Math.random()*list.length)];
 }
 
@@ -970,7 +977,7 @@ function runSamsaraChain(startYear){
     r.endYear = Math.round(Math.min(year, birthYear));
     const age = r.endYear - r.year;
     r.age = age;
-    const occ = pickOccupation(r.tier, r.year, age);
+    const occ = pickOccupation(r.tier, r.year, age, r.name);
     r.occupation = occ.name;
     r.background = occ.background;
     r.deathCause = pickDeathCause(r.year, age, occ);

@@ -62,3 +62,6 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 23:27 — Split the labor category into farmer/miner/sailor/worker so e.g. a miner and a fisherman never share the same story beats
 - 2026-07-08 23:28 — Document FR-15 (correlated 出身/職業/死因/此生印記/人生領悟) in the PRD
 - 2026-07-09 10:09 — Auto-shrink chain-end summary lines to fit on one line regardless of country name length
+- 2026-07-09 10:35 — Extract country/occupation/death-cause/legacy/meaning content pools out of index.html into data.js
+- 2026-07-09 10:35 — Split professional into medical/educator/civic/engineer/creative, and sailor into sailor/dockworker, so specific jobs never share mismatched death-cause/legacy text
+- 2026-07-09 10:35 — Add a teen (15-19) occupation tier so young lives don't get senior-executive titles, and wire it into pickOccupation

@@ -872,12 +872,19 @@ function pickOccupation(tier, year, age){
 // Adult death causes are grouped per occupation category so how a life ends fits how it was lived
 // (a soldier falls in battle, a merchant loses a fortune to ruin, not a random mismatch).
 // A long life shouldn't always end in disease/disaster - past a certain age, natural old-age
-// death becomes a real possibility alongside the occupation-specific causes.
-const NATURAL_DEATH_CAUSES = ['壽終正寢','自然老化','無疾而終','安詳離世','年邁體衰'];
+// death becomes a real possibility alongside the occupation-specific causes. Before germ theory,
+// public sanitation and antibiotics (~1900), "dying of old age" reads as a vague peaceful passing;
+// modern medicine actually names what it is, and WHO's real top causes are chronic/age-related
+// (ischaemic heart disease, stroke, COPD, dementia) rather than infection - so the pool matches era.
+const NATURAL_DEATH_CAUSES_CLASSIC = ['壽終正寢','自然老化','無疾而終','安詳離世','年邁體衰'];
+const NATURAL_DEATH_CAUSES_MODERN = ['缺血性心臟病（冠心病）','中風','慢性阻塞性肺病','阿茲海默症或失智症','糖尿病併發症','腎臟病','壽終正寢','安詳離世'];
 function pickDeathCause(year, age, category){
   const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
   if(age <= 14) return era.child[Math.floor(Math.random()*era.child.length)];
-  if(age >= 60 && Math.random() < 0.35) return NATURAL_DEATH_CAUSES[Math.floor(Math.random()*NATURAL_DEATH_CAUSES.length)];
+  if(age >= 60 && Math.random() < 0.35){
+    const pool = year >= 1900 ? NATURAL_DEATH_CAUSES_MODERN : NATURAL_DEATH_CAUSES_CLASSIC;
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
   const list = era.adult[category] || era.adult.worker;
   return list[Math.floor(Math.random()*list.length)];
 }

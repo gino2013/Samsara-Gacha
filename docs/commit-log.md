@@ -79,3 +79,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 15:37 — Give every one of the 116 adult occupations its own tailored death-cause list instead of sharing the 14 category pools
 - 2026-07-09 15:43 — Add a region system (COUNTRY_REGION/OCCUPATIONS_BY_REGION) and build a full East Asia occupation table (5 eras × 5 tiers) so China/Japan/Korea/Taiwan/Mongolia/Hong Kong stop getting European occupations like 騎士/教會神職人員
 - 2026-07-09 15:46 — Add South Asia occupation table (India/Pakistan/Bangladesh/Sri Lanka/Nepal/Bhutan/Maldives/Afghanistan): Mughal/British Raj/tech-era history instead of the default European template
+- 2026-07-09 15:50 — Add Africa/Middle East regional occupation table (69 countries): pre-colonial kingdoms, Ottoman/trans-Saharan trade, colonial partition, independence, modern oil/resource era

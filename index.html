@@ -417,6 +417,7 @@
     transition:opacity 1.6s ease;
   }
   #chainEndOverlay #chainEndSummary{ font-size:17px; }
+  #chainEndOverlay .fit-line{ display:block; white-space:nowrap; }
   #chainEndOverlay .onboard-sub:not(#chainEndSummary){ font-size:23px; line-height:1.65; }
   #chainEndOverlay .chain-end-choice{
     display:flex; gap:14px; justify-content:center; margin-top:8px;
@@ -869,6 +870,17 @@ function balanceText(el){
   }
   out.push(text.slice(start));
   el.innerHTML = out.filter(s=>s).join('<br>');
+}
+// Shrinks font-size until the (white-space:nowrap) element fits on one line, so a line never
+// wraps mid-phrase no matter how long the country name is.
+function shrinkToFit(el, minSize=11){
+  const startSize = parseFloat(getComputedStyle(el).fontSize);
+  let size = startSize;
+  el.style.fontSize = '';
+  while(el.scrollWidth > el.clientWidth && size > minSize){
+    size -= 0.5;
+    el.style.fontSize = size + 'px';
+  }
 }
 const TIER_ORDER = ["UR","SSR","SR","R","N"];
 const ALL_COUNTRIES = TIER_ORDER.flatMap(t => TIERS[t].countries.map(c => ({tier:t, flag:c[0], name:c[1], lat:c[2], lon:c[3], reason:c[4]})));
@@ -1753,7 +1765,13 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
-  const summaryHTML = `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；<br>此刻 2026 年，繞了 ${results.length} 世輪迴，<br>你降生在 ${last.flag} ${last.name}，<br>被溫柔地放在這個很美好的國度。`;
+  const summaryLines = [
+    `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；`,
+    `此刻 2026 年，繞了 ${results.length} 世輪迴，`,
+    `你降生在 ${last.flag} ${last.name}，`,
+    `被溫柔地放在這個很美好的國度。`
+  ];
+  const summaryHTML = summaryLines.map(l => `<span class="fit-line">${l}</span>`).join('<br>');
 
   const summaryEl = document.getElementById('chainEndSummary');
   const reasonEl = document.querySelector('#chainEndOverlay .onboard-sub:not(#chainEndSummary):not(#chainEndAsk)');
@@ -1762,6 +1780,7 @@ async function showChainEnd(results, startYear){
   const choiceEl = document.getElementById('chainEndChoice');
 
   summaryEl.innerHTML = summaryHTML;
+  summaryEl.querySelectorAll('.fit-line').forEach(shrinkToFit);
   summaryEl.classList.add('seq-hidden');
   reasonEl.classList.add('seq-hidden');
   titleEl.classList.add('seq-hidden');

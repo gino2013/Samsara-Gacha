@@ -61,3 +61,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-08 23:27 — Add correlated 出身/職業/死因/此生印記/人生領悟 generation: occupations now carry a category+background, and death cause/legacy/meaning are drawn from matching category pools
 - 2026-07-08 23:27 — Split the labor category into farmer/miner/sailor/worker so e.g. a miner and a fisherman never share the same story beats
 - 2026-07-08 23:28 — Document FR-15 (correlated 出身/職業/死因/此生印記/人生領悟) in the PRD
+- 2026-07-09 10:09 — Auto-shrink chain-end summary lines to fit on one line regardless of country name length

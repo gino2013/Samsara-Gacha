@@ -59,6 +59,40 @@
       radial-gradient(1.5px 1.5px at 25% 45%, rgba(255,255,255,0.35), transparent);
     background-size: 100% 100%;
     opacity:0.6;
+    animation: twinkle 5s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{ from{ opacity:0.4; } to{ opacity:0.85; } }
+
+  .aurora{
+    position:fixed; inset:-20%; z-index:0; pointer-events:none;
+    filter:blur(60px); opacity:0.55;
+    background:
+      radial-gradient(600px 420px at 18% 22%, rgba(139,127,255,0.22), transparent 70%),
+      radial-gradient(700px 480px at 82% 78%, rgba(255,110,199,0.13), transparent 70%),
+      radial-gradient(560px 420px at 60% 8%, rgba(110,231,255,0.10), transparent 70%);
+    animation: auroraDrift 26s ease-in-out infinite alternate;
+  }
+  @keyframes auroraDrift{
+    from{ transform:translate3d(-2%,-1%,0) scale(1); }
+    to{ transform:translate3d(2%,2%,0) scale(1.1); }
+  }
+
+  #fxCanvas{ position:fixed; inset:0; width:100vw; height:100vh; z-index:40; pointer-events:none; }
+  .flash{ position:fixed; inset:0; z-index:39; pointer-events:none; opacity:0; }
+  .flash.go{ animation: flashOut 0.7s ease-out; }
+  @keyframes flashOut{ 0%{ opacity:0.85; } 100%{ opacity:0; } }
+
+  body.shake .wrap{ animation: shake 0.55s cubic-bezier(.36,.07,.19,.97); }
+  @keyframes shake{
+    10%, 90%{ transform:translate(-1px, 1px); }
+    20%, 80%{ transform:translate(2px, -1px); }
+    30%, 70%{ transform:translate(-4px, 2px); }
+    40%, 60%{ transform:translate(4px, -2px); }
+    50%{ transform:translate(-3px, 2px); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .aurora, .stars, .ring{ animation:none; }
   }
 
   .wrap{ position:relative; z-index:1; width:100%; max-width:720px; }
@@ -167,6 +201,26 @@
     100%{ transform:scale(1) rotateY(0deg); }
   }
 
+  .card.charging{ animation: charge 0.5s ease-in forwards; }
+  @keyframes charge{
+    0%{ transform:scale(1); filter:brightness(1); }
+    70%{ transform:scale(0.93); filter:brightness(1.4); }
+    100%{ transform:scale(0.88); filter:brightness(2); }
+  }
+
+  /* holo shine layer that follows the cursor (see card tilt JS) */
+  .card::before{
+    content:''; position:absolute; inset:0; border-radius:16px; z-index:2;
+    pointer-events:none; opacity:0; transition:opacity 0.4s;
+    background:linear-gradient(115deg,
+      transparent 20%, rgba(255,255,255,0.10) 40%, rgba(110,231,255,0.16) 50%,
+      rgba(255,110,199,0.16) 60%, transparent 80%);
+    background-size:220% 220%;
+    background-position: var(--holo-x,50%) var(--holo-y,50%);
+    mix-blend-mode:screen;
+  }
+  .card.ur::before, .card.ssr::before{ opacity:1; }
+
   .card.ur .sweep::after{
     content:''; position:absolute; inset:0; border-radius:16px;
     background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.5) 48%, transparent 66%);
@@ -179,12 +233,6 @@
     100%{ background-position: -20% -20%; }
   }
 
-  .burst{ position:absolute; inset:0; pointer-events:none; overflow:visible; }
-  .burst i{
-    position:absolute; top:50%; left:50%; width:6px; height:6px; border-radius:50%;
-    opacity:0; transform:translate(-50%,-50%);
-  }
-
   .controls{ display:flex; gap:12px; justify-content:center; margin-bottom:8px; flex-wrap:wrap; }
   .num-legend{ font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--muted); opacity:0.8; text-align:center; max-width:420px; margin:10px auto 18px; line-height:1.6; }
   button.pull{
@@ -194,7 +242,15 @@
     cursor:pointer; color:var(--text);
     background:var(--panel2);
     transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+    position:relative; overflow:hidden;
   }
+  button.pull::after{
+    content:''; position:absolute; top:0; left:-80%; width:55%; height:100%;
+    transform:skewX(-20deg); pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+    transition:left 0.45s ease;
+  }
+  button.pull:hover::after{ left:125%; }
   button.pull:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,0.25); }
   button.pull:active{ transform:translateY(0px) scale(0.98); }
   button.pull.mega{
@@ -214,6 +270,15 @@
     color:var(--muted); margin-bottom:26px;
   }
   .pity b{ color:var(--r); }
+  .pity-bar{
+    width:220px; height:6px; border-radius:4px; margin:8px auto 0;
+    background:var(--panel2); border:1px solid var(--line); overflow:hidden;
+  }
+  .pity-fill{
+    height:100%; width:0%; border-radius:4px;
+    background:linear-gradient(90deg, var(--r), var(--ssr));
+    transition:width 0.5s cubic-bezier(.2,.9,.25,1);
+  }
 
   .grid10{
     display:none;
@@ -467,6 +532,9 @@
 </head>
 <body>
 <div class="stars"></div>
+<div class="aurora"></div>
+<canvas id="fxCanvas"></canvas>
+<div class="flash" id="flash"></div>
 
 <div class="onboard" id="onboardOverlay">
   <div class="onboard-inner">
@@ -509,8 +577,8 @@
 <div class="onboard hide" id="chainEndOverlay">
   <div class="onboard-inner">
     <p class="onboard-sub" id="chainEndSummary"></p>
-    <p class="onboard-sub">你在這裡不會沒有原因，一切都是最好的選擇。</p>
-    <h2 class="onboard-title">這一世，你還記得嗎？<br>你一直想成為的人。</h2>
+    <p class="onboard-sub">沒有哪一世是白白活過的。<br>每一次告別，都悄悄把一點什麼，留在了今天的你身上。</p>
+    <h2 class="onboard-title">這一世，你還記得嗎？<br>那個你一直想成為的人。</h2>
     <p class="onboard-sub seq-hidden" id="chainEndAsk">這麼多段人生，你都很努力地走過了。<br>還願意，再赴一次輪迴嗎？</p>
     <div class="chain-end-choice seq-hidden" id="chainEndChoice">
       <button class="pull" id="chainEndNo">否</button>
@@ -522,7 +590,7 @@
 <div class="onboard hide" id="restOverlay">
   <div class="onboard-inner">
     <h2 class="onboard-title">辛苦了。</h2>
-    <p class="onboard-sub seq-hidden" id="restLine1">這一路走來的酸甜苦辣，你都好好地承受過了。</p>
+    <p class="onboard-sub seq-hidden" id="restLine1">這麼多世的酸甜苦辣，你都一個人，好好地承受過了。</p>
     <p class="onboard-sub seq-hidden" id="restLine2">不用再悲傷，不用再難過，也不用再受苦了。</p>
     <p class="onboard-sub seq-hidden" id="restLine3">就安安靜靜地，把這一世好好過完。<br>屬於你的好結局，已經在前面等你了。</p>
     <button class="pull mega seq-hidden" id="restClose">嗯，我知道了</button>
@@ -560,7 +628,6 @@
     <div class="ring"></div>
     <div class="ring r2"></div>
     <div class="card empty" id="mainCard">
-      <div class="burst" id="burst"></div>
       <div class="flag" id="cardFlag">🎴</div>
       <div class="country" id="cardCountry">尚未投胎</div>
       <div class="hint">按下方按鈕開始輪迴</div>
@@ -572,7 +639,9 @@
     <button class="pull" id="btnPull1">單抽 · 轉世一次</button>
     <button class="pull mega" id="btnPull10">輪迴鏈 · 直到今生</button>
   </div>
-  <div class="pity">距離保底 SSR 還有 <b id="pityCount">10</b> 抽（第10抽必出 SSR 以上）</div>
+  <div class="pity">距離保底 SSR 還有 <b id="pityCount">10</b> 抽（第10抽必出 SSR 以上）
+    <div class="pity-bar"><div class="pity-fill" id="pityFill"></div></div>
+  </div>
 
   <div class="grid10" id="grid10"></div>
 
@@ -725,6 +794,7 @@ function updateStatsUI(){
   document.getElementById('statR').textContent = stats.R;
   document.getElementById('statN').textContent = stats.N;
   document.getElementById('pityCount').textContent = Math.max(0, 10 - sincePity);
+  document.getElementById('pityFill').style.width = Math.min(100, sincePity*10) + '%';
   renderHistory();
   setCookie(STATS_KEY, JSON.stringify({stats, sincePity}));
 }
@@ -746,25 +816,113 @@ function renderHistory(){
   });
 }
 
-function burstParticles(container, tier){
-  container.innerHTML = '';
-  const colors = tier === 'UR' ? ['#FFD866','#FF6EC7','#6EE7FF']
-               : tier === 'SSR' ? ['#FFB627','#FFD866']
-               : tier === 'R' ? ['#8B7FFF','#B3A8FF'] : [];
-  if(!colors.length) return;
-  const count = tier === 'UR' ? 28 : 18;
-  for(let i=0;i<count;i++){
-    const p = document.createElement('i');
-    const angle = (Math.random()*Math.PI*2);
-    const dist = 60 + Math.random()*90;
-    const dx = Math.cos(angle)*dist;
-    const dy = Math.sin(angle)*dist;
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.animate([
-      { transform:'translate(-50%,-50%) scale(1)', opacity:1 },
-      { transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.3)`, opacity:0 }
-    ], { duration: 900 + Math.random()*400, easing:'cubic-bezier(.2,.8,.3,1)' });
-    container.appendChild(p);
+/* ---- full-screen FX engine: sparks / confetti / shockwave rings on a fixed canvas ---- */
+const fxCanvas = document.getElementById('fxCanvas');
+const fxCtx = fxCanvas.getContext('2d');
+let fxParts = [];
+let fxRunning = false;
+function fxResize(){
+  const dpr = window.devicePixelRatio || 1;
+  fxCanvas.width = innerWidth * dpr;
+  fxCanvas.height = innerHeight * dpr;
+  fxCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+fxResize();
+window.addEventListener('resize', fxResize);
+
+const FX_COLORS = {
+  UR:['#FFD866','#FF6EC7','#6EE7FF','#FFFFFF'],
+  SSR:['#FFB627','#FFD866','#FFF3C4'],
+  SR:['#8B7FFF','#B3A8FF','#E0DBFF'],
+  R:['#4EA1FF','#9CCBFF'],
+  N:['#9AA1B5']
+};
+const pickColor = colors => colors[Math.floor(Math.random()*colors.length)];
+
+function fxBurst(x, y, tier){
+  const colors = FX_COLORS[tier];
+  const sparkCount = { UR:160, SSR:100, SR:55, R:35, N:16 }[tier];
+  for(let i=0;i<sparkCount;i++){
+    const a = Math.random()*Math.PI*2;
+    const sp = 2 + Math.random()*9;
+    fxParts.push({ type:'spark', x, y,
+      vx:Math.cos(a)*sp, vy:Math.sin(a)*sp - 2,
+      life:1, decay:0.008 + Math.random()*0.014,
+      size:1.4 + Math.random()*2.6, color:pickColor(colors) });
+  }
+  if(tier === 'UR' || tier === 'SSR'){
+    const confCount = tier === 'UR' ? 70 : 36;
+    for(let i=0;i<confCount;i++){
+      fxParts.push({ type:'confetti',
+        x:x + (Math.random()-0.5)*100, y,
+        vx:(Math.random()-0.5)*7, vy:-(3 + Math.random()*8),
+        rot:Math.random()*Math.PI, vr:(Math.random()-0.5)*0.3,
+        w:5 + Math.random()*5, h:8 + Math.random()*6,
+        life:1, decay:0.0035 + Math.random()*0.004, color:pickColor(colors) });
+    }
+    fxParts.push({ type:'ring', x, y, r:12, grow:13, life:1, decay:0.03, color:'#FFFFFF' });
+  }
+  if(tier === 'UR'){
+    fxParts.push({ type:'ring', x, y, r:8, grow:8, life:1, decay:0.02, color:'#FF6EC7' });
+  }
+  if(!fxRunning){ fxRunning = true; requestAnimationFrame(fxStep); }
+}
+
+function fxStep(){
+  fxCtx.clearRect(0, 0, innerWidth, innerHeight);
+  fxParts = fxParts.filter(p => p.life > 0 && p.y < innerHeight + 40);
+  if(!fxParts.length){ fxRunning = false; return; }
+  fxParts.forEach(p => {
+    p.life -= p.decay;
+    if(p.type === 'spark'){
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= 0.985; p.vy = p.vy*0.985 + 0.12;
+      fxCtx.globalCompositeOperation = 'lighter';
+      fxCtx.globalAlpha = Math.max(0, p.life);
+      fxCtx.fillStyle = p.color;
+      fxCtx.beginPath();
+      fxCtx.arc(p.x, p.y, p.size*Math.max(0.2, p.life), 0, Math.PI*2);
+      fxCtx.fill();
+    } else if(p.type === 'confetti'){
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.18; p.vx *= 0.99; p.rot += p.vr;
+      fxCtx.globalCompositeOperation = 'source-over';
+      fxCtx.globalAlpha = Math.max(0, Math.min(1, p.life*1.4));
+      fxCtx.save();
+      fxCtx.translate(p.x, p.y);
+      fxCtx.rotate(p.rot);
+      fxCtx.fillStyle = p.color;
+      fxCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h * (0.4 + 0.6*Math.abs(Math.sin(p.rot*2))));
+      fxCtx.restore();
+    } else { // ring
+      p.r += p.grow; p.grow *= 0.93;
+      fxCtx.globalCompositeOperation = 'lighter';
+      fxCtx.globalAlpha = Math.max(0, p.life*0.8);
+      fxCtx.strokeStyle = p.color;
+      fxCtx.lineWidth = 3*p.life;
+      fxCtx.beginPath();
+      fxCtx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      fxCtx.stroke();
+    }
+  });
+  fxCtx.globalAlpha = 1;
+  fxCtx.globalCompositeOperation = 'source-over';
+  requestAnimationFrame(fxStep);
+}
+
+const FLASH_TINT = { UR:'rgba(255,110,199,0.55)', SSR:'rgba(255,182,39,0.5)' };
+function rarityFX(tier){
+  const rect = document.getElementById('mainCard').getBoundingClientRect();
+  fxBurst(rect.left + rect.width/2, rect.top + rect.height/2, tier);
+  const tint = FLASH_TINT[tier];
+  if(tint){
+    const flash = document.getElementById('flash');
+    flash.style.background = `radial-gradient(circle at 50% 45%, rgba(255,255,255,0.9), ${tint} 40%, transparent 75%)`;
+    flash.classList.remove('go');
+    void flash.offsetWidth;
+    flash.classList.add('go');
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 600);
   }
 }
 
@@ -810,18 +968,43 @@ function showMainResult(result){
     story.remove();
   }
 
-  burstParticles(document.getElementById('burst'), result.tier);
+  rarityFX(result.tier);
 
   currentResult = result;
   document.getElementById('btnLocate').disabled = false;
 }
 
-document.getElementById('btnPull1').addEventListener('click', () => {
+const btnPull1 = document.getElementById('btnPull1');
+const btnPull10 = document.getElementById('btnPull10');
+// Charge-then-reveal: the card dims/shrinks for half a beat before the result pops,
+// so a pull has anticipation instead of an instant answer.
+btnPull1.addEventListener('click', () => {
   document.getElementById('grid10').classList.remove('show');
-  const result = rollOne();
-  showMainResult(result);
-  updateStatsUI();
+  btnPull1.disabled = btnPull10.disabled = true;
+  const card = document.getElementById('mainCard');
+  card.classList.remove('reveal');
+  card.classList.add('charging');
+  setTimeout(() => {
+    card.classList.remove('charging');
+    const result = rollOne();
+    showMainResult(result);
+    updateStatsUI();
+    btnPull1.disabled = btnPull10.disabled = false;
+  }, 500);
 });
+
+// 3D tilt + cursor-following holo shine on the main card (reads like a physical foil card).
+const mainCardEl = document.getElementById('mainCard');
+mainCardEl.addEventListener('pointermove', (e) => {
+  if(e.pointerType !== 'mouse') return;
+  const r = mainCardEl.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width;
+  const py = (e.clientY - r.top) / r.height;
+  mainCardEl.style.setProperty('--holo-x', (px*100) + '%');
+  mainCardEl.style.setProperty('--holo-y', (py*100) + '%');
+  mainCardEl.style.transform = `perspective(900px) rotateY(${(px-0.5)*14}deg) rotateX(${(0.5-py)*10}deg)`;
+});
+mainCardEl.addEventListener('pointerleave', () => { mainCardEl.style.transform = ''; });
 
 document.getElementById('btnPull10').addEventListener('click', () => {
   const birthYear = 2026 - homeAge;
@@ -1042,17 +1225,31 @@ function runSamsaraChain(startYear){
   setTimeout(() => showChainReview(results), 1200);
 }
 
+// Renders a life as flowing prose instead of "label: value" rows, so each entry
+// reads like a short biography. Phrasing is chosen to fit both verb-style death
+// causes (戰死沙場) and noun-style ones (缺血性心臟病) — see docs/polish-and-fun.md.
 function buildLifeDetailHTML(r){
-  const backgroundLine = r.background ? `<div class="ri-job">出身：${r.background}</div>` : '';
-  const occupationLine = r.occupation ? `<div class="ri-job">職業：${r.occupation}</div>` : '';
-  const deathLine = r.deathCause ? `<div class="ri-job">死因：${r.deathCause}</div>` : '';
-  const marriageLine = (r.married !== undefined)
-    ? `<div class="ri-job">婚姻：${r.married ? `${r.marryAge}歲成婚，育有${r.children}名子女` : '終身未婚'}</div>`
-    : '';
-  const legacyBlock = r.legacy
-    ? `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`
-    : (r.childDeathNote ? `<div class="ri-meaning">「${r.childDeathNote}」</div>` : '');
-  return backgroundLine + occupationLine + deathLine + marriageLine + legacyBlock;
+  const lines = [];
+  if(r.background) lines.push(`出身${r.background}。`);
+  if(r.occupation){
+    lines.push(r.age <= 14
+      ? `短短的一生裡，你是個${r.occupation}。`
+      : `這一世，你以「${r.occupation}」度日。`);
+  }
+  if(r.married !== undefined){
+    if(r.married){
+      lines.push(r.children > 0
+        ? `${r.marryAge}歲那年成了家，育有${r.children}名子女。`
+        : `${r.marryAge}歲那年成了家，兩人相守，未有子女。`);
+    } else if(r.age > 19){
+      lines.push('終身未婚，一個人把日子走完。');
+    }
+  }
+  if(r.deathCause) lines.push(`${r.age}歲，離開人間——${r.deathCause}。`);
+  let html = lines.map(l => `<div class="ri-job">${l}</div>`).join('');
+  if(r.legacy) html += `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`;
+  else if(r.childDeathNote) html += `<div class="ri-meaning">「${r.childDeathNote}」</div>`;
+  return html;
 }
 
 function showChainReview(results){
@@ -1074,7 +1271,7 @@ function showChainReview(results){
             <span class="ri-years">${years}</span>
           </div>
           <div class="ri-event">${event}</div>
-          ${buildLifeDetailHTML(r)}
+          ${buildLifeDetailHTML(r)}${isLast ? '<div class="ri-meaning">這一世還在書寫中——接下來的故事，換你自己寫。</div>' : ''}
         </div>
       </div>
     `;
@@ -1087,10 +1284,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function showChainEnd(results, startYear){
   const first = results[0], last = results[results.length-1];
   const summaryLines = [
-    `起點・西元 ${startYear} 年，你從 ${first.flag} ${first.name} 活過、也離開過；`,
-    `此刻 2026 年，繞了 ${results.length} 世輪迴，`,
-    `你降生在 ${last.flag} ${last.name}，`,
-    `被溫柔地放在這個很美好的國度。`
+    `西元 ${startYear} 年，你的第一世，在 ${first.flag} ${first.name} 睜開了眼；`,
+    `此後 ${results.length} 段人生，你一次次出生、相遇、告別，`,
+    `直到 2026 年的此刻——你在 ${last.flag} ${last.name} 醒來，`,
+    `帶著前世們留給你的、你不記得的溫柔。`
   ];
   const summaryHTML = summaryLines.map(l => `<span class="fit-line">${l}</span>`).join('<br>');
 

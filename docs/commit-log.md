@@ -85,3 +85,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-09 16:29 — Record remaining FR-15 gaps (regional wealth variety, 87 unmapped countries, shared legacy/meaning pools, 10x target) as a backlog in the PRD
 - 2026-07-09 16:38 — Add wealth-variety UR/SSR entries to the East Asia occupation table (parity with the default table's 6 UR / 5 SSR per era)
 - 2026-07-13 14:39 — Add reveal ceremony (charge, full-screen particles, flash, shake, holo tilt), pity bar, and narrative life-story copy so pulls feel dramatic and lives read as biographies
+- 2026-07-13 14:47 — Fix chain-end farewell line wrapping, swap em dashes for hyphens, and phrase death cause as '死因是X' for clearer life-story copy

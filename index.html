@@ -577,7 +577,7 @@
 <div class="onboard hide" id="chainEndOverlay">
   <div class="onboard-inner">
     <p class="onboard-sub" id="chainEndSummary"></p>
-    <p class="onboard-sub">沒有哪一世是白白活過的。<br><span class="fit-line" id="chainEndFarewell">每一次告別，都悄悄把一點什麼，留在了今天的你身上。</span></p>
+    <p class="onboard-sub">沒有哪一世是白白活過的。<br><span class="fit-line" id="chainEndFarewell">每一次重來，都悄悄把一點什麼，留在了今天的你身上。</span></p>
     <h2 class="onboard-title">這一世，你還記得嗎？<br>那個你一直想成為的人。</h2>
     <p class="onboard-sub seq-hidden" id="chainEndAsk">這麼多段人生，你都很努力地走過了。<br>還願意，再赴一次輪迴嗎？</p>
     <div class="chain-end-choice seq-hidden" id="chainEndChoice">
@@ -1271,7 +1271,7 @@ function showChainReview(results){
             <span class="ri-years">${years}</span>
           </div>
           <div class="ri-event">${event}</div>
-          ${buildLifeDetailHTML(r)}${isLast ? '<div class="ri-meaning">這一世還在書寫中-接下來的故事，換你自己寫。</div>' : ''}
+          ${buildLifeDetailHTML(r)}${isLast ? '<div class="ri-meaning">這一世還在書寫中 - 接下來的故事，換你自己寫。</div>' : ''}
         </div>
       </div>
     `;
@@ -1286,7 +1286,7 @@ async function showChainEnd(results, startYear){
   const summaryLines = [
     `西元 ${startYear} 年，你的第一世，在 ${first.flag} ${first.name} 睜開了眼；`,
     `此後 ${results.length} 段人生，你一次次出生、相遇、告別，`,
-    `直到 2026 年的此刻-你在 ${last.flag} ${last.name} 醒來，`,
+    `直到 2026 年的此刻 - 你在 ${last.flag} ${last.name} 醒來，`,
     `帶著前世們留給你的、你不記得的溫柔。`
   ];
   const summaryHTML = summaryLines.map(l => `<span class="fit-line">${l}</span>`).join('<br>');

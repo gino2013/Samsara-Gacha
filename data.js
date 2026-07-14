@@ -240,14 +240,14 @@ const OCCUPATIONS_BY_ERA = [
       {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']}
     ],
     R: [
-      {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+      {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
       {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','瘟疫','火災']},
       {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
       {name:'樵夫', category:'farmer', background:'山村獵戶或樵夫家庭出身', death:['山林意外','野獸襲擊','饑荒']}
     ],
     N: [
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','瘟疫']},
-      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產', death:['過勞而終','主人苛待致死','瘟疫']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','瘟疫']},
+      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產', death:['積勞而終','主人苛待致死','瘟疫']},
       {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
       {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
     ]
@@ -282,7 +282,7 @@ const OCCUPATIONS_BY_ERA = [
     ],
     N: [
       {name:'碼頭工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','瘟疫']},
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','瘟疫']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','瘟疫']},
       {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
       {name:'漁夫', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','壞血病']}
     ]
@@ -316,10 +316,10 @@ const OCCUPATIONS_BY_ERA = [
       {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','肺結核','霍亂']}
     ],
     N: [
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
       {name:'碼頭苦力', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','工殤']},
-      {name:'女僕', category:'worker', background:'貧苦人家，自幼被送入大戶人家幫傭', death:['過勞而終','肺結核','霍亂']},
-      {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['過勞而終','霍亂','意外']}
+      {name:'女僕', category:'worker', background:'貧苦人家，自幼被送入大戶人家幫傭', death:['積勞而終','肺結核','霍亂']},
+      {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['積勞而終','霍亂','意外']}
     ]
   }},
   { before:1980, jobs:{
@@ -345,16 +345,16 @@ const OCCUPATIONS_BY_ERA = [
       {name:'新聞記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['戰地採訪意外','心臟病','癌症']}
     ],
     R: [
-      {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-      {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-      {name:'電話接線生', category:'worker', background:'進城討生活的鄉下人家', death:['意外事故','心臟病','過勞而終']}
+      {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+      {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+      {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+      {name:'電話接線生', category:'worker', background:'進城討生活的鄉下人家', death:['意外事故','心臟病','積勞而終']}
     ],
     N: [
-      {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
-      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
+      {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
+      {name:'工廠作業員', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
       {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-      {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','心臟病','意外']}
+      {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['積勞而終','心臟病','意外']}
     ]
   }},
   { before:Infinity, jobs:{
@@ -529,11 +529,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'私塾先生', category:'educator', background:'略通詩書的清貧讀書人家', death:['瘟疫','傷寒','積勞而終']},
         {name:'鐵匠', category:'artisan', background:'世代打鐵的手藝人家庭', death:['爐火意外','瘟疫','火災']},
         {name:'士卒', category:'military', background:'貧苦人家出身的行伍子弟', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','過勞而終','天災欠收']}
+        {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','過勞而終','瘟疫']},
-        {name:'家僕', category:'worker', background:'賣身為奴的窮苦人家', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
+        {name:'家僕', category:'worker', background:'賣身為奴的窮苦人家', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -563,12 +563,12 @@ const OCCUPATIONS_BY_REGION = {
       R: [
         {name:'秀才', category:'educator', background:'略通詩書的清貧讀書人家', death:['瘟疫','傷寒','積勞而終']},
         {name:'差役', category:'civic', background:'公門當差的小吏人家', death:['遭刁民行刺','傷寒','瘟疫']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','瘟疫','意外']},
-        {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','過勞而終','天災欠收']}
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','瘟疫','意外']},
+        {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','過勞而終','瘟疫']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -597,13 +597,13 @@ const OCCUPATIONS_BY_REGION = {
       ],
       R: [
         {name:'紡織女工', category:'worker', background:'進城謀生的農家女兒', death:['工殤','肺結核','霍亂']},
-        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','肺結核','霍亂']},
+        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['積勞而終','肺結核','霍亂']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'碼頭工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','工殤']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -631,16 +631,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['積勞成疾','心臟病','癌症']}
       ],
       R: [
-        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'中學教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
-        {name:'工廠女工', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
+        {name:'工廠女工', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'三輪車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','心臟病','意外']}
+        {name:'三輪車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['積勞而終','心臟病','意外']}
       ]
     }},
     { before:Infinity, jobs:{
@@ -702,12 +702,12 @@ const OCCUPATIONS_BY_REGION = {
       R: [
         {name:'紡織匠人', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','瘟疫','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+        {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'獵戶', category:'farmer', background:'山林獵戶家庭出身', death:['山林意外','野獸襲擊','饑荒']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -734,12 +734,12 @@ const OCCUPATIONS_BY_REGION = {
       R: [
         {name:'紡織工匠', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','瘟疫','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','瘟疫','意外']}
+        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','瘟疫','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -767,11 +767,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'紡織廠工人', category:'worker', background:'進城謀生的農家子弟', death:['工殤','肺結核','霍亂']},
         {name:'鐵路工人', category:'worker', background:'興建鐵路的勞工家庭', death:['鐵路意外','肺結核','霍亂']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','肺結核','霍亂']}
+        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['積勞而終','肺結核','霍亂']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -796,16 +796,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['積勞成疾','心臟病','癌症']}
       ],
       R: [
-        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
-        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
+        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['過勞而終','心臟病','意外']}
+        {name:'人力車伕', category:'worker', background:'城市底層人家，全家靠勞力過活', death:['積勞而終','心臟病','意外']}
       ]
     }},
     { before:Infinity, jobs:{
@@ -865,11 +865,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','瘟疫','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
-        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']}
+        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖掘黃金鹽礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -897,11 +897,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'遊牧民族首領', category:'farmer', background:'統領遊牧部族的世襲家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','瘟疫','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','過勞而終','天災欠收']}
+        {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -929,11 +929,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'種植園工人', category:'worker', background:'在種植園討生活的貧苦家庭', death:['工殤','肺結核','霍亂']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'鐵路工人', category:'worker', background:'興建鐵路的勞工家庭', death:['鐵路意外','肺結核','霍亂']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','霍亂','意外']}
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','霍亂','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -958,16 +958,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['戰地採訪意外','心臟病','癌症']}
       ],
       R: [
-        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
-        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['過勞而終','心臟病','意外']}
+        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
+        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['積勞而終','心臟病','意外']}
       ]
     }},
     { before:Infinity, jobs:{
@@ -1024,14 +1024,14 @@ const OCCUPATIONS_BY_REGION = {
         {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
       ],
       R: [
-        {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+        {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'船夫', category:'sailor', background:'靠水路載客載貨的船夫家庭', death:['船難','溺斃','風暴']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'錫礦工', category:'miner', background:'世代挖錫礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -1056,14 +1056,14 @@ const OCCUPATIONS_BY_REGION = {
         {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
       ],
       R: [
-        {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+        {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'船夫', category:'sailor', background:'靠水路載客載貨的船夫家庭', death:['船難','溺斃','風暴']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
         {name:'錫礦工', category:'miner', background:'世代挖錫礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -1091,11 +1091,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'種植園工人', category:'worker', background:'在種植園討生活的貧苦家庭', death:['工殤','肺結核','霍亂']},
         {name:'錫礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'鐵路工人', category:'worker', background:'興建鐵路的勞工家庭', death:['鐵路意外','肺結核','霍亂']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','霍亂','意外']}
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','霍亂','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'錫礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -1120,16 +1120,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['積勞成疾','心臟病','癌症']}
       ],
       R: [
-        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
-        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['過勞而終','心臟病','意外']}
+        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
+        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['積勞而終','心臟病','意外']}
       ]
     }},
     { before:Infinity, jobs:{
@@ -1188,12 +1188,12 @@ const OCCUPATIONS_BY_REGION = {
       R: [
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+        {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'牧民', category:'farmer', background:'依附大戶放牧牲畜的貧苦牧民', death:['沙漠迷途','天災欠收','饑荒']}
       ]
@@ -1220,12 +1220,12 @@ const OCCUPATIONS_BY_REGION = {
       R: [
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','過勞而終','天災欠收']},
+        {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','過勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'牧民', category:'farmer', background:'依附大戶放牧牲畜的貧苦牧民', death:['沙漠迷途','天災欠收','饑荒']}
       ]
@@ -1253,11 +1253,11 @@ const OCCUPATIONS_BY_REGION = {
         {name:'棉花種植工人', category:'worker', background:'在種植園討生活的貧苦家庭', death:['工殤','肺結核','霍亂']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'鐵路工人', category:'worker', background:'興建鐵路的勞工家庭', death:['鐵路意外','肺結核','霍亂']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','霍亂','意外']}
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','霍亂','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
         {name:'牧民', category:'farmer', background:'依附大戶放牧牲畜的貧苦牧民', death:['沙漠迷途','天災欠收','饑荒']}
       ]
@@ -1282,15 +1282,15 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['積勞成疾','心臟病','癌症']}
       ],
       R: [
-        {name:'集體農場工人', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
-        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','過勞而終']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'集體農場工人', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
+        {name:'工廠領班', category:'worker', background:'從基層作業員一路晉升的工人家庭', death:['工殤意外','心臟病','積勞而終']},
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
         {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺病','礦坑意外']},
-        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
+        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
         {name:'牧民', category:'farmer', background:'依附集體農場放牧牲畜的貧苦牧民', death:['沙漠迷途','心臟病','意外']}
       ]
     }},
@@ -1349,14 +1349,14 @@ const OCCUPATIONS_BY_REGION = {
       ],
       R: [
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','過勞而終','天災欠收']},
+        {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','積勞而終','天災欠收']},
         {name:'戰士', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','主人苛待致死','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','過勞而終','瘟疫']},
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
         {name:'工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝', death:['工坊意外','瘟疫','意外']}
       ]
     }},
@@ -1381,14 +1381,14 @@ const OCCUPATIONS_BY_REGION = {
       ],
       R: [
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','過勞而終','天災欠收']},
+        {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','積勞而終','天災欠收']},
         {name:'戰士', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','瘟疫','火災']}
       ],
       N: [
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['過勞而終','意外','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','過勞而終','瘟疫']},
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
         {name:'工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝', death:['工坊意外','瘟疫','意外']}
       ]
     }},
@@ -1415,13 +1415,13 @@ const OCCUPATIONS_BY_REGION = {
         {name:'種植園工人', category:'worker', background:'在種植園討生活的貧苦家庭', death:['工殤','肺結核','霍亂']},
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
         {name:'港口工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','工殤']},
-        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['過勞而終','霍亂','意外']}
+        {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','霍亂','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','過勞而終','肺結核']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['過勞而終','霍亂','意外']},
+        {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','過勞而終','瘟疫']}
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']}
       ]
     }},
     { before:1980, jobs:{
@@ -1444,16 +1444,16 @@ const OCCUPATIONS_BY_REGION = {
         {name:'記者', category:'creative', background:'關心時事、重視文字表達的家庭', death:['積勞成疾','心臟病','癌症']}
       ],
       R: [
-        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','過勞而終']},
-        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','過勞而終']},
+        {name:'公務員', category:'worker', background:'普通城市家庭，靠穩定考試謀職', death:['意外事故','心臟病','積勞而終']},
+        {name:'教師', category:'worker', background:'重視教育的一般家庭出身', death:['積勞成疾','心臟病','積勞而終']},
         {name:'漁業工人', category:'sailor', background:'跟著漁船出海討生活的家庭', death:['船難','溺斃','風暴']},
-        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['過勞而終','心臟病','意外']}
+        {name:'店員', category:'worker', background:'城市小康人家，靠零售業謀生', death:['積勞而終','心臟病','意外']}
       ],
       N: [
-        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['過勞而終','心臟病','農藥中毒']},
+        {name:'農夫', category:'farmer', background:'世代務農，守著幾分薄田過活的家庭', death:['積勞而終','心臟病','農藥中毒']},
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
-        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','過勞而終']},
-        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['過勞而終','心臟病','意外']}
+        {name:'工廠工人', category:'worker', background:'離鄉背井進城打工的貧苦家庭', death:['意外事故','心臟病','積勞而終']},
+        {name:'街頭小販', category:'worker', background:'城市底層人家，全家靠沿街叫賣糊口', death:['積勞而終','心臟病','意外']}
       ]
     }},
     { before:Infinity, jobs:{
@@ -1540,7 +1540,7 @@ const TEEN_OCCUPATIONS = {
     {name:'店鋪夥計', category:'civic', background:'城鎮小康人家，剛開始在店裡幫忙見習'}
   ],
   R: [
-    {name:'工廠學徒', category:'worker', background:'普通人家出身，剛進工廠當學徒'},
+    {name:'工坊學徒', category:'worker', background:'普通人家出身，剛進工坊當學徒'},
     {name:'新兵', category:'military', background:'貧苦人家出身，剛被徵召入伍'},
     {name:'農忙幫工', category:'farmer', background:'農家子弟，跟著長輩在田裡幫忙'}
   ],
@@ -1916,17 +1916,17 @@ const DEATH_CAUSES_BY_ERA = [
       noble:['宮廷鬥爭遇害','瘟疫','難產'],
       merchant:['商旅途中遇劫','瘟疫','傷寒'],
       military:['戰死沙場','重傷不治','屠城中喪生'],
-      medical:['瘟疫','過勞而終','醫治途中染疫'],
+      medical:['瘟疫','積勞而終','醫治途中染疫'],
       educator:['修道院內染疫','瘟疫','傷寒'],
       civic:['傷寒','瘟疫','產褥熱'],
-      engineer:['工坊意外','瘟疫','過勞而終'],
+      engineer:['工坊意外','瘟疫','積勞而終'],
       creative:['瘟疫','傷寒','積勞而終'],
       artisan:['工坊意外','瘟疫','火災'],
-      farmer:['饑荒','過勞而終','天災欠收','瘟疫','產褥熱'],
+      farmer:['饑荒','積勞而終','天災欠收','瘟疫','產褥熱'],
       miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
       sailor:['船難','溺斃','風暴','瘟疫'],
-      dockworker:['貨物砸傷','碼頭墜落意外','過勞而終','瘟疫'],
-      worker:['過勞而終','饑荒','瘟疫','產褥熱']
+      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','瘟疫'],
+      worker:['積勞而終','饑荒','瘟疫','產褥熱']
     },
     child:['天花','痲疹','饑荒','難產']
   },
@@ -1938,14 +1938,14 @@ const DEATH_CAUSES_BY_ERA = [
       medical:['瘟疫','看診途中染疫','傷寒'],
       educator:['瘟疫','傷寒','舟車勞頓積勞成疾'],
       civic:['瘟疫','傷寒','產褥熱'],
-      engineer:['工坊意外','瘟疫','過勞而終'],
+      engineer:['工坊意外','瘟疫','積勞而終'],
       creative:['瘟疫','傷寒','積勞而終'],
       artisan:['工坊意外','瘟疫','火災'],
-      farmer:['饑荒','過勞而終','天災欠收','瘟疫','產褥熱'],
+      farmer:['饑荒','積勞而終','天災欠收','瘟疫','產褥熱'],
       miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
       sailor:['船難','溺斃','壞血病','風暴'],
-      dockworker:['貨物砸傷','碼頭墜落意外','過勞而終','瘟疫'],
-      worker:['過勞而終','瘟疫','意外','產褥熱']
+      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','瘟疫'],
+      worker:['積勞而終','瘟疫','意外','產褥熱']
     },
     child:['天花','痢疾','饑荒']
   },
@@ -1960,7 +1960,7 @@ const DEATH_CAUSES_BY_ERA = [
       engineer:['工殤意外','肺結核','霍亂'],
       creative:['肺結核','霍亂','積勞成疾'],
       artisan:['工殤','肺結核','霍亂'],
-      farmer:['饑荒','過勞而終','肺結核','霍亂','產褥熱'],
+      farmer:['饑荒','積勞而終','肺結核','霍亂','產褥熱'],
       miner:['礦坑坍塌','塵肺病','礦坑意外','霍亂'],
       sailor:['船難','溺斃','風暴','霍亂'],
       dockworker:['貨物砸傷','碼頭墜落意外','工殤','霍亂'],
@@ -1979,11 +1979,11 @@ const DEATH_CAUSES_BY_ERA = [
       engineer:['工殤意外','心臟病','肺結核'],
       creative:['積勞成疾','心臟病','癌症'],
       artisan:['工殤意外','心臟病','肺結核'],
-      farmer:['過勞而終','心臟病','農藥中毒','意外'],
+      farmer:['積勞而終','心臟病','農藥中毒','意外'],
       miner:['礦坑坍塌','塵肺病','礦坑意外','心臟病'],
       sailor:['船難','溺斃','風暴','意外事故'],
       dockworker:['貨物砸傷','碼頭墜落意外','意外事故','心臟病'],
-      worker:['意外事故','心臟病','過勞而終']
+      worker:['意外事故','心臟病','積勞而終']
     },
     child:['小兒麻痺','麻疹','肺炎']
   },
@@ -2017,7 +2017,7 @@ const LEGACY_BY_CATEGORY = {
     '用家族的財富資助了無數窮困人家的孩子讀書，卻從未張揚',
     '在動盪年代守住了家業，讓家人平安活下來',
     '沒有顯赫的政績，但治下百姓多年後仍念著他的好',
-    '把家族的財富轉為濟世的善舉，晚年開設了免費的診所與學堂',
+    '把家族的財富轉為濟世的善舉，晚年開設了免費的醫館與學堂',
     '家道中落後，靠著僅存的人脈與尊嚴，撐住了家人的體面',
     '在饑荒年間開倉放糧，救了半個村子',
     '一輩子活在眾人矚目下，卻始終記得替最底層的佃戶留一條活路',
@@ -2096,7 +2096,7 @@ const LEGACY_BY_CATEGORY = {
     '用專業守住了無數個素不相識家庭的希望',
     '晚年仍堅持義診，直到走不動的那一天',
     '沒有顯赫的頭銜，但診斷過的病人多年後仍記得他的名字',
-    '用畢生積蓄買了一整套醫療器材，捐給了鄉里的診所',
+    '用畢生積蓄買了一整套醫療器材，捐給了鄉里的醫者',
     '一輩子替窮苦病人看病不收錢，自己卻常常入不敷出',
     '一輩子堅持出診到最偏遠的村落，風雨無阻',
     '沒能治好每一個人，但陪伴了每一個需要陪伴的人',
@@ -2114,7 +2114,7 @@ const LEGACY_BY_CATEGORY = {
     '用一雙手接住過的新生命，比自己記得的還多',
     '沒能治好的病，反而讓他更謙卑地面對醫學的極限',
     '一輩子與病痛為伍，卻始終相信每個人都值得被好好對待',
-    '留下的醫術與醫德，成了整間診所立下的傳統',
+    '留下的醫術與醫德，成了後進醫者代代相傳的傳統',
     '用一生的堅持，證明了仁心比手術刀更重要'
   ],
   educator: [
@@ -2140,7 +2140,7 @@ const LEGACY_BY_CATEGORY = {
     '一輩子堅持有教無類，不因家境好壞區別對待學生',
     '用一輩子的耐心，教會了無數孩子相信自己值得被期待',
     '沒能改變整個教育制度，但改變了教室裡的每一個孩子',
-    '一輩子與粉筆和黑板為伍，卻留下了比任何獎盃都珍貴的東西',
+    '一輩子與筆墨和講堂為伍，卻留下了比任何功名都珍貴的東西',
     '留下的教學方法，至今仍被後來的老師沿用',
     '用一生證明了，一個好老師能改變的不只是成績'
   ],
@@ -2194,7 +2194,7 @@ const LEGACY_BY_CATEGORY = {
     '一輩子堅持親自到現場勘查，不只是紙上作業',
     '用一輩子的專業，換來了使用者安心的每一天',
     '沒能完成最理想的設計，但完成了最安全的那一個',
-    '一輩子與鋼筋和水泥為伍，卻留下了經得起時間考驗的作品',
+    '一輩子與圖紙和磚石為伍，卻留下了經得起時間考驗的作品',
     '留下的設計原則，至今仍被後來的工程師沿用',
     '用一生證明了，慢一點把事情做對，比快一點更重要'
   ],
@@ -2376,7 +2376,7 @@ const LEGACY_BY_CATEGORY = {
     '沒有顯赫的成就，但同事都記得他從不推卸責任',
     '一輩子堅持準時上工，即使身體早已不堪負荷',
     '沒有令人羨慕的職稱，但這份工作養活了一整個家',
-    '沒能出人頭地，但走的時候，整個工廠的人都來送行',
+    '沒能出人頭地，但走的時候，一起做工的夥伴都來送行',
     '一輩子換過好幾份工作，卻始終沒放棄讓生活更好一點',
     '留下的做事方法，成了後來新人參考的訣竅',
     '沒有名利雙收，但被共事過的每個人記得他的可靠',
@@ -2521,7 +2521,7 @@ const MEANING_BY_CATEGORY = {
     '曾以為自己在改變孩子的未來，後來才發現，是孩子改變了他',
     '用一生的堅持，證明了平凡的講台也能站出不平凡的高度',
     '直到最後一堂課，仍然相信每個孩子都值得被好好對待',
-    '一輩子與課本和黑板為伍，卻留下了比任何獎狀都珍貴的東西',
+    '一輩子與書卷和講台為伍，卻留下了比任何虛名都珍貴的東西',
     '曾以為教書是一份工作，後來才發現，是一輩子的修行',
     '用一生證明了，一句真誠的鼓勵，可能改變一個人的一生'
   ],
@@ -2732,7 +2732,7 @@ const MEANING_BY_CATEGORY = {
     '一輩子與碼頭的喧囂為伍，卻在其中找到了屬於自己的節奏',
     '曾經以為搬貨是低賤的活，後來才發現，養家糊口沒有高低之分',
     '用一生驗證了，肯出力的人，總能找到活下去的辦法',
-    '直到看著碼頭機械化取代人力，才懂得自己那個年代的價值',
+    '直到看著碼頭一天天變了樣，才懂得自己那個年代的價值',
     '一輩子沒有輕鬆過，但從未讓家人因為他而挨餓',
     '曾以為自己的人生很平凡，後來才發現，平凡也能扛起千斤重',
     '用一生的力氣，證明了勞動本身就值得被尊敬',
@@ -2986,7 +2986,7 @@ const LIFE_CHAPTERS = {
     peak: [
       '你教過的學生開始有了出息，逢年過節登門的人踏破了門檻。你最得意的不是那些功成名就的，而是那些活成了正直之人的。',
       '那些年你聲名在外，大戶人家重金來聘，你沒去，還是守著自己那間學堂。你說：誰家的孩子，都是孩子。',
-      '你編的課本被鄰近的學堂爭相傳抄。你不收分文，只提一個要求：別漏掉最後一頁寫給孩子們的話。',
+      '你編的教本被鄰近的學堂爭相傳抄。你不收分文，只提一個要求：別漏掉最後一頁寫給孩子們的話。',
       '桃李漸滿天下的那幾年，你在課堂上話反而越來越少，越來越多地聽學生說。你說：教到最後，是學生在教我。'
     ],
     midlife: [

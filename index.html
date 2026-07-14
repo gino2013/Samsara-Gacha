@@ -82,6 +82,16 @@
   .flash.go{ animation: flashOut 0.7s ease-out; }
   @keyframes flashOut{ 0%{ opacity:0.85; } 100%{ opacity:0; } }
 
+  .bgm-toggle{
+    position:fixed; top:16px; right:16px; z-index:60;
+    width:40px; height:40px; border-radius:50%; font-size:16px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--panel); border:1px solid var(--line); color:var(--text);
+    cursor:pointer; opacity:0.75; transition:opacity 0.2s, transform 0.15s, border-color 0.2s;
+  }
+  .bgm-toggle:hover{ opacity:1; border-color:rgba(255,255,255,0.25); transform:scale(1.06); }
+  .bgm-toggle.muted{ color:var(--muted); }
+
   body.shake .wrap{ animation: shake 0.55s cubic-bezier(.36,.07,.19,.97); }
   @keyframes shake{
     10%, 90%{ transform:translate(-1px, 1px); }
@@ -595,13 +605,10 @@
   @keyframes sunSink{ to{ bottom:7%; } }
   @keyframes sunBreathe{ from{ filter:brightness(1); } to{ filter:brightness(1.18); } }
   #theEndOverlay .the-end-hills{
-    position:absolute; left:0; right:0; bottom:0; height:20%; background:#140b22;
-    clip-path:polygon(0 65%, 14% 42%, 28% 58%, 44% 18%, 58% 48%, 74% 12%, 88% 46%, 100% 28%, 100% 100%, 0 100%);
+    position:absolute; left:0; right:0; bottom:0; height:20%; width:100%;
+    display:block;
   }
-  #theEndOverlay .the-end-hills.back{
-    height:26%; background:#241338; opacity:0.75;
-    clip-path:polygon(0 40%, 10% 60%, 22% 30%, 36% 52%, 50% 26%, 66% 56%, 80% 34%, 92% 58%, 100% 42%, 100% 100%, 0 100%);
-  }
+  #theEndOverlay .the-end-hills.back{ height:26%; opacity:0.75; }
   #theEndOverlay .the-end-motes{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
   #theEndOverlay .the-end-motes i{
     position:absolute; bottom:-10px; border-radius:50%;
@@ -643,6 +650,10 @@
 <canvas id="fxCanvas"></canvas>
 <div class="flash" id="flash"></div>
 <div class="beam" id="beam"></div>
+<audio id="bgmAudio" loop preload="none">
+  <source src="sounds/bgm.m4a" type="audio/mp4">
+</audio>
+<button class="bgm-toggle" id="bgmToggle" title="背景音樂開關" aria-label="背景音樂開關">🔊</button>
 
 <div class="onboard" id="onboardOverlay">
   <div class="onboard-inner">
@@ -709,8 +720,12 @@
   <div class="the-end-stars"></div>
   <div class="the-end-rays"></div>
   <div class="the-end-sun"></div>
-  <div class="the-end-hills back"></div>
-  <div class="the-end-hills"></div>
+  <svg class="the-end-hills back" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,55 C10,35 18,50 28,38 C38,26 48,44 58,32 C68,20 78,42 88,30 C93,24 97,34 100,30 L100,100 L0,100 Z" fill="#241338"/>
+  </svg>
+  <svg class="the-end-hills" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,65 C12,40 22,60 34,42 C46,24 56,54 68,38 C78,24 88,46 100,36 L100,100 L0,100 Z" fill="#140b22"/>
+  </svg>
   <div class="the-end-motes" id="theEndMotes"></div>
   <div class="the-end-vignette"></div>
   <div class="onboard-inner">
@@ -817,6 +832,11 @@ function formatReason(reason){
   return html;
 }
 
+// 國家池裡有些名稱帶著「・現代次分區」字尾（如「美國・矽谷科技菁英圈」），
+// 那是專為「此刻/今生」設計的 2026 年社會經濟快照，套到輪迴鏈裡任意古代年份的過去世
+// 會變成時代錯亂（矽谷出現在 1535 年）。過去世一律只顯示去除字尾的國名本體。
+function baseCountryName(name){ return name.split('・')[0]; }
+
 const _measureCtx = document.createElement('canvas').getContext('2d');
 function balanceText(el){
   if(!el) return;
@@ -868,6 +888,30 @@ function getCookie(name){
   const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
   return m ? decodeURIComponent(m[1]) : null;
 }
+
+// ── 背景音樂：第一次使用者互動時才播放（瀏覽器政策），記住靜音偏好 ──
+const BGM_MUTE_KEY = 'samsara_bgm_muted';
+const bgmAudio = document.getElementById('bgmAudio');
+const bgmToggle = document.getElementById('bgmToggle');
+const BGM_VOLUME = 0.22;
+bgmAudio.volume = BGM_VOLUME;
+let bgmMuted = getCookie(BGM_MUTE_KEY) === '1';
+function applyBgmUI(){
+  bgmToggle.textContent = bgmMuted ? '🔇' : '🔊';
+  bgmToggle.classList.toggle('muted', bgmMuted);
+}
+applyBgmUI();
+function startBgm(){
+  if(bgmMuted) return;
+  bgmAudio.play().catch(() => {}); // 瀏覽器可能仍拒絕，忽略即可，下次互動會再試
+}
+document.addEventListener('pointerdown', startBgm, { once:true });
+bgmToggle.addEventListener('click', () => {
+  bgmMuted = !bgmMuted;
+  setCookie(BGM_MUTE_KEY, bgmMuted ? '1' : '0');
+  applyBgmUI();
+  if(bgmMuted) bgmAudio.pause(); else startBgm();
+});
 
 const STATS_KEY = 'samsara_stats';
 let savedStats = null;
@@ -1079,9 +1123,13 @@ function showMainResult(result){
   card.classList.add(result.tier.toLowerCase(), 'reveal');
   if(result.tier === 'UR') card.classList.add('sweep');
 
+  // 有 deathCause 代表這是輪迴鏈裡「已經走完的過去世」，不是「此刻/今生」——
+  // 國家池的名稱字尾與現代GDP/快樂指數統計只對「此刻」成立，過去世要拿掉。
+  const isPast = !!result.deathCause;
+
   document.getElementById('cardFlag').textContent = result.flag;
   const cardCountryEl = document.getElementById('cardCountry');
-  cardCountryEl.textContent = result.name;
+  cardCountryEl.textContent = isPast ? baseCountryName(result.name) : result.name;
   balanceText(cardCountryEl);
 
   let badge = card.querySelector('.rarity-badge');
@@ -1094,7 +1142,6 @@ function showMainResult(result){
   let lifeTag = card.querySelector('.life-tag');
   if(result.life){
     if(!lifeTag){ lifeTag = document.createElement('div'); lifeTag.className = 'life-tag'; card.insertBefore(lifeTag, document.getElementById('cardFlag')); }
-    const isPast = !!result.deathCause;
     const years = isPast ? `${result.year}–${result.endYear}` : `${result.year}・此刻`;
     lifeTag.textContent = `${isPast ? '你曾經是' : '此刻的你'}・第${result.life}世・${years}`;
   } else if(lifeTag){
@@ -1102,9 +1149,13 @@ function showMainResult(result){
   }
 
   let reasonEl = card.querySelector('.reason');
-  if(!reasonEl){ reasonEl = document.createElement('div'); reasonEl.className='reason'; card.appendChild(reasonEl); }
-  reasonEl.innerHTML = formatReason(result.reason);
-  balanceText(reasonEl.querySelector('.stat-desc'));
+  if(isPast){
+    if(reasonEl) reasonEl.remove();
+  } else {
+    if(!reasonEl){ reasonEl = document.createElement('div'); reasonEl.className='reason'; card.appendChild(reasonEl); }
+    reasonEl.innerHTML = formatReason(result.reason);
+    balanceText(reasonEl.querySelector('.stat-desc'));
+  }
 
   let story = card.querySelector('.life-story');
   if(result.occupation){
@@ -1242,6 +1293,16 @@ function pickOccupation(tier, year, age, countryName){
   else {
     const table = (region && OCCUPATIONS_BY_REGION[region]) || OCCUPATIONS_BY_ERA;
     list = table.find(e => year < e.before).jobs[tier];
+  }
+  if(NO_HEREDITARY_NOBILITY.has(baseCountryName(countryName))){
+    // countryName can carry a modern sub-region suffix (e.g. "美國・矽谷科技菁英圈") - the
+    // no-nobility list only stores base names, so it must compare against baseCountryName()
+    // or every USA entry (all 7 of which are suffixed) silently misses this filter entirely.
+    // category:'noble' catches most of it, but a few entries in OTHER categories still
+    // name-drop a royal court (e.g. 宮廷畫師/court painter is tagged 'creative') - filter by
+    // content too so nothing slips through just because of its category tag.
+    const noNoble = list.filter(j => j.category !== 'noble' && !/宮廷|王室|皇室/.test(j.name + j.background));
+    if(noNoble.length) list = noNoble;
   }
   return list[Math.floor(Math.random()*list.length)];
 }
@@ -1393,12 +1454,13 @@ async function runSamsaraChain(startYear){
 
   results.forEach((r, i) => {
     const div = document.createElement('div');
+    const rIsPast = !!r.deathCause;
     div.className = `mini ${r.tier.toLowerCase()}`;
     div.style.animationDelay = (i*0.06)+'s';
-    div.title = r.reason;
+    div.title = rIsPast ? `${baseCountryName(r.name)}（${r.tier}）` : r.reason;
     div.innerHTML = `
       <div class="flag">${r.flag}</div>
-      <div class="country">${r.name}</div>
+      <div class="country">${rIsPast ? baseCountryName(r.name) : r.name}</div>
       <div class="badge">${r.tier}</div>
       <div class="life-year">第${r.life}世・${r.year}</div>
     `;
@@ -1497,7 +1559,10 @@ function showChainReview(results){
   const lastLife = results.length;
   list.innerHTML = results.map((r, i) => {
     const isLast = r.life === lastLife;
-    const event = (r.reason.split('｜').pop() || '').trim();
+    // event 是國家池裡「此刻2026年」的現代社會經濟描述（矽谷、GDP…），只對今生成立，
+    // 過去世不顯示，也不用帶現代次分區字尾的國名（見 baseCountryName 註解）。
+    const event = isLast ? (r.reason.split('｜').pop() || '').trim() : '';
+    const displayName = isLast ? r.name : baseCountryName(r.name);
     const age = isLast ? (2026 - r.year) : (r.endYear - r.year);
     const years = isLast ? `${r.year}・此刻・${age}歲` : `${r.year}–${r.endYear}・${age}歲`;
 
@@ -1507,10 +1572,10 @@ function showChainReview(results){
         <div class="ri-body">
           <div class="ri-head">
             <span class="ri-life">第${r.life}世</span>
-            <span class="ri-name">${r.name}</span>
+            <span class="ri-name">${displayName}</span>
             <span class="ri-years">${years}</span>
           </div>
-          <div class="ri-event">${event}</div>
+          ${event ? `<div class="ri-event">${event}</div>` : ''}
           ${buildLifeBiographyHTML(r)}${isLast ? '<div class="ri-meaning">這一世還在書寫中 - 接下來的故事，換你自己寫。</div>' : ''}
         </div>
       </div>
@@ -1921,14 +1986,21 @@ function animateToLocation(country){
 }
 
 function showGeoInfo(country){
+  const isPast = !!country.deathCause; // 過去世：不顯示現代次分區國名字尾與現代GDP/快樂指數統計
   document.getElementById('geoFlag').textContent = country.flag;
-  document.getElementById('geoName').textContent = country.name;
+  document.getElementById('geoName').textContent = isPast ? baseCountryName(country.name) : country.name;
   const tg = document.getElementById('geoTier');
   tg.textContent = country.tier;
   tg.className = 'tg ' + country.tier.toLowerCase();
   const geoReasonEl = document.getElementById('geoReason');
-  geoReasonEl.innerHTML = formatReason(country.reason);
-  balanceText(geoReasonEl.querySelector('.stat-desc'));
+  if(isPast){
+    geoReasonEl.innerHTML = country.occupation
+      ? `這一世你以「${country.occupation}」度日，${country.year}–${country.endYear}年，享年${country.age}歲。`
+      : '';
+  } else {
+    geoReasonEl.innerHTML = formatReason(country.reason);
+    balanceText(geoReasonEl.querySelector('.stat-desc'));
+  }
   document.getElementById('geoInfo').classList.add('show');
 }
 

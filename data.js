@@ -434,6 +434,11 @@ const COUNTRY_REGION = {
   '帛琉':'pacific', '密克羅尼西亞':'pacific', '馬紹爾群島':'pacific'
 };
 
+// 這些國家沒有本土世襲貴族／宮廷傳統（美國憲法更明文禁止封爵），不管哪個年代抽到，
+// 都不該套用歐洲封建預設表裡的 noble 類職業（宮廷重臣、世襲公爵…），
+// pickOccupation() 會用這份名單把 noble 類別過濾掉，改用同一年代其他類別（多半是白手起家的商賈／財閥）。
+const NO_HEREDITARY_NOBILITY = new Set(['美國', '加拿大', '澳洲', '紐西蘭']);
+
 const OCCUPATIONS_BY_REGION = {
   eastAsia: [
     { before:1500, jobs:{

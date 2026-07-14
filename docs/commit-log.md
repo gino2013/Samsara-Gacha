@@ -89,3 +89,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-13 15:27 — Add spaces around remaining hyphens and reword chain-end farewell line to '每一次重來' for a better tone
 - 2026-07-14 15:16 — Add Tower-of-Saviors-style summon ritual (magic circle, converge particles, tier-colored beam, UR rainbow fake-out), expand chain-review lives into 10x age-anchored biographies, and upgrade THE END scene with sinking sun, stars, rays and rising motes
 - 2026-07-14 16:00 — Replace em-dashes with spaced hyphens in life-chapter narrative text for consistent punctuation style
+- 2026-07-14 16:40 — Smooth THE END mountain silhouettes into SVG bezier curves, add looping background music with a mute toggle, and fix historical anachronisms where past lives showed present-day country branding (e.g. '矽谷科技菁英圈' in 1535) or rolled hereditary-nobility occupations for nations that never had a royal court (USA/Canada/Australia/NZ)

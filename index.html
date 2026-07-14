@@ -936,11 +936,17 @@ function rollTier(forcePityBreak){
   return "N";
 }
 
-function rollOne(){
+function rollOne(year){
   sincePity++;
   const forcePity = sincePity >= 10;
   const tier = rollTier(forcePity);
-  const pool = TIERS[tier].countries;
+  let pool = TIERS[tier].countries;
+  // year 只在輪迴鏈的過去世傳入 - 把還沒建國的國家從候選池剔除，而不是抽到後才在畫面上
+  // 補救；單抽（沒有 year 參數）永遠代表「此刻」，所有國家都合法，不受影響。
+  if(year !== undefined){
+    const eligible = pool.filter(c => year >= (COUNTRY_FOUNDED[baseCountryName(c[1])] ?? -Infinity));
+    if(eligible.length) pool = eligible;
+  }
   const c = pool[Math.floor(Math.random()*pool.length)];
   if(tier === "SSR" || tier === "UR") sincePity = 0;
 
@@ -1396,7 +1402,7 @@ async function runSamsaraChain(startYear){
       break;
     }
     life++;
-    const r = rollOne();
+    const r = rollOne(Math.round(year));
     r.life = life;
     r.year = Math.round(year);
     // Most lives run a normal length (avg ±20%); a 12% chance of a wide 1~avg*1.1 roll adds

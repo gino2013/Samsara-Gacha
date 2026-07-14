@@ -87,3 +87,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-13 14:39 — Add reveal ceremony (charge, full-screen particles, flash, shake, holo tilt), pity bar, and narrative life-story copy so pulls feel dramatic and lives read as biographies
 - 2026-07-13 14:47 — Fix chain-end farewell line wrapping, swap em dashes for hyphens, and phrase death cause as '死因是X' for clearer life-story copy
 - 2026-07-13 15:27 — Add spaces around remaining hyphens and reword chain-end farewell line to '每一次重來' for a better tone
+- 2026-07-14 15:16 — Add Tower-of-Saviors-style summon ritual (magic circle, converge particles, tier-colored beam, UR rainbow fake-out), expand chain-review lives into 10x age-anchored biographies, and upgrade THE END scene with sinking sun, stars, rays and rising motes

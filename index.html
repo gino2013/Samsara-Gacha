@@ -1325,14 +1325,19 @@ const NATURAL_DEATH_CAUSES_MODERN = ['缺血性心臟病（冠心病）','中風
 // occ.death (set per-occupation in OCCUPATIONS_BY_ERA) takes priority - a soldier and a farmer
 // in the same "military"/"farmer" category still die differently. Falls back to the category
 // pool for occupations without their own list (child/teen roles).
-function pickDeathCause(year, age, occ){
+function pickDeathCause(year, age, occ, married){
   const era = DEATH_CAUSES_BY_ERA.find(e => year < e.before);
   if(age <= 14) return era.child[Math.floor(Math.random()*era.child.length)];
   if(age >= 60 && Math.random() < 0.35){
     const pool = year >= 1900 ? NATURAL_DEATH_CAUSES_MODERN : NATURAL_DEATH_CAUSES_CLASSIC;
     return pool[Math.floor(Math.random()*pool.length)];
   }
-  const list = occ.death || era.adult[occ.category] || era.adult.worker;
+  let list = occ.death || era.adult[occ.category] || era.adult.worker;
+  // 未成家的一世不該死於生產 - 難產/產褥熱只留給成過家的人生
+  if(!married){
+    const noBirth = list.filter(d => !/難產|產褥熱/.test(d));
+    if(noBirth.length) list = noBirth;
+  }
   return list[Math.floor(Math.random()*list.length)];
 }
 
@@ -1418,7 +1423,6 @@ async function runSamsaraChain(startYear){
     r.occupation = occ.name;
     r.occCategory = occ.category;
     r.background = occ.background;
-    r.deathCause = pickDeathCause(r.year, age, occ);
     if(age > 19){
       const m = pickMarriage(age);
       r.married = m.married;
@@ -1436,6 +1440,8 @@ async function runSamsaraChain(startYear){
     } else {
       r.childDeathNote = pickChildDeathNote();
     }
+    // 婚姻先定、死因後抽：pickDeathCause 需要知道有沒有成家，才不會讓未婚的一世死於難產
+    r.deathCause = pickDeathCause(r.year, age, occ, r.married);
     results.push(r);
   }
 

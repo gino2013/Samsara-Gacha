@@ -220,9 +220,9 @@ const OCCUPATIONS_BY_ERA = [
   { before:1500, jobs:{
     UR: [
       {name:'封地領主', category:'noble', background:'世襲貴族之家，生來就擁有封地與佃農', death:['宮廷鬥爭遇害','遇刺','痛風併發症']},
-      {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
+      {name:'部落首領', category:'noble', background:'部落酋長世家，自幼被栽培為繼承人', death:['部落內鬥遇害','征戰陣亡','熱病不退']},
       {name:'大商賈', category:'merchant', background:'商旅世家，自小跟著長輩走遍各地商路', death:['商旅途中遇劫','海盜襲擊','瘟疫']},
-      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位', death:['宮廷政爭失勢病故','遇刺','瘟疫']},
+      {name:'王室封臣', category:'noble', background:'效忠王室的貴族分支，領有世襲爵位', death:['宮廷政爭失勢病故','遇刺','中風']},
       {name:'主教兼領主', category:'noble', background:'教會高層兼世俗領主，掌握大片教產與封地', death:['教產爭端遇害','瘟疫','痛風併發症']},
       {name:'放貸金融家族之主', category:'merchant', background:'專營借貸生意的富裕家族，財富雄厚卻常受猜忌', death:['遭債務人尋仇','瘟疫','遇刺']}
     ],
@@ -231,23 +231,23 @@ const OCCUPATIONS_BY_ERA = [
       {name:'教會高階神職人員', category:'educator', background:'虔誠信徒之家，年少即入修道院受教', death:['修道院內染疫','瘟疫','傷寒']},
       {name:'行會會長', category:'artisan', background:'工匠世家，繼承家族在行會的地位', death:['工坊火災','瘟疫','行會鬥爭遇害']},
       {name:'城邦執政官', category:'noble', background:'城邦望族之後，自幼受政治栽培', death:['政爭遇刺','瘟疫','宮廷鬥爭失勢']},
-      {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','瘟疫','傷寒']}
+      {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','壞血病','傷寒']}
     ],
     SR: [
-      {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝', death:['工坊意外','瘟疫','火災']},
+      {name:'工匠師傅', category:'artisan', background:'工匠家庭出身，自小當學徒磨練手藝', death:['工坊意外','傷口潰爛','火災']},
       {name:'鄉紳地主', category:'noble', background:'小地主家庭，繼承祖上留下的田產', death:['家道爭產遇害','瘟疫','傷寒']},
       {name:'隨軍書記官', category:'civic', background:'識字的小吏之家，靠書寫本事謀生', death:['隨軍染疫','傷寒','戰亂波及']},
-      {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']}
+      {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']}
     ],
     R: [
       {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
-      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','瘟疫','火災']},
+      {name:'鐵匠', category:'artisan', background:'鐵匠之子，自幼在爐火邊長大', death:['爐火意外','傷口潰爛','火災']},
       {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
       {name:'樵夫', category:'farmer', background:'山村獵戶或樵夫家庭出身', death:['山林意外','野獸襲擊','饑荒']}
     ],
     N: [
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','瘟疫']},
-      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產', death:['積勞而終','主人苛待致死','瘟疫']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','痢疾']},
+      {name:'僕役', category:'worker', background:'家生奴僕，生來就是主人家的財產', death:['積勞而終','主人苛待致死','傷寒']},
       {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
       {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
     ]
@@ -257,15 +257,15 @@ const OCCUPATIONS_BY_ERA = [
       {name:'殖民地總督', category:'noble', background:'母國權貴世家，被派任海外統治一方', death:['熱帶疫病','遇刺','舟車勞頓積勞成疾']},
       {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營遠洋貿易的商行', death:['商船沉沒血本無歸抑鬱而終','海盜襲擊','瘟疫']},
       {name:'特許公司股東', category:'merchant', background:'投資特許公司起家的富商家族', death:['投資失利破產鬱鬱而終','瘟疫','痛風併發症']},
-      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢病故','遇刺','瘟疫']},
+      {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢病故','遇刺','中風']},
       {name:'黃金船隊船東', category:'merchant', background:'擁有整支遠洋船隊的巨富家族', death:['船隊遇劫','瘟疫','海難']},
       {name:'世襲公爵', category:'noble', background:'血統顯赫的世襲貴族，領地橫跨數個省份', death:['決鬥身亡','瘟疫','痛風併發症']}
     ],
     SSR: [
       {name:'遠洋船長', category:'military', background:'航海世家出身，自幼隨父輩出海', death:['海戰陣亡','船難','壞血病']},
       {name:'種植園主', category:'merchant', background:'殖民地拓墾起家的地主家族', death:['熱帶疫病','瘟疫','莊園暴動遇害']},
-      {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族', death:['戰亂喪生','瘟疫','舟車勞頓積勞成疾']},
-      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家', death:['瘟疫','傷寒','積勞而終']},
+      {name:'軍需官', category:'military', background:'行伍出身，靠軍功一路升遷的家族', death:['戰亂喪生','傷口潰爛','舟車勞頓積勞成疾']},
+      {name:'宮廷畫師', category:'creative', background:'師承名門畫派的藝匠世家', death:['熱病不退','傷寒','積勞而終']},
       {name:'特許貿易公司高階股東', category:'merchant', background:'投資東印度公司一類特許貿易組織起家的富裕家族', death:['商船沉沒','熱帶疫病','瘟疫']}
     ],
     SR: [
@@ -276,13 +276,13 @@ const OCCUPATIONS_BY_ERA = [
     ],
     R: [
       {name:'水手', category:'sailor', background:'貧苦港口人家，靠出海謀生', death:['壞血病','船難','溺斃']},
-      {name:'裁縫', category:'artisan', background:'裁縫學徒出身，一手好針線', death:['工坊意外','瘟疫','火災']},
+      {name:'裁縫', category:'artisan', background:'裁縫學徒出身，一手好針線', death:['工坊意外','傷口潰爛','火災']},
       {name:'磨坊主', category:'artisan', background:'磨坊世家，繼承祖傳的磨坊生意', death:['磨坊意外','瘟疫','火災']},
       {name:'民兵', category:'military', background:'鄉里徵召的農家子弟', death:['戰亂喪生','壞血病','瘟疫']}
     ],
     N: [
       {name:'碼頭工人', category:'dockworker', background:'碼頭邊長大，靠出賣力氣過活的窮苦人家', death:['貨物砸傷','碼頭墜落意外','瘟疫']},
-      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','瘟疫']},
+      {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','痢疾']},
       {name:'礦工', category:'miner', background:'礦工家庭，父輩也埋骨礦坑', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
       {name:'漁夫', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','壞血病']}
     ]
@@ -507,33 +507,33 @@ const OCCUPATIONS_BY_REGION = {
       UR: [
         {name:'藩王', category:'noble', background:'皇室宗親分封的藩王世家，享有封地與軍權', death:['奪嫡政爭遇害','瘟疫','痛風併發症']},
         {name:'世襲宰輔世家之主', category:'noble', background:'累世為官的宰輔家族，權傾朝野', death:['朝廷政爭失勢','瘟疫','遇刺']},
-        {name:'大鹽商', category:'merchant', background:'壟斷鹽業貿易的巨富商賈世家', death:['官府查抄致死','瘟疫','傷寒']},
+        {name:'大鹽商', category:'merchant', background:'壟斷鹽業貿易的巨富商賈世家', death:['官府查抄致死','熱病不退','傷寒']},
         {name:'皇親國戚', category:'noble', background:'與皇室聯姻的貴戚家族', death:['宮廷鬥爭遇害','瘟疫','痛風併發症']},
-        {name:'皇商世家', category:'merchant', background:'獲皇室特許經營專賣生意的富商世家', death:['官府查抄致死','瘟疫','傷寒']},
+        {name:'皇商世家', category:'merchant', background:'獲皇室特許經營專賣生意的富商世家', death:['官府查抄致死','熱病不退','傷寒']},
         {name:'前朝遺老貴族', category:'noble', background:'前朝沒落貴族，仍保有部分田產與人脈', death:['家道中落憂鬱而終','瘟疫','傷寒']}
       ],
       SSR: [
         {name:'節度使', category:'military', background:'手握重兵的地方軍閥世家', death:['征戰陣亡','兵變遇害','瘟疫']},
         {name:'狀元及第官員', category:'educator', background:'科舉高中入朝為官的書香門第', death:['朝廷政爭失勢','瘟疫','積勞成疾']},
-        {name:'絲綢商行大東家', category:'merchant', background:'經營絲路貿易的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
+        {name:'絲綢商行大東家', category:'merchant', background:'經營絲路貿易的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
         {name:'寺院方丈', category:'educator', background:'佛門高僧兼帝王師的清望之家', death:['寺院染疫','瘟疫','積勞而終']},
-        {name:'鹽鐵專賣巨賈', category:'merchant', background:'掌控鹽鐵專賣特許權的富商世家', death:['官府查抄致死','瘟疫','傷寒']}
+        {name:'鹽鐵專賣巨賈', category:'merchant', background:'掌控鹽鐵專賣特許權的富商世家', death:['官府查抄致死','熱病不退','傷寒']}
       ],
       SR: [
-        {name:'舉人官員', category:'civic', background:'科舉中第任職地方的書香人家', death:['遭政敵構陷','瘟疫','傷寒']},
-        {name:'富農地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']},
+        {name:'舉人官員', category:'civic', background:'科舉中第任職地方的書香人家', death:['遭政敵構陷','熱病不退','傷寒']},
+        {name:'富農地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘧疾','傷寒']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']},
         {name:'錢莊掌櫃', category:'merchant', background:'經營票號錢莊的商賈之家', death:['遭劫掠致死','瘟疫','傷寒']}
       ],
       R: [
-        {name:'私塾先生', category:'educator', background:'略通詩書的清貧讀書人家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'鐵匠', category:'artisan', background:'世代打鐵的手藝人家庭', death:['爐火意外','瘟疫','火災']},
+        {name:'私塾先生', category:'educator', background:'略通詩書的清貧讀書人家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'鐵匠', category:'artisan', background:'世代打鐵的手藝人家庭', death:['爐火意外','傷口潰爛','火災']},
         {name:'士卒', category:'military', background:'貧苦人家出身的行伍子弟', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
-        {name:'家僕', category:'worker', background:'賣身為奴的窮苦人家', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','痢疾']},
+        {name:'家僕', category:'worker', background:'賣身為奴的窮苦人家', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -541,34 +541,34 @@ const OCCUPATIONS_BY_REGION = {
     { before:1750, jobs:{
       UR: [
         {name:'攝政親王', category:'noble', background:'代理朝政的皇族世家', death:['奪權政爭失勢','瘟疫','痛風併發症']},
-        {name:'皇商世家之主', category:'merchant', background:'專供宮廷用度的御用商行家族', death:['官府查抄致死','瘟疫','傷寒']},
+        {name:'皇商世家之主', category:'merchant', background:'專供宮廷用度的御用商行家族', death:['官府查抄致死','熱病不退','傷寒']},
         {name:'世襲藩王', category:'noble', background:'鎮守一方的世襲藩王家族', death:['朝廷削藩失勢','瘟疫','痛風併發症']},
         {name:'旗人貴族世家', category:'noble', background:'開國功勳世家，享有世襲俸祿', death:['宮廷鬥爭遇害','瘟疫','傷寒']},
-        {name:'十三行行商世家', category:'merchant', background:'獲官方特許壟斷對外貿易的行商世家', death:['商船遇劫','瘟疫','傷寒']},
+        {name:'十三行行商世家', category:'merchant', background:'獲官方特許壟斷對外貿易的行商世家', death:['商船遇劫','壞血病','傷寒']},
         {name:'沒落貴族世家', category:'noble', background:'祖上顯赫如今家道中落的舊貴族', death:['家道中落憂鬱而終','瘟疫','傷寒']}
       ],
       SSR: [
         {name:'封疆大吏', category:'civic', background:'總督一方的封疆大吏世家', death:['朝廷政爭失勢','瘟疫','積勞成疾']},
-        {name:'儒學大家', category:'educator', background:'帝王師出身的儒學世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'票號東家', category:'merchant', background:'經營跨省匯兌票號的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
+        {name:'儒學大家', category:'educator', background:'帝王師出身的儒學世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'票號東家', category:'merchant', background:'經營跨省匯兌票號的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
         {name:'武舉將領', category:'military', background:'武舉出身的將門世家', death:['征戰陣亡','兵變遇害','瘟疫']},
-        {name:'漕運糧商巨賈', category:'merchant', background:'壟斷南北漕運糧食貿易的富商世家', death:['商隊遇劫','瘟疫','傷寒']}
+        {name:'漕運糧商巨賈', category:'merchant', background:'壟斷南北漕運糧食貿易的富商世家', death:['商隊遇劫','水土不服病故','傷寒']}
       ],
       SR: [
-        {name:'進士官員', category:'civic', background:'科舉高中任職朝廷的書香人家', death:['遭政敵構陷','瘟疫','傷寒']},
-        {name:'鹽商', category:'merchant', background:'經營鹽業專賣的商賈之家', death:['官府查抄致死','瘟疫','傷寒']},
+        {name:'進士官員', category:'civic', background:'科舉高中任職朝廷的書香人家', death:['遭政敵構陷','熱病不退','傷寒']},
+        {name:'鹽商', category:'merchant', background:'經營鹽業專賣的商賈之家', death:['官府查抄致死','熱病不退','傷寒']},
         {name:'御醫', category:'medical', background:'世代供職宮廷太醫院的醫術世家', death:['醫治途中染疫','瘟疫','傷寒']},
-        {name:'地方鄉紳', category:'noble', background:'累世積田的地方望族', death:['地界糾紛遇害','瘟疫','傷寒']}
+        {name:'地方鄉紳', category:'noble', background:'累世積田的地方望族', death:['地界糾紛遇害','瘧疾','傷寒']}
       ],
       R: [
-        {name:'秀才', category:'educator', background:'略通詩書的清貧讀書人家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'差役', category:'civic', background:'公門當差的小吏人家', death:['遭刁民行刺','傷寒','瘟疫']},
+        {name:'秀才', category:'educator', background:'略通詩書的清貧讀書人家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'差役', category:'civic', background:'公門當差的小吏人家', death:['遭刁民行刺','傷寒','痢疾']},
         {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','瘟疫','意外']},
         {name:'佃農', category:'farmer', background:'世代租地耕種的佃農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','痢疾']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','痢疾']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -682,64 +682,64 @@ const OCCUPATIONS_BY_REGION = {
   southAsia: [
     { before:1500, jobs:{
       UR: [
-        {name:'土邦君主', category:'noble', background:'世襲統治一方的土邦王族', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
-        {name:'蘇丹王室宗親', category:'noble', background:'蘇丹國統治家族的旁支貴戚', death:['奪位政爭遇害','瘟疫','遇刺']},
-        {name:'香料貿易巨賈', category:'merchant', background:'掌控香料貿易路線的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'宮廷祭司世家', category:'educator', background:'世代擔任宮廷祭祀顧問的學者家族', death:['瘟疫','傷寒','積勞而終']}
+        {name:'土邦君主', category:'noble', background:'世襲統治一方的土邦王族', death:['宮廷政爭失勢','中風','痛風併發症']},
+        {name:'蘇丹王室宗親', category:'noble', background:'蘇丹國統治家族的旁支貴戚', death:['奪位政爭遇害','中風','遇刺']},
+        {name:'香料貿易巨賈', category:'merchant', background:'掌控香料貿易路線的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'宮廷祭司世家', category:'educator', background:'世代擔任宮廷祭祀顧問的學者家族', death:['熱病不退','傷寒','積勞而終']}
       ],
       SSR: [
         {name:'武士貴族', category:'military', background:'世襲騎戰武士的貴族家庭', death:['戰死沙場','比武意外','重傷不治']},
-        {name:'大地主貴族', category:'noble', background:'擁有廣袤田產的地主貴族家庭', death:['地界糾紛遇害','瘟疫','傷寒']},
-        {name:'宮廷學者祭司', category:'educator', background:'精通經典與占星的學者世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','瘟疫','傷寒']}
+        {name:'大地主貴族', category:'noble', background:'擁有廣袤田產的地主貴族家庭', death:['地界糾紛遇害','瘧疾','傷寒']},
+        {name:'宮廷學者祭司', category:'educator', background:'精通經典與占星的學者世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','壞血病','傷寒']}
       ],
       SR: [
-        {name:'學者祭司', category:'educator', background:'世代誦習經典的學者家庭', death:['瘟疫','傷寒','積勞而終']},
-        {name:'富商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的紡織或珠寶匠人世家', death:['工坊意外','瘟疫','火災']}
+        {name:'學者祭司', category:'educator', background:'世代誦習經典的學者家庭', death:['熱病不退','傷寒','積勞而終']},
+        {name:'富商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的紡織或珠寶匠人世家', death:['工坊意外','傷口潰爛','火災']}
       ],
       R: [
-        {name:'紡織匠人', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','瘟疫','火災']},
+        {name:'紡織匠人', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','傷口潰爛','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'自耕農', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'獵戶', category:'farmer', background:'山林獵戶家庭出身', death:['山林意外','野獸襲擊','饑荒']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
     }},
     { before:1750, jobs:{
       UR: [
-        {name:'蒙兀兒王公貴族', category:'noble', background:'蒙兀兒帝國分封的世襲王公世家', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
-        {name:'世襲土邦君主', category:'noble', background:'向帝國納貢自治的土邦統治家族', death:['奪位政爭遇害','瘟疫','遇刺']},
+        {name:'蒙兀兒王公貴族', category:'noble', background:'蒙兀兒帝國分封的世襲王公世家', death:['宮廷政爭失勢','中風','痛風併發症']},
+        {name:'世襲土邦君主', category:'noble', background:'向帝國納貢自治的土邦統治家族', death:['奪位政爭遇害','中風','遇刺']},
         {name:'香料紡織貿易巨賈', category:'merchant', background:'家族數代經營香料與紡織貿易', death:['商船沉沒血本無歸抑鬱而終','瘟疫','海盜襲擊']},
-        {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢病故','遇刺','瘟疫']}
+        {name:'宮廷重臣', category:'noble', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢病故','遇刺','中風']}
       ],
       SSR: [
-        {name:'蒙兀兒將領', category:'military', background:'行伍出身，靠軍功一路升遷的將門世家', death:['戰亂喪生','瘟疫','舟車勞頓積勞成疾']},
+        {name:'蒙兀兒將領', category:'military', background:'行伍出身，靠軍功一路升遷的將門世家', death:['戰亂喪生','傷口潰爛','舟車勞頓積勞成疾']},
         {name:'東印度公司高階代理商', category:'merchant', background:'替殖民貿易公司牽線致富的代理商家族', death:['熱帶疫病','瘟疫','海盜襲擊']},
-        {name:'宗教領袖世家', category:'educator', background:'世代主持宗教事務的清望之家', death:['瘟疫','傷寒','積勞而終']},
+        {name:'宗教領袖世家', category:'educator', background:'世代主持宗教事務的清望之家', death:['熱病不退','傷寒','積勞而終']},
         {name:'土邦大臣', category:'civic', background:'輔佐土邦君主的重臣世家', death:['宮廷政爭失勢','瘟疫','傷寒']}
       ],
       SR: [
-        {name:'蒙兀兒官員', category:'civic', background:'任職帝國官僚體系的書香人家', death:['遭政敵構陷','瘟疫','傷寒']},
-        {name:'香料商行掌櫃', category:'merchant', background:'經營香料商行的商賈之家', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'宮廷畫師', category:'creative', background:'師承細密畫畫派的藝匠世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']}
+        {name:'蒙兀兒官員', category:'civic', background:'任職帝國官僚體系的書香人家', death:['遭政敵構陷','熱病不退','傷寒']},
+        {name:'香料商行掌櫃', category:'merchant', background:'經營香料商行的商賈之家', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'宮廷畫師', category:'creative', background:'師承細密畫畫派的藝匠世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']}
       ],
       R: [
-        {name:'紡織工匠', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','瘟疫','火災']},
+        {name:'紡織工匠', category:'artisan', background:'世代織布的手藝人家庭', death:['工坊意外','傷口潰爛','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'商販', category:'worker', background:'沿街叫賣的小本經營人家', death:['積勞而終','瘟疫','意外']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','意外','痢疾']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -844,64 +844,64 @@ const OCCUPATIONS_BY_REGION = {
   africaMiddleEast: [
     { before:1500, jobs:{
       UR: [
-        {name:'蘇丹', category:'noble', background:'統治一方王國的蘇丹世家', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
-        {name:'哈里發宗親', category:'noble', background:'哈里發家族的旁支貴戚', death:['奪位政爭遇害','瘟疫','遇刺']},
-        {name:'黃金鹽貿易巨賈', category:'merchant', background:'掌控橫越沙漠商路的黃金鹽業貿易世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'部落大酋長', category:'noble', background:'統領多個部落聯盟的世襲酋長家族', death:['部落內鬥遇害','征戰陣亡','瘟疫']}
+        {name:'蘇丹', category:'noble', background:'統治一方王國的蘇丹世家', death:['宮廷政爭失勢','中風','痛風併發症']},
+        {name:'哈里發宗親', category:'noble', background:'哈里發家族的旁支貴戚', death:['奪位政爭遇害','中風','遇刺']},
+        {name:'黃金鹽貿易巨賈', category:'merchant', background:'掌控橫越沙漠商路的黃金鹽業貿易世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'部落大酋長', category:'noble', background:'統領多個部落聯盟的世襲酋長家族', death:['部落內鬥遇害','征戰陣亡','熱病不退']}
       ],
       SSR: [
-        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易首領', category:'merchant', background:'率領橫越沙漠商隊的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
+        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易首領', category:'merchant', background:'率領橫越沙漠商隊的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
         {name:'王室戰士貴族', category:'military', background:'世襲騎戰的貴族武士家庭', death:['戰死沙場','比武意外','重傷不治']},
-        {name:'港口貿易巨賈', category:'merchant', background:'經營印度洋沿岸貿易的富商世家', death:['商船遇劫','瘟疫','傷寒']}
+        {name:'港口貿易巨賈', category:'merchant', background:'經營印度洋沿岸貿易的富商世家', death:['商船遇劫','壞血病','傷寒']}
       ],
       SR: [
-        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘟疫','傷寒']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']}
+        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘧疾','傷寒']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']}
       ],
       R: [
-        {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','瘟疫','火災']},
+        {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','傷口潰爛','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'礦工', category:'miner', background:'世代挖掘黃金鹽礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
     }},
     { before:1750, jobs:{
       UR: [
-        {name:'蘇丹國統治者', category:'noble', background:'世襲統治一方的蘇丹國王族', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
-        {name:'鄂圖曼行省總督', category:'noble', background:'代理帝國治理一方的總督世家', death:['宮廷政爭失勢病故','遇刺','瘟疫']},
-        {name:'黃金貿易巨賈', category:'merchant', background:'家族數代經營黃金與奴隸貿易路線的巨富商行', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'王室貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['奪位政爭遇害','瘟疫','遇刺']}
+        {name:'蘇丹國統治者', category:'noble', background:'世襲統治一方的蘇丹國王族', death:['宮廷政爭失勢','中風','痛風併發症']},
+        {name:'鄂圖曼行省總督', category:'noble', background:'代理帝國治理一方的總督世家', death:['宮廷政爭失勢病故','遇刺','中風']},
+        {name:'黃金貿易巨賈', category:'merchant', background:'家族數代經營黃金與奴隸貿易路線的巨富商行', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'王室貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['奪位政爭遇害','中風','遇刺']}
       ],
       SSR: [
-        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易商首領', category:'merchant', background:'率領橫越沙漠商隊的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'港口貿易巨賈', category:'merchant', background:'經營印度洋沿岸貿易的富商世家', death:['商船遇劫','瘟疫','傷寒']},
-        {name:'軍事貴族將領', category:'military', background:'行伍出身，靠軍功一路升遷的將門世家', death:['戰亂喪生','瘟疫','舟車勞頓積勞成疾']}
+        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易商首領', category:'merchant', background:'率領橫越沙漠商隊的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'港口貿易巨賈', category:'merchant', background:'經營印度洋沿岸貿易的富商世家', death:['商船遇劫','壞血病','傷寒']},
+        {name:'軍事貴族將領', category:'military', background:'行伍出身，靠軍功一路升遷的將門世家', death:['戰亂喪生','傷口潰爛','舟車勞頓積勞成疾']}
       ],
       SR: [
-        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']}
+        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']}
       ],
       R: [
         {name:'遊牧民族首領', category:'farmer', background:'統領遊牧部族的世襲家庭', death:['沙漠迷途','天災欠收','饑荒']},
-        {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','瘟疫','火災']},
+        {name:'金屬工匠', category:'artisan', background:'世代打鐵鑄銅的手藝人家庭', death:['爐火意外','傷口潰爛','火災']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'農民', category:'farmer', background:'世代務農的自耕農家庭', death:['饑荒','積勞而終','天災欠收']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','痢疾']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -1006,64 +1006,64 @@ const OCCUPATIONS_BY_REGION = {
   seAsia: [
     { before:1500, jobs:{
       UR: [
-        {name:'蘇丹', category:'noble', background:'統治一方王國的蘇丹世家', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
-        {name:'王室宗親', category:'noble', background:'古老王國統治家族的旁支貴戚', death:['奪位政爭遇害','瘟疫','遇刺']},
-        {name:'香料貿易巨賈', category:'merchant', background:'掌控香料群島貿易路線的富商世家', death:['商船遇劫','瘟疫','傷寒']},
+        {name:'蘇丹', category:'noble', background:'統治一方王國的蘇丹世家', death:['宮廷政爭失勢','中風','痛風併發症']},
+        {name:'王室宗親', category:'noble', background:'古老王國統治家族的旁支貴戚', death:['奪位政爭遇害','中風','遇刺']},
+        {name:'香料貿易巨賈', category:'merchant', background:'掌控香料群島貿易路線的富商世家', death:['商船遇劫','壞血病','傷寒']},
         {name:'水師統帥世家', category:'military', background:'統領海上艦隊的世襲將門', death:['海戰陣亡','船難','壞血病']}
       ],
       SSR: [
         {name:'宮廷大臣', category:'civic', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢','瘟疫','傷寒']},
         {name:'佛寺高僧', category:'educator', background:'虔誠信徒之家，年少即入寺院受教', death:['寺院染疫','瘟疫','積勞而終']},
-        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','瘟疫','傷寒']},
+        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','壞血病','傷寒']},
         {name:'水師將領', category:'military', background:'行伍出身，靠海戰軍功升遷的家族', death:['海戰陣亡','船難','重傷不治']}
       ],
       SR: [
-        {name:'地方官員', category:'civic', background:'受王室任命治理一方的官宦人家', death:['遭政敵構陷','瘟疫','傷寒']},
-        {name:'香料商人', category:'merchant', background:'經營香料貿易的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']},
-        {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
+        {name:'地方官員', category:'civic', background:'受王室任命治理一方的官宦人家', death:['遭政敵構陷','熱病不退','傷寒']},
+        {name:'香料商人', category:'merchant', background:'經營香料貿易的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']},
+        {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘧疾','傷寒']}
       ],
       R: [
         {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'船夫', category:'sailor', background:'靠水路載客載貨的船夫家庭', death:['船難','溺斃','風暴']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'錫礦工', category:'miner', background:'世代挖錫礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
     }},
     { before:1750, jobs:{
       UR: [
-        {name:'蘇丹王國統治者', category:'noble', background:'世襲統治一方的蘇丹國王族', death:['宮廷政爭失勢','瘟疫','痛風併發症']},
+        {name:'蘇丹王國統治者', category:'noble', background:'世襲統治一方的蘇丹國王族', death:['宮廷政爭失勢','中風','痛風併發症']},
         {name:'荷屬東印度公司高階代理商', category:'merchant', background:'替殖民貿易公司牽線致富的代理商家族', death:['熱帶疫病','瘟疫','海盜襲擊']},
         {name:'香料貿易巨賈', category:'merchant', background:'家族數代經營香料貿易的巨富商行', death:['商船沉沒血本無歸抑鬱而終','瘟疫','海盜襲擊']},
-        {name:'王室貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['奪位政爭遇害','瘟疫','遇刺']}
+        {name:'王室貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['奪位政爭遇害','中風','遇刺']}
       ],
       SSR: [
         {name:'宮廷大臣', category:'civic', background:'世代仕宦的宮廷世家', death:['宮廷政爭失勢','瘟疫','傷寒']},
-        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','瘟疫','傷寒']},
+        {name:'香料商行大股東', category:'merchant', background:'跨區域香料貿易起家的富裕商行家族', death:['商船遇劫','壞血病','傷寒']},
         {name:'佛寺高僧', category:'educator', background:'虔誠信徒之家，年少即入寺院受教', death:['寺院染疫','瘟疫','積勞而終']},
         {name:'水師將領', category:'military', background:'行伍出身，靠海戰軍功升遷的家族', death:['海戰陣亡','船難','壞血病']}
       ],
       SR: [
-        {name:'地方官員', category:'civic', background:'受王室任命治理一方的官宦人家', death:['遭政敵構陷','瘟疫','傷寒']},
-        {name:'香料商人', category:'merchant', background:'經營香料貿易的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']},
-        {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
+        {name:'地方官員', category:'civic', background:'受王室任命治理一方的官宦人家', death:['遭政敵構陷','熱病不退','傷寒']},
+        {name:'香料商人', category:'merchant', background:'經營香料貿易的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']},
+        {name:'稻田地主', category:'noble', background:'累世積田的地主家庭', death:['地界糾紛遇害','瘧疾','傷寒']}
       ],
       R: [
         {name:'稻農', category:'farmer', background:'世代種稻的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
         {name:'船夫', category:'sailor', background:'靠水路載客載貨的船夫家庭', death:['船難','溺斃','風暴']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'木雕匠人', category:'artisan', background:'世代雕刻木器的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','痢疾']},
         {name:'錫礦工', category:'miner', background:'世代挖錫礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']}
       ]
@@ -1169,31 +1169,31 @@ const OCCUPATIONS_BY_REGION = {
     { before:1500, jobs:{
       UR: [
         {name:'可汗', category:'noble', background:'統領草原部族的世襲可汗世家', death:['奪位政爭遇害','征戰陣亡','瘟疫']},
-        {name:'帖木兒王朝宗親', category:'noble', background:'帖木兒帝國統治家族的旁支貴戚', death:['宮廷政爭失勢','瘟疫','遇刺']},
-        {name:'絲路貿易巨賈', category:'merchant', background:'掌控絲路貿易路線的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'部落大汗世家', category:'noble', background:'統領多個遊牧部族聯盟的世襲家族', death:['部落內鬥遇害','征戰陣亡','瘟疫']}
+        {name:'帖木兒王朝宗親', category:'noble', background:'帖木兒帝國統治家族的旁支貴戚', death:['宮廷政爭失勢','熱病不退','遇刺']},
+        {name:'絲路貿易巨賈', category:'merchant', background:'掌控絲路貿易路線的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'部落大汗世家', category:'noble', background:'統領多個遊牧部族聯盟的世襲家族', death:['部落內鬥遇害','征戰陣亡','熱病不退']}
       ],
       SSR: [
         {name:'遊牧貴族將領', category:'military', background:'世襲騎戰的遊牧貴族家庭', death:['戰死沙場','征戰陣亡','重傷不治']},
-        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易首領', category:'merchant', background:'率領絲路商隊的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'綠洲城邦統治者', category:'noble', background:'統治絲路綠洲城邦的世襲家族', death:['宮廷政爭失勢','瘟疫','遇刺']}
+        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易首領', category:'merchant', background:'率領絲路商隊的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'綠洲城邦統治者', category:'noble', background:'統治絲路綠洲城邦的世襲家族', death:['宮廷政爭失勢','熱病不退','遇刺']}
       ],
       SR: [
-        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['瘟疫','傷寒','積勞而終']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']}
+        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['熱病不退','傷寒','積勞而終']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']}
       ],
       R: [
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
-        {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'牧民', category:'farmer', background:'依附大戶放牧牲畜的貧苦牧民', death:['沙漠迷途','天災欠收','饑荒']}
       ]
@@ -1201,31 +1201,31 @@ const OCCUPATIONS_BY_REGION = {
     { before:1750, jobs:{
       UR: [
         {name:'汗國統治者', category:'noble', background:'統治一方汗國的世襲王族', death:['奪位政爭遇害','征戰陣亡','瘟疫']},
-        {name:'世襲貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['宮廷政爭失勢','瘟疫','遇刺']},
-        {name:'絲路貿易巨賈', category:'merchant', background:'家族數代經營絲路貿易的巨富商行', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'部落大汗世家', category:'noble', background:'統領多個遊牧部族聯盟的世襲家族', death:['部落內鬥遇害','征戰陣亡','瘟疫']}
+        {name:'世襲貴族', category:'noble', background:'血統顯赫的世襲貴族世家', death:['宮廷政爭失勢','熱病不退','遇刺']},
+        {name:'絲路貿易巨賈', category:'merchant', background:'家族數代經營絲路貿易的巨富商行', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'部落大汗世家', category:'noble', background:'統領多個遊牧部族聯盟的世襲家族', death:['部落內鬥遇害','征戰陣亡','熱病不退']}
       ],
       SSR: [
         {name:'遊牧貴族將領', category:'military', background:'世襲騎戰的遊牧貴族家庭', death:['戰死沙場','征戰陣亡','重傷不治']},
-        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['瘟疫','傷寒','積勞而終']},
-        {name:'商隊貿易首領', category:'merchant', background:'率領絲路商隊的富商世家', death:['商隊遇劫','瘟疫','傷寒']},
-        {name:'綠洲城邦統治者', category:'noble', background:'統治絲路綠洲城邦的世襲家族', death:['宮廷政爭失勢','瘟疫','遇刺']}
+        {name:'伊斯蘭學者顯貴', category:'educator', background:'精通經典教義的宗教學者世家', death:['熱病不退','傷寒','積勞而終']},
+        {name:'商隊貿易首領', category:'merchant', background:'率領絲路商隊的富商世家', death:['商隊遇劫','水土不服病故','傷寒']},
+        {name:'綠洲城邦統治者', category:'noble', background:'統治絲路綠洲城邦的世襲家族', death:['宮廷政爭失勢','熱病不退','遇刺']}
       ],
       SR: [
-        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','瘟疫','傷寒']},
-        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['瘟疫','傷寒','積勞而終']},
-        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','瘟疫']},
-        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','瘟疫','火災']}
+        {name:'商隊貿易商', category:'merchant', background:'經商致富的商人家庭', death:['商旅途中遇劫','水土不服病故','傷寒']},
+        {name:'清真寺教長', category:'educator', background:'世代主持宗教事務的學者家族', death:['熱病不退','傷寒','積勞而終']},
+        {name:'地方稅吏', category:'civic', background:'公門人家出身，子承父業當差', death:['遭刁民行刺','傷寒','痢疾']},
+        {name:'御用工匠', category:'artisan', background:'世代服務宮廷的匠人世家', death:['工坊意外','傷口潰爛','火災']}
       ],
       R: [
         {name:'遊牧牧民', category:'farmer', background:'世代逐水草而居的遊牧家庭', death:['沙漠迷途','天災欠收','饑荒']},
         {name:'士兵', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
         {name:'農民', category:'farmer', background:'綠洲灌溉農業的自耕農家庭', death:['饑荒','積勞而終','天災欠收']},
-        {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'皮革工匠', category:'artisan', background:'世代製革的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','瘟疫']},
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
+        {name:'佃農', category:'farmer', background:'一無所有的佃農家庭，世代租地耕種', death:['饑荒','積勞而終','痢疾']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','痢疾']},
         {name:'礦工', category:'miner', background:'世代挖礦的窮苦礦工家庭', death:['礦坑坍塌','塵肺積疾','礦坑瓦斯']},
         {name:'牧民', category:'farmer', background:'依附大戶放牧牲畜的貧苦牧民', death:['沙漠迷途','天災欠收','饑荒']}
       ]
@@ -1330,65 +1330,65 @@ const OCCUPATIONS_BY_REGION = {
   pacific: [
     { before:1500, jobs:{
       UR: [
-        {name:'部落大酋長', category:'noble', background:'統領島嶼聯盟的世襲大酋長世家', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
-        {name:'王室宗親', category:'noble', background:'高階酋長世系的旁支貴戚', death:['奪位政爭遇害','瘟疫','遇刺']},
+        {name:'部落大酋長', category:'noble', background:'統領島嶼聯盟的世襲大酋長世家', death:['部落內鬥遇害','征戰陣亡','熱病不退']},
+        {name:'王室宗親', category:'noble', background:'高階酋長世系的旁支貴戚', death:['奪位政爭遇害','中風','遇刺']},
         {name:'航海貿易首領', category:'merchant', background:'率領長程獨木舟貿易船隊的世家', death:['船難','溺斃','風暴']},
-        {name:'祭司頭領世家', category:'educator', background:'世代主持祭祀的高階祭司家族', death:['瘟疫','傷寒','積勞而終']}
+        {name:'祭司頭領世家', category:'educator', background:'世代主持祭祀的高階祭司家族', death:['熱病不退','傷寒','積勞而終']}
       ],
       SSR: [
-        {name:'部落酋長', category:'noble', background:'統領一方部落的世襲酋長家庭', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
+        {name:'部落酋長', category:'noble', background:'統領一方部落的世襲酋長家庭', death:['部落內鬥遇害','征戰陣亡','熱病不退']},
         {name:'航海領航員世家', category:'sailor', background:'世代精通星象與洋流的領航員家族', death:['船難','溺斃','風暴']},
         {name:'戰士貴族', category:'military', background:'世襲戰士的貴族家庭', death:['戰死沙場','比武意外','重傷不治']},
-        {name:'祭司世家', category:'educator', background:'世代主持祭祀與醫療的祭司家族', death:['瘟疫','傷寒','積勞而終']}
+        {name:'祭司世家', category:'educator', background:'世代主持祭祀與醫療的祭司家族', death:['熱病不退','傷寒','積勞而終']}
       ],
       SR: [
-        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘟疫','傷寒']},
-        {name:'獨木舟工匠', category:'artisan', background:'世代打造遠洋獨木舟的匠人世家', death:['工坊意外','瘟疫','火災']},
+        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘧疾','傷寒']},
+        {name:'獨木舟工匠', category:'artisan', background:'世代打造遠洋獨木舟的匠人世家', death:['工坊意外','傷口潰爛','火災']},
         {name:'漁撈頭領', category:'sailor', background:'統領漁撈船隊的世家', death:['船難','溺斃','風暴']},
-        {name:'農園主', category:'noble', background:'擁有芋頭與麵包樹園的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
+        {name:'農園主', category:'noble', background:'擁有芋頭與麵包樹園的地主家庭', death:['地界糾紛遇害','瘧疾','傷寒']}
       ],
       R: [
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
         {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','積勞而終','天災欠收']},
         {name:'戰士', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','主人苛待致死','傷寒']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','痢疾']},
         {name:'工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝', death:['工坊意外','瘟疫','意外']}
       ]
     }},
     { before:1750, jobs:{
       UR: [
-        {name:'部落大酋長', category:'noble', background:'統領島嶼聯盟的世襲大酋長世家', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
-        {name:'王室宗親', category:'noble', background:'高階酋長世系的旁支貴戚', death:['奪位政爭遇害','瘟疫','遇刺']},
+        {name:'部落大酋長', category:'noble', background:'統領島嶼聯盟的世襲大酋長世家', death:['部落內鬥遇害','征戰陣亡','熱病不退']},
+        {name:'王室宗親', category:'noble', background:'高階酋長世系的旁支貴戚', death:['奪位政爭遇害','中風','遇刺']},
         {name:'航海貿易首領', category:'merchant', background:'率領長程獨木舟貿易船隊的世家', death:['船難','溺斃','風暴']},
-        {name:'祭司頭領世家', category:'educator', background:'世代主持祭祀的高階祭司家族', death:['瘟疫','傷寒','積勞而終']}
+        {name:'祭司頭領世家', category:'educator', background:'世代主持祭祀的高階祭司家族', death:['熱病不退','傷寒','積勞而終']}
       ],
       SSR: [
-        {name:'部落酋長', category:'noble', background:'統領一方部落的世襲酋長家庭', death:['部落內鬥遇害','征戰陣亡','瘟疫']},
+        {name:'部落酋長', category:'noble', background:'統領一方部落的世襲酋長家庭', death:['部落內鬥遇害','征戰陣亡','熱病不退']},
         {name:'航海領航員世家', category:'sailor', background:'世代精通星象與洋流的領航員家族', death:['船難','溺斃','風暴']},
         {name:'戰士貴族', category:'military', background:'世襲戰士的貴族家庭', death:['戰死沙場','比武意外','重傷不治']},
-        {name:'祭司世家', category:'educator', background:'世代主持祭祀與醫療的祭司家族', death:['瘟疫','傷寒','積勞而終']}
+        {name:'祭司世家', category:'educator', background:'世代主持祭祀與醫療的祭司家族', death:['熱病不退','傷寒','積勞而終']}
       ],
       SR: [
-        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘟疫','傷寒']},
-        {name:'獨木舟工匠', category:'artisan', background:'世代打造遠洋獨木舟的匠人世家', death:['工坊意外','瘟疫','火災']},
+        {name:'部落長老', category:'civic', background:'受部落敬重的長老家族', death:['部落紛爭遇害','瘧疾','傷寒']},
+        {name:'獨木舟工匠', category:'artisan', background:'世代打造遠洋獨木舟的匠人世家', death:['工坊意外','傷口潰爛','火災']},
         {name:'漁撈頭領', category:'sailor', background:'統領漁撈船隊的世家', death:['船難','溺斃','風暴']},
-        {name:'農園主', category:'noble', background:'擁有芋頭與麵包樹園的地主家庭', death:['地界糾紛遇害','瘟疫','傷寒']}
+        {name:'農園主', category:'noble', background:'擁有芋頭與麵包樹園的地主家庭', death:['地界糾紛遇害','瘧疾','傷寒']}
       ],
       R: [
         {name:'漁民', category:'sailor', background:'靠海吃海的漁戶家庭', death:['船難','溺斃','風暴']},
         {name:'農夫', category:'farmer', background:'種植芋頭與麵包樹的農家', death:['饑荒','積勞而終','天災欠收']},
         {name:'戰士', category:'military', background:'貧苦人家出身，從軍謀一口飯吃', death:['戰死沙場','重傷不治','屠城中喪生']},
-        {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','瘟疫','火災']}
+        {name:'編織匠人', category:'artisan', background:'世代編織蓆蓐與漁網的手藝人家庭', death:['工坊意外','傷口潰爛','火災']}
       ],
       N: [
-        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','瘟疫']},
+        {name:'底層勞工', category:'worker', background:'從事最卑微勞役的貧困家庭', death:['積勞而終','意外','痢疾']},
         {name:'漁民', category:'sailor', background:'靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']},
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','痢疾']},
         {name:'工匠學徒', category:'artisan', background:'生於工匠家庭，很小就被送去學手藝', death:['工坊意外','瘟疫','意外']}
       ]
     }},
@@ -1421,7 +1421,7 @@ const OCCUPATIONS_BY_REGION = {
         {name:'佃農', category:'farmer', background:'佃農之家，世代租地耕種，一無所有', death:['饑荒','積勞而終','肺結核']},
         {name:'苦力', category:'worker', background:'靠出賣力氣過活的窮苦人家', death:['積勞而終','霍亂','意外']},
         {name:'漁民', category:'sailor', background:'漁村人家，靠海吃海的貧苦漁戶', death:['船難','溺斃','風暴']},
-        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','瘟疫']}
+        {name:'農夫', category:'farmer', background:'一無所有的佃農家庭', death:['饑荒','積勞而終','痢疾']}
       ]
     }},
     { before:1980, jobs:{
@@ -1927,74 +1927,74 @@ const YOUNG_DEATH_NOTES = [
 const DEATH_CAUSES_BY_ERA = [
   { before:1500,
     adult:{
-      noble:['宮廷鬥爭遇害','瘟疫','難產'],
-      merchant:['商旅途中遇劫','瘟疫','傷寒'],
-      military:['戰死沙場','重傷不治','屠城中喪生'],
+      noble:['宮廷鬥爭遇害','中風','難產','痛風併發症'],
+      merchant:['商旅途中遇劫','水土不服病故','傷寒'],
+      military:['戰死沙場','重傷不治','屠城中喪生','傷口潰爛'],
       medical:['瘟疫','積勞而終','醫治途中染疫'],
-      educator:['修道院內染疫','瘟疫','傷寒'],
-      civic:['傷寒','瘟疫','產褥熱'],
-      engineer:['工坊意外','瘟疫','積勞而終'],
-      creative:['瘟疫','傷寒','積勞而終'],
-      artisan:['工坊意外','瘟疫','火災'],
+      educator:['修道院內染疫','肺癆','傷寒'],
+      civic:['傷寒','痢疾','產褥熱'],
+      engineer:['工坊意外','傷口潰爛','積勞而終'],
+      creative:['肺癆','傷寒','積勞而終'],
+      artisan:['工坊意外','傷口潰爛','火災'],
       farmer:['饑荒','積勞而終','天災欠收','瘟疫','產褥熱'],
-      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
-      sailor:['船難','溺斃','風暴','瘟疫'],
-      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','瘟疫'],
-      worker:['積勞而終','饑荒','瘟疫','產褥熱']
+      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','積勞而終'],
+      sailor:['船難','溺斃','風暴','壞血病'],
+      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','疝氣'],
+      worker:['積勞而終','饑荒','傷寒','產褥熱']
     },
     child:['天花','痲疹','饑荒','落水']
   },
   { before:1750,
     adult:{
-      noble:['宮廷政爭失勢病故','瘟疫','痛風併發症'],
-      merchant:['商船沉沒血本無歸抑鬱而終','瘟疫','海盜襲擊'],
-      military:['海戰陣亡','壞血病','船難'],
+      noble:['宮廷政爭失勢病故','中風','痛風併發症'],
+      merchant:['商船沉沒血本無歸抑鬱而終','水土不服病故','海盜襲擊'],
+      military:['海戰陣亡','壞血病','船難','傷口潰爛'],
       medical:['瘟疫','看診途中染疫','傷寒'],
-      educator:['瘟疫','傷寒','舟車勞頓積勞成疾'],
-      civic:['瘟疫','傷寒','產褥熱'],
-      engineer:['工坊意外','瘟疫','積勞而終'],
-      creative:['瘟疫','傷寒','積勞而終'],
-      artisan:['工坊意外','瘟疫','火災'],
-      farmer:['饑荒','積勞而終','天災欠收','瘟疫','產褥熱'],
-      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','瘟疫'],
+      educator:['肺癆','傷寒','舟車勞頓積勞成疾'],
+      civic:['痢疾','傷寒','產褥熱'],
+      engineer:['工坊意外','傷口潰爛','積勞而終'],
+      creative:['肺癆','傷寒','積勞而終'],
+      artisan:['工坊意外','傷口潰爛','火災'],
+      farmer:['饑荒','積勞而終','天災欠收','瘧疾','產褥熱'],
+      miner:['礦坑坍塌','塵肺積疾','礦坑瓦斯','積勞而終'],
       sailor:['船難','溺斃','壞血病','風暴'],
-      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','瘟疫'],
-      worker:['積勞而終','瘟疫','意外','產褥熱']
+      dockworker:['貨物砸傷','碼頭墜落意外','積勞而終','疝氣'],
+      worker:['積勞而終','痢疾','意外','產褥熱']
     },
     child:['天花','痢疾','饑荒']
   },
   { before:1900,
     adult:{
-      noble:['家道中落憂鬱而終','肺結核','霍亂'],
+      noble:['家道中落憂鬱而終','中風','痛風併發症'],
       merchant:['投資失利破產鬱鬱而終','肺結核','霍亂'],
-      military:['戰亂喪生','肺結核','霍亂'],
-      medical:['看診途中染疫','肺結核','霍亂'],
-      educator:['肺結核','霍亂','積勞成疾'],
-      civic:['肺結核','霍亂','產褥熱'],
-      engineer:['工殤意外','肺結核','霍亂'],
-      creative:['肺結核','霍亂','積勞成疾'],
-      artisan:['工殤','肺結核','霍亂'],
-      farmer:['饑荒','積勞而終','肺結核','霍亂','產褥熱'],
-      miner:['礦坑坍塌','塵肺病','礦坑意外','霍亂'],
-      sailor:['船難','溺斃','風暴','霍亂'],
-      dockworker:['貨物砸傷','碼頭墜落意外','工殤','霍亂'],
+      military:['戰亂喪生','傷口感染','痢疾'],
+      medical:['看診途中染疫','肺結核','傷寒'],
+      educator:['肺結核','積勞成疾','肺炎'],
+      civic:['傷寒','霍亂','產褥熱'],
+      engineer:['工殤意外','肺結核','敗血症'],
+      creative:['肺結核','積勞成疾','酗酒傷身'],
+      artisan:['工殤','敗血症','肺炎'],
+      farmer:['饑荒','積勞而終','霍亂','天災欠收','產褥熱'],
+      miner:['礦坑坍塌','塵肺病','礦坑意外','肺結核'],
+      sailor:['船難','溺斃','風暴','熱帶疫病'],
+      dockworker:['貨物砸傷','碼頭墜落意外','工殤','疝氣'],
       worker:['工殤','肺結核','霍亂','產褥熱']
     },
     child:['白喉','麻疹','肺結核','饑荒']
   },
   { before:1980,
     adult:{
-      noble:['家族企業崩解抑鬱而終','心臟病','癌症'],
-      merchant:['事業破產一夕之間垮台','心臟病','癌症'],
-      military:['戰爭','意外事故','心臟病'],
-      medical:['積勞成疾','心臟病','癌症'],
-      educator:['積勞成疾','心臟病','癌症'],
-      civic:['積勞成疾','心臟病','癌症'],
-      engineer:['工殤意外','心臟病','肺結核'],
-      creative:['積勞成疾','心臟病','癌症'],
-      artisan:['工殤意外','心臟病','肺結核'],
-      farmer:['積勞而終','心臟病','農藥中毒','意外'],
-      miner:['礦坑坍塌','塵肺病','礦坑意外','心臟病'],
+      noble:['家族企業崩解抑鬱而終','中風','癌症'],
+      merchant:['事業破產一夕之間垮台','心臟病','肝病'],
+      military:['戰爭','意外事故','舊傷復發'],
+      medical:['積勞成疾','心臟病','肺炎'],
+      educator:['積勞成疾','中風','癌症'],
+      civic:['積勞成疾','心臟病','腦溢血'],
+      engineer:['工殤意外','癌症','心臟病'],
+      creative:['積勞成疾','肝病','癌症'],
+      artisan:['工殤意外','肺結核','中風'],
+      farmer:['積勞而終','農藥中毒','意外','中風'],
+      miner:['礦坑坍塌','塵肺病','礦坑意外','肺癌'],
       sailor:['船難','溺斃','風暴','意外事故'],
       dockworker:['貨物砸傷','碼頭墜落意外','意外事故','心臟病'],
       worker:['意外事故','心臟病','積勞而終']
@@ -2004,19 +2004,19 @@ const DEATH_CAUSES_BY_ERA = [
   { before:Infinity,
     adult:{
       noble:['家族事業被時代淘汰鬱鬱而終','心臟病','癌症'],
-      merchant:['創業失敗東山再起未果','心臟病','癌症'],
-      military:['公務意外殉職','心臟病','癌症'],
+      merchant:['創業失敗東山再起未果','中風','癌症'],
+      military:['公務意外殉職','心臟病','創傷後遺症'],
       medical:['過勞猝死','心臟病','癌症'],
-      educator:['過勞猝死','心臟病','癌症'],
-      civic:['過勞猝死','心臟病','癌症'],
-      engineer:['職業傷害','心臟病','癌症'],
-      creative:['過勞猝死','心臟病','癌症'],
-      artisan:['職業傷害','心臟病','癌症'],
-      farmer:['過勞猝死','心臟病','癌症','意外'],
-      miner:['礦坑意外','塵肺病','心臟病','癌症'],
-      sailor:['海上意外','溺斃','風暴','心臟病'],
+      educator:['過勞猝死','中風','癌症'],
+      civic:['過勞猝死','心臟病','腦溢血'],
+      engineer:['職業傷害','癌症','心臟病'],
+      creative:['過勞猝死','肝病','癌症'],
+      artisan:['職業傷害','中風','癌症'],
+      farmer:['過勞猝死','心臟病','農藥累積傷害','意外'],
+      miner:['礦坑意外','塵肺病','肺癌','心臟病'],
+      sailor:['海上意外','溺斃','風暴','中風'],
       dockworker:['貨物砸傷','碼頭意外','職業傷害','心臟病'],
-      worker:['車禍','過勞猝死','心臟病','意外']
+      worker:['車禍','過勞猝死','糖尿病併發症','意外']
     },
     child:['意外事故','先天疾病','傳染病']
   }
@@ -2813,7 +2813,7 @@ const CHILD_DEATH_NOTES = [
   '沒能學會自己的名字怎麼寫',
   '家人把他埋在了院子裡最向陽的角落',
   '這一世太匆忙，連害怕都來不及',
-  '沒能等到那場說好要帶他去看的廟會',
+  '沒能等到那場說好要帶他去看的節慶',
   '走的時候，身邊只有母親一人陪著',
   '這輩子唯一的玩伴，是家裡養的那隻老狗',
   '沒能撐過那場席捲全村的瘟疫',
@@ -2842,7 +2842,7 @@ const CHILD_DEATH_NOTES = [
   '家人把他的小名給了後來出生的孩子，像一種延續',
   '走的時候很安靜，像怕吵醒了誰',
   '沒能大到記事，所有的記憶都替他存在別人心裡',
-  '那年廟會買的小玩意，成了家裡最捨不得收起來的東西',
+  '那年市集上買的小玩意，成了家裡最捨不得收起來的東西',
   '沒能等到父親遠行回來 - 行囊裡有給他帶的禮物',
   '短短幾年，把一家人一輩子的疼都用完了',
   '他咿咿呀呀學說話的樣子，母親模仿了一輩子',
@@ -2897,7 +2897,7 @@ const LIFE_CHAPTERS = {
       '你主持修繕了鄉里的義倉與學堂。佃戶們私下說，這一代的主人跟從前不一樣。這句話比任何頭銜都讓你受用。',
       '家業在你手上又添了新的產業。慶功宴上眾人簇擁，你卻在深夜獨自巡完每一間倉房，才安心睡下。',
       '荒年那次，你開了自家的糧倉平價放糧。帳房急得直跳腳，你說：糧放出去是虧，人心散掉才是敗。後來證明，你買回來的東西比糧貴得多。',
-      '你當家的這些年立了條新規：族裡子弟不論嫡庶，讀書的束脩一律由公中出。有人罵你壞了規矩。二十年後，這條「壞規矩」給家裡養出了最爭氣的一代。',
+      '你當家的這些年立了條新規：族裡的孩子不分親疏遠近，讀書的花費一律由家族公帳出。有人罵你壞了規矩。二十年後，這條「壞規矩」給家裡養出了最爭氣的一代。',
       '外人只看見你們家鮮花著錦，只有你知道自己擋掉過幾次滅頂的災禍 - 有些仗打贏了，是連家裡人都不能說的。',
       '你的話漸漸成了地方上的分量。你越發謹慎，輕易不開口。你告訴子侄：咱們家的話重，所以更要說得慢。'
     ],
@@ -2915,7 +2915,7 @@ const LIFE_CHAPTERS = {
       '晚年你把大小事務都放了手，每天在院子裡侍弄花草。有人來請教持家之道，你只說：善待底下的人，別的都是虛的。',
       '你把一生的積蓄分派妥當，特意留了一筆給府裡最老的僕人。你說，他陪這個家的時間，比誰都長。',
       '暮年的你最喜歡坐在門廊上曬太陽，看小輩在院裡追逐。那些爭過的、搶過的，如今想來，都不如這一刻。',
-      '臨老你讓人打開祖祠，把族譜從頭到尾讀了一遍。讀到自己名字的時候，你停了很久，最後笑著合上了。',
+      '臨老你讓人取出家族的名冊，從頭到尾讀了一遍。讀到自己名字的時候，你停了很久，最後笑著合上了。',
       '晚年你最常做的事，是把子侄們一個個單獨叫來喝茶。不訓話，只聽他們說。你說：家業我交得出去，眼界得他們自己長。',
       '你吩咐後事從簡，省下的錢貼給了族學。你說：排場是做給活人看的，我不需要了。',
       '有一年鬧饑荒的舊事被小輩們當傳奇講，你聽著聽著就睡著了。他們不知道，那年夜裡守著糧倉不敢闔眼的人，就是眼前這個打盹的老人。',
@@ -2924,10 +2924,10 @@ const LIFE_CHAPTERS = {
   },
   merchant: {
     childhood: [
-      '你在算盤聲與貨物的氣味裡長大，還不識字就先認得了秤與帳本。大人談生意的時候，你總蹲在櫃檯底下聽。',
+      '你在算帳聲與貨物的氣味裡長大，還不識字就先認得了秤與帳本。大人談生意的時候，你總蹲在櫃檯底下聽。',
       '父親第一次帶你去看貨，教你用手摸、用鼻子聞。他說：貨不會騙人，人才會。這句話你記了一輩子。',
       '你的童年在商路與店鋪之間度過。別的孩子收集石子，你收集各地的口音與行情。',
-      '過年結帳的夜裡，全家人圍著油燈核帳到天亮。你負責撥算盤，錯一顆珠子就得重來，你卻樂在其中。',
+      '年終結帳的夜裡，全家人圍著油燈核帳到天亮。你負責報數，錯一個數就得從頭再來，你卻樂在其中。',
       '你很小就會看人下菜：哪個客人急著要、哪個只是問問行情，你一眼就分得出。大人們笑說這孩子是天生吃這行飯的。',
       '有一回店裡多找了客人錢，父親讓你追出去三條街還回去。回來你氣喘吁吁，父親說：跑這一趟，比做十筆生意都值。',
       '你的啟蒙讀物是貨單和帳冊。別的孩子聽睡前故事，你聽的是大人們覆盤今天的生意 - 哪筆賺了、哪筆虧在哪。',
@@ -2981,7 +2981,7 @@ const LIFE_CHAPTERS = {
       '晚年你把店交給了最踏實的夥計，不是最精明的那個。你說：精明能守三年，踏實能守三代。',
       '你老了還改不掉毛病：路過任何一個攤子，都要瞄一眼人家的貨色和秤。孫輩笑你，你說：這不是毛病，這是你們祖上吃飯的本事。',
       '有老主顧的孫輩拿著幾十年前的舊票據來試你，你眯著眼認了半天，照付。你說：字號還在一天，說過的話就作數一天。',
-      '你最後的日子常坐在店堂裡打盹。開門的響聲、算盤的響聲、夥計招呼客人的響聲 - 你在這些聲音裡睡得特別安穩。'
+      '你最後的日子常坐在店堂裡打盹。開門的響聲、數錢的響聲、夥計招呼客人的響聲 - 你在這些聲音裡睡得特別安穩。'
     ]
   },
   military: {
@@ -3050,7 +3050,7 @@ const LIFE_CHAPTERS = {
     childhood: [
       '你在藥香裡長大，識字是從藥名開始學的。別的孩子怕苦，你卻覺得藥湯的苦味，聞著安心。',
       '你第一次看見長輩把一個奄奄一息的人救回來。那家人跪下磕頭的聲音，你隔了一輩子都還記得。',
-      '你從小的玩具是藥碾和戥子。長輩說你手穩、心細、不怕血，是這塊料。',
+      '你從小的玩具是藥臼和小秤。長輩說你手穩、心細、不怕血，是這塊料。',
       '有一年疫病過境，家裡大人日夜不歸。你守著空屋卻不害怕，因為你知道，他們在做很要緊的事。',
       '你小時候撿回過一隻斷翅的鳥，照著大人的樣子替牠上藥、綁縛。牠後來飛走的那天，你高興得滿院子跑。',
       '長輩出診從不挑病家的門第，破棚子也一樣進。你跟在後面提藥箱，慢慢懂了：進了門，就只有病人，沒有貴賤。',
@@ -3102,7 +3102,7 @@ const LIFE_CHAPTERS = {
       '你把一生的方子整理成冊，不藏私、不設限，誰來抄都給。你說：方子鎖在櫃裡是紙，傳出去才是藥。',
       '暮年的你被當年救過的病人們輪流照顧著。你常說不必如此，他們說：您忘了我們是誰，我們可沒忘。',
       '你這輩子送走過很多人，比誰都清楚生死是怎麼回事。所以晚年的你格外平靜，像個把船搖到岸邊的老艄公。',
-      '你老得拿不穩戥子了，就坐在一旁看徒弟抓藥，一眼就能看出分量差了幾分。徒弟們又敬又怕，說您這眼睛比秤還準。',
+      '你老得拿不穩藥秤了，就坐在一旁看徒弟配藥，一眼就能看出分量差了幾分。徒弟們又敬又怕，說您這眼睛比秤還準。',
       '晚年常有痊癒多年的病人特地繞路來看你，進門第一句都是「您還記得我嗎」。你多半不記得了，但你記得他們的病。他們笑：這就對了，這就是您。',
       '你把行醫幾十年攢下的疑難雜案講給徒弟聽，講到自己當年的誤診也不避諱。你說：我把跌過的坑都告訴你們，你們就能從我停下的地方往前走。',
       '臨終前你交代：藥圃留著，別荒了。街坊來討藥的規矩也留著。你說：我走了，這個門檻得還是熱的。'
@@ -3123,18 +3123,18 @@ const LIFE_CHAPTERS = {
       '你寒窗苦讀，同齡人笑你迂，你不辯解。你隱約知道，書裡有一條看不見的路，能通到很遠的地方。',
       '你第一次登台講課，底下坐的都是比你小不了幾歲的學生。你緊張得聲音發顫，下課時卻有個孩子追出來多問了一個問題。就為這一個問題，你決定教一輩子。',
       '求學路上你遇見了真正點亮你的那位老師。多年後你才明白，你後來對學生做的一切，都是在還他的情。',
-      '家裡供你讀書供得艱難。放榜那天你的名字在列，回家看見母親在門口張望的身影，你在心裡發誓不能辜負。',
+      '家裡供你讀書供得艱難。你考過的那天，名字被念了出來，回家看見母親在門口張望的身影，你在心裡發誓不能辜負。',
       '同窗裡有人天資遠勝於你。你不氣餒，只是比他早起一個時辰、晚睡一個時辰。多年後他半途而廢，你還在讀 - 你贏的不是聰明，是捨不得。',
       '你替先生代過一次課，緊張得把講義攥出了汗。下課時先生從後排站起來，只說了一句：以後這班的蒙學，交給你。',
       '你發現自己講一遍題，比自己做十遍記得還牢。你隱約摸到了這一行的秘密：教，是最深的學。',
       '求學最苦的那年你想過放棄，是路過一間學堂聽見裡面的讀書聲，站著聽完了一整課。你回頭繼續埋頭苦讀 - 你想站到那個位置上去。'
     ],
     early: [
-      '你開始教書，束脩微薄，日子清苦。但每當有學生的眼睛突然亮起來，你就覺得，這一行虧不了。',
+      '你開始教書，酬勞微薄，日子清苦。但每當有學生的眼睛突然亮起來，你就覺得，這一行虧不了。',
       '你接手的學生裡有個出了名的頑劣孩子，人人放棄，你沒有。三年後他變了個人。你從此相信：沒有教不了的孩子，只有還沒找到的法子。',
       '年輕的你教得太急，恨不得把畢生所學一次倒給學生。後來你才學會：教書像種田，急不得。',
       '你在最偏僻的地方教過幾年書，學生們走幾里山路來上課。你捨不得請一天假 - 你一歇，他們的路就白走了。',
-      '有個學生家裡出不起束脩，他父親提來一籃雞蛋，紅著臉不敢進門。你把人請進來，把孩子留下了，雞蛋讓他提了回去。',
+      '有個學生家裡出不起學費，他父親提來一籃雞蛋，紅著臉不敢進門。你把人請進來，把孩子留下了，雞蛋讓他提了回去。',
       '你發現最笨的法子最有用：一個孩子不懂，就換一種講法，再不懂，再換。你最多的一次，同一個道理講了九種講法 - 第九種，他懂了。',
       '你教的第一批學生離開的那天，你在門口站了很久。你忽然明白這一行的本質：把人教好，然後目送他們走遠。',
       '年輕的你也曾被學生當面問倒過。你紅著臉承認不會，回去查了三天，再站上講台從頭講起。後來你常拿這件事教學生：不會不丟人，裝會才丟人。'
@@ -3172,34 +3172,34 @@ const LIFE_CHAPTERS = {
   },
   civic: {
     childhood: [
-      '你在公門人家長大，從小看著父輩深夜伏案。你以為那些文書枯燥，直到有天發現，一紙文書能定人一生。',
+      '你在官吏人家長大，從小看著父輩深夜伏案。你以為那些文書枯燥，直到有天發現，一紙文書能定人一生。',
       '你從小寫得一手好字。長輩說：字是敲門磚。你不懂，只是覺得筆畫工整的時候，心也是齊的。',
       '家裡教你的第一課不是識字，是規矩：什麼能說、什麼不能說、什麼要記在心裡爛在肚裡。',
       '你的童年在官署的院牆邊度過，看著形形色色的人進出：喊冤的、託情的、謝恩的。人間百態，你比同齡人先看了十年。',
-      '父親當差回來，靴子上常沾著各處的泥。母親邊擦邊念叨，父親只說一句：坐著辦不成事。你把這句話記下了。',
+      '父親辦完公事回來，靴子上常沾著各處的泥。母親邊擦邊念叨，父親只說一句：坐著辦不成事。你把這句話記下了。',
       '你見過父親深夜替素不相識的人改一紙陳情，改了又改。你問他認不認識那人，他說：不認識。但這張紙遞上去，就是那家人的天。',
-      '別的孩子怕進官署，你熟門熟路。門房的老伯、抄寫的先生、燒水的雜役你都喊得出稱呼 - 你從小就懂，衙門是靠這些人轉起來的。',
+      '別的孩子怕進官署，你熟門熟路。門房的老伯、抄寫的文書、燒水的雜役你都喊得出稱呼 - 你從小就懂，官署是靠這些人轉起來的。',
       '家裡最重的一次家法，是因為你撿了別人孝敬父親被退回的一包點心。父親說：咱們這種人家，嘴要比別人乾淨。'
     ],
     youth: [
-      '你開始在案牘間當差，抄寫、歸檔、跑腿。帶你的老先生只教了一句話：筆下有人命，字字要過心。',
+      '你開始在案牘間任職，抄寫、歸檔、跑腿。帶你的老前輩只教了一句話：筆下有人命，字字要過心。',
       '你年少氣盛，替一樁不平事多說了兩句，被上頭壓了下來。那晚你明白了這行的難處：想做事，得先學會留在局裡。',
-      '你考過了功名路上的第一關，家裡擺了兩桌酒。父親喝多了，拉著你說：當差不難，難的是十年後，還記得今天想做個什麼樣的人。',
+      '你考過了任職路上的第一關，家裡擺了兩桌酒。父親喝多了，拉著你說：做官不難，難的是十年後，還記得今天想做個什麼樣的人。',
       '你在文書堆裡練出了過目不忘的本事，別人查半天的舊檔，你一伸手就到。上頭開始注意到這個不聲不響的年輕人。',
-      '頭一年當差，你把前任留下的爛帳一筆筆理清了。沒人交代你做這個，你只是受不了「說不清」三個字。',
+      '頭一年任職，你把前任留下的爛帳一筆筆理清了。沒人交代你做這個，你只是受不了「說不清」三個字。',
       '有人塞給你第一筆「規費」，數目不大，正好夠你動心。你退回去的那晚睡得特別沉。後來你才知道，那是有人在試你的價錢。',
       '你陪上官下鄉問過一次災情。回程的路上他問你看見了什麼，你說：冊子上報的和田裡長的，是兩回事。他看了你很久，說：記住你今天這句話。',
-      '同期當差的人裡，有人鑽營、有人躺平。你選了最笨的一條：把每件經手的事做到能簽自己名字的程度。'
+      '同期任職的人裡，有人鑽營、有人敷衍。你選了最笨的一條：把每件經手的事做到能簽自己名字的程度。'
     ],
     early: [
       '你經手的第一樁要案，卷宗裡全是含糊其辭。你多跑了三個地方、多問了十幾個人，把含糊變成了清楚。案子不大，但你睡得著覺。',
       '你開始獨當一面，學會了在各方之間周旋。你給自己畫了條線：話可以圓，事不能歪。',
-      '衙門裡的老人教你「多一事不如少一事」，你嘴上應著，手裡還是把每件事辦到底。慢慢地，難辦的事都往你桌上送。',
+      '官署裡的老人教你「多一事不如少一事」，你嘴上應著，手裡還是把每件事辦到底。慢慢地，難辦的事都往你桌上送。',
       '你辦事公道的名聲傳開了，來求情送禮的也多了。你退回去的東西越來越貴重，門檻也越來越冷清。你覺得，這樣正好。',
-      '你辦的第一件得罪人的事，讓你被冷落了整整一年。你不辯解，把冷板凳上的日子全用來熟讀舊檔。復起之後，沒人比你更懂這個衙門。',
+      '你辦的第一件得罪人的事，讓你被冷落了整整一年。你不辯解，把冷板凳上的日子全用來熟讀舊檔。復起之後，沒人比你更懂這個地方。',
       '鄉裡兩姓為水源械鬥了幾代人，是你一趟趟跑、一家家勸，立了個兩邊都認的章程。文書歸檔那天你想：這頁紙要是早三十年寫出來，能少埋多少人。',
       '你手上過的錢糧多了，你給自己立了個死規矩：帳目當日清，過手不過夜。有人笑你自苦，你說：這規矩不是防別人，是防我自己。',
-      '你發現底下人辦事拖沓，不全是懶 - 是章程繞。你把流程一道道拆了重排，跑三趟的事變成跑一趟。百姓不知道你的名字，只說：這衙門好像變勤快了。'
+      '你發現底下人辦事拖沓，不全是懶 - 是章程繞。你把流程一道道拆了重排，跑三趟的事變成跑一趟。百姓不知道你的名字，只說：這官署好像變勤快了。'
     ],
     peak: [
       '那些年你主持過幾件實事：修堤、清冊、平抑糧價。碑上沒有你的名字，但堤壩每年擋住大水的時候，你都知道，那是你的。',
@@ -3212,9 +3212,9 @@ const LIFE_CHAPTERS = {
       '你經手立的那套章程被鄰縣抄了去用。同僚為你不平，說該署你的名。你笑：章程是拿來用的，不是拿來署名的。'
     ],
     midlife: [
-      '宦海沉浮，你也有被構陷、被冷落的時候。最難的那年，你把官帽擺在桌上想了一夜，天亮還是戴上了 - 不是貪戀，是不甘心把位置讓給那些人。',
+      '宦海沉浮，你也有被構陷、被冷落的時候。最難的那年，你把辭呈寫好擺在桌上想了一夜，天亮還是收了起來 - 不是貪戀，是不甘心把位置讓給那些人。',
       '你看著同僚一個個學會了鑽營，日子過得比你風光。你偶爾也羨慕，但每次提筆簽字的時候，手還是穩的。你知道自己守著什麼。',
-      '中年的你被調去了個冷衙門，明升暗降。你安之若素，把那攤沒人管的爛帳理得清清楚楚。後來接手的人說：這是我見過最乾淨的帳。',
+      '中年的你被調去了個沒人要的閒缺，明升暗降。你安之若素，把那攤沒人管的爛帳理得清清楚楚。後來接手的人說：這是我見過最乾淨的帳。',
       '你替人擋了一次錯不在你的責任，仕途從此止步。多年後當事人登門謝罪，你只說：換你也會這麼做的。其實你們都知道 - 不會。',
       '新來的上官銳意更張，把你當年立的章程改了大半。你不攔，只把當年為什麼那樣立的緣由，一條條寫下來留給他。兩年後，改回去了一半。',
       '你帶過的後生一個個升得比你快、走得比你遠。逢年過節他們的問候雪片一樣來。你回信永遠只有一句：位置越高，簽字越慢。',
@@ -3222,13 +3222,13 @@ const LIFE_CHAPTERS = {
       '有人翻舊帳構陷你，查了三個月，一無所獲。結案那天同僚來道賀，你說：不用賀。我這三十年，就是為了經得起這三個月。'
     ],
     twilight: [
-      '你告老還鄉，行李簡單得讓送行的人吃驚。你笑說：當了一輩子差，攢下的就兩樣 - 睡得著，走得動。',
-      '晚年鄉里有了糾紛還是愛找你評理。你不推辭，搬條凳子坐在祠堂前聽兩邊講完。講的還是那套：規矩要顧，人情也要顧。',
+      '你卸任還鄉，行李簡單得讓送行的人吃驚。你笑說：辦了一輩子公事，攢下的就兩樣 - 睡得著，走得動。',
+      '晚年鄉里有了糾紛還是愛找你評理。你不推辭，搬條凳子坐在門前的老樹下聽兩邊講完。講的還是那套：規矩要顧，人情也要顧。',
       '你把畢生經手的章程與文書格式默寫成冊，留給後來人。開頁寫著一行字：辦的是公事，面對的是人。',
       '暮年的你每天沿著當年修的那道堤走一圈。堤上的樹已經合抱粗了。沒人知道是你當年讓栽的，你也從沒說過。',
       '晚年有後進來討教為官之道，你只給他看了一樣東西：你這輩子退回去的禮的清單。你說：本事各有各的，這張單子，人人都做得到。',
-      '你告老之後，接任的人遇到難處還是會來信。你每信必覆，末尾永遠加一句：以上僅供參考，責任你自己擔 - 擔責任，就是這個位置的俸祿。',
-      '鄉里修祠堂，要把你的名字刻進去，你堅辭了。你說：我拿了一輩子俸祿，辦事是本分。要刻，刻那些沒拿俸祿還出了力的人。',
+      '你卸任之後，接任的人遇到難處還是會來信。你每信必覆，末尾永遠加一句：以上僅供參考，責任你自己擔 - 擔責任，就是這個位置的代價。',
+      '鄉里立碑紀念，要把你的名字刻進去，你堅辭了。你說：我領了一輩子薪俸，辦事是本分。要刻，刻那些沒領一分錢還出了力的人。',
       '臨終前你讓家人把你的官服取來看了看，又讓收回去了。你說：陪葬就不必了。那身衣服是借的，我還回去了。'
     ]
   },
@@ -3303,7 +3303,7 @@ const LIFE_CHAPTERS = {
       '你會為一片雲、一段聲響、一塊石頭的紋路停下來，一看就是半天。大人們說這孩子魂不守舍 - 他們不知道，你的魂正忙著呢。',
       '你做的東西第一次被大人拿去給客人看。你躲在門後聽他們稱讚，那是你頭一回知道：自己心裡的東西，別人也看得見。',
       '家裡的牆、地上的沙、起霧的窗，都被你畫滿過。挨了不少罵，但擦掉了你再畫 - 有些東西在你身體裡，關不住。',
-      '你最早的「師傅」是廟會上的匠人、路過的戲班、牆上斑駁的舊畫。沒人正式教過你，但整個世界都在教你。'
+      '你最早的「師傅」是節慶市集上的匠人、路過的戲班、牆上斑駁的舊畫。沒人正式教過你，但整個世界都在教你。'
     ],
     youth: [
       '你正式拜了師，才知道天分在基本功面前一文不值。你把最枯燥的練習做了千百遍，直到它們長進骨頭裡。',
@@ -3633,7 +3633,7 @@ const LIFE_CHAPTERS = {
       '你摸出了自己的一套省力法：怎麼起肩、怎麼換步、怎麼借貨的勢。同樣的活，你比別人多扛兩年不傷身。你把這套法子見人就教 - 力氣人的家底，就是這副身子。',
       '碼頭上來了個愣頭青，第一天就要跟你比誰扛得多。你讓他贏了。收工時你把墊肩和藥膏放在他鋪上 - 明天他就知道疼了。',
       '你被貨主誣賴過短了數，工頭要扣你的錢息事寧人。你不肯，一件件貨當眾重新過秤。秤到最後，貨主的臉比秤砣還沉。你要的不是那幾個錢，是這行立身的東西。',
-      '你成親那天，碼頭上的弟兄們湊錢送了一條扁擔，紅布纏的。這是老規矩：扁擔挑得起貨，就撐得起家。'
+      '你成家那天，碼頭上的弟兄們湊錢送了一副新的扛貨肩墊，紅布纏著邊。這是老規矩：肩膀扛得起貨，就撐得起家。'
     ],
     peak: [
       '你成了碼頭上的老把式，多重的貨、多刁的角度，到你手上都有辦法。年輕人服你，不是服你力氣，是服你的門道。',
@@ -3659,11 +3659,11 @@ const LIFE_CHAPTERS = {
       '晚年你還是愛去碼頭邊坐著，看貨來貨往。老夥計們一個個少了，但碼頭永遠是熱鬧的。這讓你安心。',
       '你的肩膀上留著兩塊厚厚的老繭，孫輩摸著覺得神奇。你笑著說：這是爺爺的勳章。',
       '當年一起扛活的老弟兄，如今湊不齊一桌了。你們偶爾聚聚，聊的還是當年哪一船貨最沉、哪一年的冬天最冷。',
-      '暮年的你還保留著當年的扁擔，立在門後。搬了幾次家都沒捨得丟。你說：一家人的日子，是它挑出來的。',
+      '暮年的你還保留著當年那副扛貨的肩墊，掛在門後。搬了幾次家都沒捨得丟。你說：一家人的日子，是它扛出來的。',
       '晚年你的背再也直不起來了。孫輩心疼，你倒看得開：這是貨壓的，也是日子壓的 - 它彎，是因為扛住過。',
       '碼頭上如今認識你的人不多了，但老泊位的石階上，還有你們當年歇腳磨出來的凹。你偶爾去坐坐，一坐就是半天。',
       '你這輩子沒讀過書，卻教出了碼頭上最講規矩的一班人。有人問你怎麼教的，你說：我就會一句 - 你怎麼待貨，貨主怎麼待你；你怎麼待人，日子怎麼待你。',
-      '走之前你把當年那條紅布纏的扁擔擦了一遍，交給了工班裡最年輕的。你說：不是讓你挑貨 - 往後這碼頭上誰家有難，你就想起它是怎麼到你手上的。'
+      '走之前你把當年那副紅布纏邊的肩墊擦了一遍，交給了工班裡最年輕的。你說：不是讓你扛貨 - 往後這碼頭上誰家有難，你就想起它是怎麼到你手上的。'
     ]
   },
   worker: {
@@ -3703,7 +3703,7 @@ const LIFE_CHAPTERS = {
       '你帶過不少剛出來討生活的年輕人，教他們幹活，也教他們別受人欺負。他們喊你一聲師傅，你每次都應得特別響亮。',
       '東家要提你管事，你猶豫了很久才應下。上工第一天你跟大伙說：我也是做工出身。在我手下，力氣不會白出。',
       '你手裡漸漸有了幾樣拿得出手的熟活，行情你也摸得透了。年輕人問你怎麼熬出來的，你說：沒竅門 - 別人挑活的時候我在做，別人歇著的時候我在學。',
-      '東家換了幾任，走的時候都想把你帶上。你成了那種奇怪的人：沒有一紙功名，走到哪裡都有人給你留一個位置。',
+      '東家換了幾任，走的時候都想把你帶上。你成了那種奇怪的人：沒有一紙出身，走到哪裡都有人給你留一個位置。',
       '你出面替大伙談過一次工錢。東家拍桌子，你不拍，就一句話：您算算換一批生手的虧空，再算算我們要的這點。談成之後，弟兄們要抬你，你擺手：都散了，明天照常上工 - 談成的規矩，要靠做工守住。',
       '最忙的那幾年你同時打著兩份工，天不亮出門，星星出來才回。你不覺得苦 - 家裡添了新碗筷，孩子的個子一年一個樣，這些都是你的工錢。'
     ],
@@ -3734,11 +3734,11 @@ const LIFE_CHAPTERS = {
 const MEET_SPOUSE = [
   '對方是鄰里相熟的人家，兩家長輩一撮合，你們紅著臉點了頭。婚後才慢慢處出了真感情，一鍋一灶地把日子過稠了。',
   '你們是在營生的往來裡認識的，話不多，但誰都看得出你們投緣。定下來那天，兩個人都笑得傻。',
-  '那是一樁再普通不過的姻緣，沒有什麼轟轟烈烈。但往後的歲月裡，燈總為你留著，飯總為你熱著。',
+  '那是一樁再普通不過的婚事，沒有什麼轟轟烈烈。但往後的歲月裡，燈總為你留著，飯總為你熱著。',
   '你們相識於一場再偶然不過的相遇。後來你常想：那天若走了另一條路，這一世就是另一個故事了。',
   '成親那天你緊張得同手同腳，對方也一樣。多年後說起來，你們還會笑作一團。',
   '對方家裡起初並不同意這門親事，是你們兩個一起熬、一起爭取來的。所以你們比誰都珍惜。',
-  '你們是打小一起長大的，誰也沒說破過。直到旁人要來提親，你才慌了，連夜托人上了門。',
+  '你們是打小一起長大的，誰也沒說破過。直到有別人開始追求對方，你才慌了神，連夜跑去把話說開。',
   '成家前你們只見過寥寥幾面。是往後幾十年的柴米油鹽，把兩個陌生人熬成了彼此的命。',
   '對方不算好看，也不算能說會道，但那年你病倒，是這個人衣不解帶地守了你半個月。你認定了。',
   '你們吵了一輩子嘴，也相守了一輩子。鄰里都知道：你們吵歸吵，誰說對方一句不好，你們立刻一致對外。',
@@ -3772,7 +3772,7 @@ const UNMARRIED_NOTES = [
   '你不是沒遇過想共度一生的人，只是造化弄人，終究錯過了。後來你把那份心思收好，誰也沒再給過。',
   '你一個人過了一輩子，卻不算孤單：徒弟、鄰里、老友，你的屋裡總有人聲。只是夜裡熄了燈，屋子還是一個人的大小。',
   '有人問過你後不後悔，你想了想說：成家是一種活法，我這也是一種活法。話雖這麼說，你還是把那人的名字，記到了最後。',
-  '你把大半生給了手上的活計，回過神來，媒人都不上門了。你自嘲了一句，倒也踏實 - 你這一生，是自己一步步走出來的。'
+  '你把大半生給了手上的活計，回過神來，身邊的人都成了家。你自嘲了一句，倒也踏實 - 你這一生，是自己一步步走出來的。'
 ];
 // 終章前的鋪陳：年老安詳 vs 走得太早，各一池
 const DEATH_PRELUDES_OLD = [

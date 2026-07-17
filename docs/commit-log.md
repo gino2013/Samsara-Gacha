@@ -106,3 +106,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-17 11:25 — 5x expansion batch 7: engineer and creative life chapters to 12-13 lines per stage, written for emotional weight
 - 2026-07-17 11:45 — 5x expansion batch 8: artisan and farmer life chapters to 12-13 lines per stage, written for emotional weight
 - 2026-07-17 12:05 — 5x expansion batch 9: miner and sailor life chapters to 12-13 lines per stage, written for emotional weight
+- 2026-07-17 12:25 — 5x expansion batch 10 (final): dockworker and worker life chapters to 12-13 lines per stage - all 14 occupation categories now at 12-13 lines x 6 stages (1000+ chapter lines, ~6x the original 168)

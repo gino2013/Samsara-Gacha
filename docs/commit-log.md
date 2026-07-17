@@ -103,3 +103,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-17 10:25 — 5x expansion batch 4: noble and merchant life chapters 8→13 lines per stage, written for emotional weight
 - 2026-07-17 10:45 — 5x expansion batch 5: military and medical life chapters to 12-13 lines per stage, written for emotional weight
 - 2026-07-17 11:05 — 5x expansion batch 6: educator and civic life chapters to 12-13 lines per stage; follow-up fix for two culture-specific terms the guard caught (功名→成就, 公門→官署)
+- 2026-07-17 11:25 — 5x expansion batch 7: engineer and creative life chapters to 12-13 lines per stage, written for emotional weight

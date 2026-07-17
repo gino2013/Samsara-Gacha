@@ -1569,6 +1569,23 @@ function buildLifeDetailHTML(r){
 // 輪迴回顧用的詳盡版傳記：依年齡逐段抽取該職業類別的人生階段敘事
 // （幼年→少年→立業→成家→壯年→中年→晚年→終章），主卡片仍用上面的精簡版。
 const pickFrom = a => a[Math.floor(Math.random()*a.length)];
+// 回顧十世會抽同一個池七、八次，純隨機幾乎必撞句 - 同一句相遇故事在一次人生回顧裡
+// 出現兩次，比池子不夠大更傷沉浸感。每個池配一個洗牌袋，發完才重洗；
+// resetStoryBags() 在建立回顧前呼叫，讓每次回顧重新洗牌。
+const storyBags = new Map();
+function drawFrom(pool){
+  let bag = storyBags.get(pool);
+  if(!bag || !bag.length){
+    bag = [...pool];
+    for(let i = bag.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [bag[i], bag[j]] = [bag[j], bag[i]];
+    }
+    storyBags.set(pool, bag);
+  }
+  return bag.pop();
+}
+function resetStoryBags(){ storyBags.clear(); }
 const bioLine = (age, text, cls='') =>
   `<div class="ri-bio ${cls}"><span class="ri-bio-age">${age}歲</span><span>${text}</span></div>`;
 
@@ -1579,20 +1596,20 @@ function buildLifeBiographyHTML(r){
   const ev = [];
   const stage = (min, span, pool) => {
     const age = min + Math.floor(Math.random()*span);
-    if(age < A) ev.push({ age, html: bioLine(age, pickFrom(pool)) });
+    if(age < A) ev.push({ age, html: bioLine(age, drawFrom(pool)) });
   };
   stage(5, 4, ch.childhood);
   if(A > 13) stage(13, 4, ch.youth);
   if(A > 21) stage(19, 5, ch.early);
   if(r.married){
-    let t = `你在這一年成了家。${pickFrom(MEET_SPOUSE)}`;
+    let t = `你在這一年成了家。${drawFrom(MEET_SPOUSE)}`;
     t += r.children > 0
-      ? `後來你們有了${r.children}個孩子。${pickFrom(CHILDREN_NOTES)}`
-      : `你們相守一生，未有子女。${pickFrom(NO_CHILDREN_NOTES)}`;
+      ? `後來你們有了${r.children}個孩子。${drawFrom(CHILDREN_NOTES)}`
+      : `你們相守一生，未有子女。${drawFrom(NO_CHILDREN_NOTES)}`;
     ev.push({ age: r.marryAge, html: bioLine(r.marryAge, t) });
   } else if(r.married === false && A > 25){
     const ua = Math.min(A - 1, 32);
-    ev.push({ age: ua, html: bioLine(ua, pickFrom(UNMARRIED_NOTES)) });
+    ev.push({ age: ua, html: bioLine(ua, drawFrom(UNMARRIED_NOTES)) });
   }
   if(A > 32) stage(28, 10, ch.peak);
   if(A > 52) stage(44, 8, ch.midlife);
@@ -1608,7 +1625,7 @@ function buildLifeBiographyHTML(r){
   ev.sort((a, b) => a.age - b.age);
   html += ev.map(e => e.html).join('');
 
-  const prelude = pickFrom(A >= 55 ? DEATH_PRELUDES_OLD : DEATH_PRELUDES_EARLY);
+  const prelude = drawFrom(A >= 55 ? DEATH_PRELUDES_OLD : DEATH_PRELUDES_EARLY);
   html += bioLine(A, `${prelude}${A}歲，你離開了人間，死因是${r.deathCause}。`, 'ri-end');
   if(r.legacy) html += `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`;
   else if(r.childDeathNote) html += `<div class="ri-meaning">「${r.childDeathNote}」</div>`;
@@ -1618,6 +1635,7 @@ function buildLifeBiographyHTML(r){
 function showChainReview(results){
   const list = document.getElementById('reviewList');
   const lastLife = results.length;
+  resetStoryBags(); // 每次回顧重新洗牌，回顧內部（下面整個 map）保證不重句
   list.innerHTML = results.map((r, i) => {
     const isLast = r.life === lastLife;
     // event 是國家池裡「此刻2026年」的現代社會經濟描述（矽谷、GDP…），只對今生成立，

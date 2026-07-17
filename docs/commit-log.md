@@ -101,3 +101,4 @@ Auto-appended by `/rock` each time it commits and pushes. Backfilled below with 
 - 2026-07-17 09:55 — 5x expansion batch 2, written for emotional weight: children notes 8→23, childless 5→14, unmarried 7→20, death preludes old 8→23 / early 8→23 (all culture-neutral, verified by test_shared_pool.js)
 - 2026-07-17 10:05 — 5x expansion batch 3: young death notes 29→45, child death notes 69→85, written for emotional weight
 - 2026-07-17 10:25 — 5x expansion batch 4: noble and merchant life chapters 8→13 lines per stage, written for emotional weight
+- 2026-07-17 10:45 — 5x expansion batch 5: military and medical life chapters to 12-13 lines per stage, written for emotional weight

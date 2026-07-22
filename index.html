@@ -1592,11 +1592,20 @@ const bioLine = (age, text, cls='') =>
 function buildLifeBiographyHTML(r){
   if(!r.occupation) return buildLifeDetailHTML(r); // 今生（進行中）沿用精簡版
   const ch = LIFE_CHAPTERS[r.occCategory] || LIFE_CHAPTERS.worker;
+  // 一世固定走同一條「人生線」：六個 stage 陣列的同一 index 屬於同一條線，
+  // 童年埋的錨（人、物、一句話）在中年、晚年被呼應。洗牌袋沿用 drawFrom，
+  // 保證同一次回顧裡同類別的兩世不會走同一條線。
+  ch._threads = ch._threads || ch.childhood.map((_, i) => i);
+  const ti = drawFrom(ch._threads);
+  // {token} 佔位符依國家所屬地區代入在地用語（碗筷/刀叉、寺廟/教堂…）
+  const flavor = FLAVOR_BY_REGION[COUNTRY_REGION[r.name]] || FLAVOR_BY_REGION.default;
+  const spice = t => t.replace(/\{(\w+)\}/g, (_, k) => flavor[k] || FLAVOR_BY_REGION.default[k] || '');
   const A = r.age;
   const ev = [];
   const stage = (min, span, pool) => {
     const age = min + Math.floor(Math.random()*span);
-    if(age < A) ev.push({ age, html: bioLine(age, drawFrom(pool)) });
+    // ponytail: % length 讓還沒改成人生線的舊類別（各 stage 行數不齊）也能安全取值，全數遷移後可拿掉
+    if(age < A) ev.push({ age, html: bioLine(age, spice(pool[ti % pool.length])) });
   };
   stage(5, 4, ch.childhood);
   if(A > 13) stage(13, 4, ch.youth);

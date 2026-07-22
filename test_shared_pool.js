@@ -15,7 +15,7 @@ new Function(fs.readFileSync(__dirname + '/data.js', 'utf8') + `
   this.DEATH_PRELUDES_OLD=DEATH_PRELUDES_OLD; this.DEATH_PRELUDES_EARLY=DEATH_PRELUDES_EARLY;
   this.YOUNG_DEATH_NOTES=YOUNG_DEATH_NOTES; this.CHILD_DEATH_NOTES=CHILD_DEATH_NOTES;
   this.DEATH_CAUSES_BY_ERA=DEATH_CAUSES_BY_ERA; this.OCCUPATIONS_BY_ERA=OCCUPATIONS_BY_ERA;
-  this.OCCUPATIONS_BY_REGION=OCCUPATIONS_BY_REGION;
+  this.OCCUPATIONS_BY_REGION=OCCUPATIONS_BY_REGION; this.FLAVOR_BY_REGION=FLAVOR_BY_REGION;
 `).call(s);
 
 // ---- 1. no culture-specific institutions/rituals in the globally shared pools ----
@@ -72,4 +72,20 @@ Object.values(s.OCCUPATIONS_BY_REGION).forEach(scanEra);
 const plagueShare = plague / total;
 assert(plagueShare < 0.12, `瘟疫 is ${(plagueShare*100).toFixed(0)}% of pre-1750 occupation death causes (${plague}/${total}) - every early life dies of plague`);
 
-console.log(`OK — ${SHARED.length} shared pools free of culture-specific terms; no death cause over 20% of any era; 瘟疫 ${(plagueShare*100).toFixed(0)}% of pre-1750 occupation rolls.`);
+// ---- 3. thread-based categories: the 6 stage arrays must stay index-aligned ----
+// (one life walks one thread; a length mismatch silently pairs the wrong lines via % length)
+const THREADED = ['noble', 'merchant']; // extend as categories migrate to threads
+const STAGES = ['childhood', 'youth', 'early', 'peak', 'midlife', 'twilight'];
+for (const cat of THREADED) {
+  const lens = STAGES.map(st => s.LIFE_CHAPTERS[cat][st].length);
+  assert(new Set(lens).size === 1, `${cat} stages not aligned: ${STAGES.map((st,i)=>`${st}=${lens[i]}`).join(' ')}`);
+}
+
+// ---- 4. every {token} used in LIFE_CHAPTERS resolves in FLAVOR_BY_REGION.default ----
+const tokens = new Set(JSON.stringify(s.LIFE_CHAPTERS).match(/\{(\w+)\}/g) || []);
+for (const t of tokens) {
+  const k = t.slice(1, -1);
+  assert(s.FLAVOR_BY_REGION.default[k], `placeholder ${t} has no FLAVOR_BY_REGION.default entry`);
+}
+
+console.log(`OK — ${SHARED.length} shared pools free of culture-specific terms; no death cause over 20% of any era; 瘟疫 ${(plagueShare*100).toFixed(0)}% of pre-1750 occupation rolls; ${THREADED.length} threaded categories aligned; ${tokens.size} flavor tokens resolve.`);

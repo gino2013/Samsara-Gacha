@@ -1600,6 +1600,8 @@ function buildLifeBiographyHTML(r){
   // {token} 佔位符依國家所屬地區代入在地用語（碗筷/刀叉、寺廟/教堂…）
   const flavor = FLAVOR_BY_REGION[COUNTRY_REGION[r.name]] || FLAVOR_BY_REGION.default;
   const spice = t => t.replace(/\{(\w+)\}/g, (_, k) => flavor[k] || FLAVOR_BY_REGION.default[k] || '');
+  // 文體風格雙層：時代語氣（度日/謀生/討生活、歿於/死於/死因是）× 地區離世意象
+  const tone = lifeTone(COUNTRY_REGION[r.name], r.year);
   const A = r.age;
   const ev = [];
   const stage = (min, span, pool) => {
@@ -1627,15 +1629,15 @@ function buildLifeBiographyHTML(r){
   let html = '';
   if(r.background) html += `<div class="ri-job">出身${r.background}。</div>`;
   if(A <= 16){
-    html += `<div class="ri-job">${A <= 14 ? `短短的一生裡，你是個${r.occupation}。` : `這一世，你以「${r.occupation}」度日。`}</div>`;
+    html += `<div class="ri-job">${A <= 14 ? `短短的一生裡，你是個${r.occupation}。` : `這一世，你以「${r.occupation}」${tone.live}。`}</div>`;
   } else {
-    ev.push({ age: 17.5, html: `<div class="ri-job">這一世，你以「${r.occupation}」度日。</div>` });
+    ev.push({ age: 17.5, html: `<div class="ri-job">這一世，你以「${r.occupation}」${tone.live}。</div>` });
   }
   ev.sort((a, b) => a.age - b.age);
   html += ev.map(e => e.html).join('');
 
   const prelude = drawFrom(A >= 55 ? DEATH_PRELUDES_OLD : DEATH_PRELUDES_EARLY);
-  html += bioLine(A, `${prelude}${A}歲，你離開了人間，死因是${r.deathCause}。`, 'ri-end');
+  html += bioLine(A, `${prelude}${A}歲，你${tone.pass}，${tone.lead}${r.deathCause}。`, 'ri-end');
   if(r.legacy) html += `<div class="ri-job">此生印記：${r.legacy}</div><div class="ri-meaning">「${r.meaning}」</div>`;
   else if(r.childDeathNote) html += `<div class="ri-meaning">「${r.childDeathNote}」</div>`;
   return html;

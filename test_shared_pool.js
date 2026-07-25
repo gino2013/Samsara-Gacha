@@ -16,6 +16,7 @@ new Function(fs.readFileSync(__dirname + '/data.js', 'utf8') + `
   this.YOUNG_DEATH_NOTES=YOUNG_DEATH_NOTES; this.CHILD_DEATH_NOTES=CHILD_DEATH_NOTES;
   this.DEATH_CAUSES_BY_ERA=DEATH_CAUSES_BY_ERA; this.OCCUPATIONS_BY_ERA=OCCUPATIONS_BY_ERA;
   this.OCCUPATIONS_BY_REGION=OCCUPATIONS_BY_REGION; this.FLAVOR_BY_REGION=FLAVOR_BY_REGION;
+  this.ERA_TONE=ERA_TONE; this.PASS_AWAY=PASS_AWAY; this.lifeTone=lifeTone;
 `).call(s);
 
 // ---- 1. no culture-specific institutions/rituals in the globally shared pools ----
@@ -89,4 +90,22 @@ for (const t of tokens) {
   assert(s.FLAVOR_BY_REGION.default[k], `placeholder ${t} has no FLAVOR_BY_REGION.default entry`);
 }
 
-console.log(`OK — ${SHARED.length} shared pools free of culture-specific terms; no death cause over 20% of any era; 瘟疫 ${(plagueShare*100).toFixed(0)}% of pre-1750 occupation rolls; ${THREADED.length} threaded categories aligned; ${tokens.size} flavor tokens resolve.`);
+// ---- 5. era×region tone layer: every band resolves for every region, arrays non-empty ----
+const REGIONS = ['default', ...new Set(Object.keys(s.FLAVOR_BY_REGION))];
+const YEARS = [1200, 1600, 1850, 1950, 2010];
+for (const reg of REGIONS) {
+  for (const y of YEARS) {
+    const t = s.lifeTone(reg === 'default' ? undefined : reg, y);
+    assert(t.live && t.lead && t.pass, `lifeTone(${reg}, ${y}) returned empty field: ${JSON.stringify(t)}`);
+  }
+}
+// PASS_AWAY rows must all have 5 bands (aligned to ERA_TONE), each band non-empty
+for (const [reg, rows] of Object.entries(s.PASS_AWAY)) {
+  assert(rows.length === s.ERA_TONE.length, `PASS_AWAY.${reg} has ${rows.length} bands, expected ${s.ERA_TONE.length}`);
+  rows.forEach((band, i) => assert(Array.isArray(band) && band.length, `PASS_AWAY.${reg}[${i}] empty`));
+}
+// tone words are framing register, not culture-specific institutions
+const toneText = JSON.stringify([s.ERA_TONE, s.PASS_AWAY]);
+for (const t of SINO_ONLY) assert(!toneText.includes(t), `culture-specific term 「${t}」 leaked into tone layer`);
+
+console.log(`OK — ${SHARED.length} shared pools free of culture-specific terms; no death cause over 20% of any era; 瘟疫 ${(plagueShare*100).toFixed(0)}% of pre-1750 occupation rolls; ${THREADED.length} threaded categories aligned; ${tokens.size} flavor tokens resolve; tone layer resolves for ${REGIONS.length} regions × ${YEARS.length} eras.`);

@@ -2905,6 +2905,36 @@ const FLAVOR_BY_REGION = {
   pacific:          {utensil:'木盤', table:'餐蓆', drink:'椰水', worship:'教堂',   coin:'貝幣', crop:'芋頭'}
 };
 
+// ── 文體風格雙層：時代語氣 × 地區意象 ──
+// 只作用在「框架模板」（職業句、離世句），不碰敘事池，避免自動改寫產生生硬句。
+// 時代（ERA_TONE）= 用詞的正式度：職業動詞 live、死因連接詞 lead，依年份分 5 段。
+// 地區（PASS_AWAY）= 「離世」的說法意象：[region][band]，缺就退回 default[band]。
+// 兩者正交組合：時代決定語體，地區決定「怎麼說一個人走了」。地區意象刻意保持
+// 職業中性（不用「回到海裡」這種會跟農夫衝突的畫面），只用語體/世界觀差異。
+const ERA_TONE = [
+  { before: 1500,     live: '度日',   lead: '歿於' },
+  { before: 1750,     live: '度日',   lead: '歿於' },
+  { before: 1900,     live: '謀生',   lead: '死於' },
+  { before: 1980,     live: '過活',   lead: '死於' },
+  { before: Infinity, live: '討生活', lead: '死因是' }
+];
+const PASS_AWAY = {
+  default:          [['溘然長逝','撒手人寰'],['與世長辭','溘然長逝'],['離開了人世','走完了一生'],['離開了人世','走完了這一生'],['走完了一生','離開了','走了']],
+  eastAsia:         [['歸了塵土','溘然長逝'],['歸了塵土','闔眼長辭'],['走完了一生','去了'],       ['走完了這一生','去了'],   ['走完了一生','走了']],
+  seAsia:           [['歸了塵土','溘然長逝'],['歸了塵土','闔眼長辭'],['走完了一生','去了'],       ['走完了這一生','去了'],   ['走完了一生','走了']],
+  southAsia:        [['了了此生','溘然長逝'],['了了此生','與世長辭'],['走完了此生','去了'],       ['走完了此生','去了'],     ['走完了此生','走了']],
+  africaMiddleEast: [['走完了塵世的路','與世長辭'],['走完了塵世的路','與世長辭'],['離開了人世','走完了一生'],['離開了人世','走完了這一生'],['走完了一生','走了']],
+  centralAsia:      [['溘然長逝','去了'],   ['溘然長逝','去了'],   ['離開了人世','去了'],       ['走完了這一生','去了'],   ['走完了一生','走了']],
+  pacific:          [['去了','走完了一生'], ['去了','走完了一生'], ['離開了人世','去了'],       ['走完了這一生','去了'],   ['走完了一生','走了']]
+};
+// region 可為 undefined（歐洲/美洲等用 default）；回傳這一世的框架語氣。
+function lifeTone(region, year){
+  const band = ERA_TONE.findIndex(e => year < e.before);
+  const passPool = (PASS_AWAY[region] || PASS_AWAY.default)[band] || PASS_AWAY.default[band];
+  return { live: ERA_TONE[band].live, lead: ERA_TONE[band].lead,
+           pass: passPool[Math.floor(Math.random() * passPool.length)] };
+}
+
 const LIFE_CHAPTERS = {
   noble: {
     childhood: [

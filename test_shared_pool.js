@@ -74,7 +74,8 @@ assert(plagueShare < 0.12, `瘟疫 is ${(plagueShare*100).toFixed(0)}% of pre-17
 
 // ---- 3. thread-based categories: the 6 stage arrays must stay index-aligned ----
 // (one life walks one thread; a length mismatch silently pairs the wrong lines via % length)
-const THREADED = ['noble', 'merchant']; // extend as categories migrate to threads
+const THREADED = ['noble', 'merchant', 'military', 'medical', 'educator', 'civic',
+  'engineer', 'creative', 'artisan', 'farmer', 'miner', 'sailor', 'dockworker', 'worker']; // all 14 migrated to threads
 const STAGES = ['childhood', 'youth', 'early', 'peak', 'midlife', 'twilight'];
 for (const cat of THREADED) {
   const lens = STAGES.map(st => s.LIFE_CHAPTERS[cat][st].length);
